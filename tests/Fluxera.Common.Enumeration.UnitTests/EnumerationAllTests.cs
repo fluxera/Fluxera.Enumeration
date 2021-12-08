@@ -5,7 +5,7 @@ namespace Fluxera.Enumeration.UnitTests
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class EnumerationGetAllTests
+	public class EnumerationAllTests
 	{
 		[Test]
 		public void ReturnsAllBaseAndDerivedEnumerations()

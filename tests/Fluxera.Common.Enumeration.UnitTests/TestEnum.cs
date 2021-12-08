@@ -8,7 +8,7 @@
 		public static readonly TestEnum Two = new TestEnum(2);
 		public static readonly TestEnum Three = new TestEnum(3);
 
-		protected TestEnum(int value, [CallerMemberName] string name = null)
+		private TestEnum(int value, [CallerMemberName] string? name = null)
 			: base(name, value)
 		{
 		}
@@ -36,12 +36,12 @@
 
 		public new static TestBaseEnum FromValue(int value)
 		{
-			return TestBaseEnum.FromValue(value);
+			return TestBaseEnum.ParseValue(value);
 		}
 
 		public new static TestBaseEnum FromName(string name, bool ignoreCase = false)
 		{
-			return TestBaseEnum.FromName(name, ignoreCase);
+			return TestBaseEnum.ParseName(name, ignoreCase);
 		}
 	}
 

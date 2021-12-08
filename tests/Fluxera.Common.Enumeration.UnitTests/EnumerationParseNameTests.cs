@@ -6,7 +6,7 @@ namespace Fluxera.Enumeration.UnitTests
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class EnumerationFromNameTests
+	public class EnumerationParseNameTests
 	{
 		[Test]
 		public void ReturnsEnumGivenDerivedClass()
@@ -21,7 +21,7 @@ namespace Fluxera.Enumeration.UnitTests
 		{
 			string expected = TestEnum.One.Name;
 
-			TestEnum result = TestEnum.FromName(expected);
+			TestEnum result = TestEnum.ParseName(expected);
 
 			result.Name.Should().Be(expected);
 		}
@@ -29,7 +29,7 @@ namespace Fluxera.Enumeration.UnitTests
 		[Test]
 		public void ReturnsEnumGivenMatchingName()
 		{
-			TestEnum result = TestEnum.FromName("One");
+			TestEnum result = TestEnum.ParseName("One");
 
 			result.Should().BeSameAs(TestEnum.One);
 		}
@@ -39,7 +39,7 @@ namespace Fluxera.Enumeration.UnitTests
 		{
 			string expected = "One";
 
-			TestEnum result = TestEnum.FromName(expected);
+			TestEnum result = TestEnum.ParseName(expected);
 
 			result.Name.Should().Be(expected);
 		}
@@ -47,7 +47,7 @@ namespace Fluxera.Enumeration.UnitTests
 		[Test]
 		public void ThrowsGivenEmptyString()
 		{
-			Action action = () => TestEnum.FromName(string.Empty);
+			Action action = () => TestEnum.ParseName(string.Empty);
 
 			action.Should()
 				.ThrowExactly<ArgumentException>()
@@ -59,7 +59,7 @@ namespace Fluxera.Enumeration.UnitTests
 		{
 			string name = "Doesn't Exist";
 
-			Action action = () => TestEnum.FromName(name);
+			Action action = () => TestEnum.ParseName(name);
 
 			action.Should()
 				.ThrowExactly<InvalidEnumArgumentException>();
@@ -68,7 +68,7 @@ namespace Fluxera.Enumeration.UnitTests
 		[Test]
 		public void ThrowsGivenNull()
 		{
-			Action action = () => TestEnum.FromName(null);
+			Action action = () => TestEnum.ParseName(null);
 
 			action.Should()
 				.ThrowExactly<ArgumentNullException>()

@@ -31,7 +31,7 @@ namespace Fluxera.Enumeration.SystemTextJson
 			if(reader.TokenType == JsonTokenType.String)
 			{
 				string? name = reader.GetString();
-				if(!Enumeration<TEnum>.TryFromName(name, out TEnum? result))
+				if(!Enumeration<TEnum>.TryParseName(name, out TEnum? result))
 				{
 					throw new JsonException($"Error converting name '{name ?? "null"}' to enumeration '{typeToConvert.Name}'.");
 				}

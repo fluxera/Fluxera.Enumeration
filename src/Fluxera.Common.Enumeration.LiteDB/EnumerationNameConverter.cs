@@ -26,7 +26,7 @@
 				{
 					string? name = bson.AsString;
 
-					if(!Enumeration.TryFromName(enumerationType, name, out IEnumeration? result))
+					if(!Enumeration.TryParseName(enumerationType, name, out IEnumeration? result))
 					{
 						throw new LiteException(0, $"Error converting name '{name ?? "null"}' to enumeration '{enumerationType.Name}'.");
 					}

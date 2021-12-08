@@ -38,7 +38,7 @@
 			if(reader.TokenType == JsonToken.String)
 			{
 				string? name = (string?)reader.Value;
-				if(!Enumeration<TEnum>.TryFromName(name, out TEnum? result))
+				if(!Enumeration<TEnum>.TryParseName(name, out TEnum? result))
 				{
 					throw new JsonSerializationException($"Error converting name '{name ?? "null"}' to enumeration '{objectType.Name}'.");
 				}

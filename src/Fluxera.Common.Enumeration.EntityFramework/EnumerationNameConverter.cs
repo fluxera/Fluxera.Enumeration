@@ -23,7 +23,7 @@
 				return null;
 			}
 
-			if(!Enumeration<TEnum>.TryFromName(name, out TEnum? result))
+			if(!Enumeration<TEnum>.TryParseName(name, out TEnum? result))
 			{
 				throw new FormatException($"Error converting name '{name}' to enumeration '{typeof(TEnum).Name}'.");
 			}

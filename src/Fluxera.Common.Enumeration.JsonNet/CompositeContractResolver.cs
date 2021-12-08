@@ -9,7 +9,7 @@
 	using Newtonsoft.Json.Serialization;
 
 	[PublicAPI]
-	public class CompositeContractResolver : IContractResolver, System.Collections.Generic.IEnumerable<IContractResolver>
+	public class CompositeContractResolver : IContractResolver, IEnumerable<IContractResolver>
 	{
 		private readonly IList<IContractResolver> contractResolvers = new List<IContractResolver>();
 		private readonly DefaultContractResolver defaultContractResolver = new DefaultContractResolver();

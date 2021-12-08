@@ -36,7 +36,7 @@
 			{
 				int value = context.Reader.ReadInt32();
 
-				if(!Enumeration<TEnum>.TryFromValue(value, out TEnum? result))
+				if(!Enumeration<TEnum>.TryParseValue(value, out TEnum? result))
 				{
 					throw new FormatException($"Error converting value '{value}' to enumeration '{args.NominalType.Name}'.");
 				}

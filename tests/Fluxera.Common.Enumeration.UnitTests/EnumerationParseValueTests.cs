@@ -5,7 +5,7 @@ namespace Fluxera.Enumeration.UnitTests
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class EnumerationFromValueTests
+	public class EnumerationParseValueTests
 	{
 		[Test]
 		public void ReturnsDefaultEnumGivenNonMatchingValue()
@@ -13,7 +13,7 @@ namespace Fluxera.Enumeration.UnitTests
 			int value = -1;
 			TestEnum defaultEnum = TestEnum.One;
 
-			TestEnum result = TestEnum.FromValue(value, defaultEnum);
+			TestEnum result = TestEnum.ParseValue(value, defaultEnum);
 
 			result.Should().BeSameAs(defaultEnum);
 		}
@@ -29,7 +29,7 @@ namespace Fluxera.Enumeration.UnitTests
 		[Test]
 		public void ReturnsEnumGivenMatchingValue()
 		{
-			TestEnum result = TestEnum.FromValue(1);
+			TestEnum result = TestEnum.ParseValue(1);
 
 			result.Should().BeSameAs(TestEnum.One);
 		}
@@ -39,7 +39,7 @@ namespace Fluxera.Enumeration.UnitTests
 		{
 			int value = -1;
 
-			Action action = () => TestEnum.FromValue(value);
+			Action action = () => TestEnum.ParseValue(value);
 
 			action.Should()
 				.ThrowExactly<ArgumentException>();

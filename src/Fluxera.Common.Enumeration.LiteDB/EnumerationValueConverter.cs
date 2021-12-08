@@ -26,7 +26,7 @@
 				{
 					int value = bson.AsInt32;
 
-					if(!Enumeration.TryFromValue(enumerationType, value, out IEnumeration? result))
+					if(!Enumeration.TryParseValue(enumerationType, value, out IEnumeration? result))
 					{
 						throw new LiteException(0, $"Error converting value '{value}' to enumeration '{enumerationType.Name}'.");
 					}

@@ -35,7 +35,7 @@
 			if(context.Reader.CurrentBsonType == BsonType.String)
 			{
 				string? name = context.Reader.ReadString();
-				if(!Enumeration<TEnum>.TryFromName(name, out TEnum? result))
+				if(!Enumeration<TEnum>.TryParseName(name, out TEnum? result))
 				{
 					throw new FormatException($"Error converting name '{name ?? "null"}' to enumeration '{args.NominalType.Name}'.");
 				}

@@ -50,7 +50,7 @@
 					}
 				}
 
-				if(!Enumeration<TEnum>.TryFromValue(value, out TEnum? result))
+				if(!Enumeration<TEnum>.TryParseValue(value, out TEnum? result))
 				{
 					throw new JsonSerializationException($"Error converting value '{reader.Value ?? "null"}' to enumeration '{objectType.Name}'.");
 				}

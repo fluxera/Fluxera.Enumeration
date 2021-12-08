@@ -23,7 +23,7 @@
 				return null;
 			}
 
-			if(!Enumeration<TEnum>.TryFromValue(value.Value, out TEnum? result))
+			if(!Enumeration<TEnum>.TryParseValue(value.Value, out TEnum? result))
 			{
 				throw new FormatException($"Error converting value '{value}' to enumeration '{typeof(TEnum).Name}'.");
 			}
