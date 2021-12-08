@@ -31,5 +31,20 @@
 
 			return new EnumerationWhen<TEnum>(this.stopEvaluating || this.isMatch, this.enumeration);
 		}
+
+		/// <summary>
+		///     Calls <paramref name="action" /> Action when the preceding When call matches.
+		/// </summary>
+		/// <param name="action">Action method to call.</param>
+		/// <returns>A chainable instance of CaseWhen for more when calls.</returns>
+		public EnumerationWhen<TEnum> Then(Action<TEnum> action)
+		{
+			if(!this.stopEvaluating && this.isMatch)
+			{
+				action.Invoke((TEnum)this.enumeration);
+			}
+
+			return new EnumerationWhen<TEnum>(this.stopEvaluating || this.isMatch, this.enumeration);
+		}
 	}
 }

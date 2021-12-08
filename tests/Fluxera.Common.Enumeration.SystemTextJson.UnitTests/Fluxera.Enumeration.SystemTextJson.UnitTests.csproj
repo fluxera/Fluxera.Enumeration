@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Fluxera.Common.Enumeration.SystemTextJson\Fluxera.Enumeration.SystemTextJson.csproj" />
+    <ProjectReference Include="..\Fluxera.Enumeration.UnitTests.Enums\Fluxera.Enumeration.UnitTests.Enums.csproj" />
   </ItemGroup>
 
 </Project>

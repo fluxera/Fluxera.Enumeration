@@ -2,6 +2,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 {
 	using System;
 	using FluentAssertions;
+	using Fluxera.Enumeration.UnitTests.Enums;
 	using global::MongoDB.Bson;
 	using global::MongoDB.Bson.Serialization;
 	using global::MongoDB.Bson.Serialization.Conventions;
@@ -12,15 +13,15 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 	{
 		public class TestClass
 		{
-			public TestEnum Enum { get; set; }
+			public Color Color { get; set; }
 		}
 
 		private static readonly TestClass TestInstance = new TestClass
 		{
-			Enum = TestEnum.Instance,
+			Color = Color.Red,
 		};
 
-		private static readonly string JsonString = @"{ ""Enum"" : 1 }";
+		private static readonly string JsonString = @"{ ""Color"" : 0 }";
 
 		static EnumerationValueSerializerTests()
 		{
@@ -34,7 +35,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		{
 			TestClass? obj = BsonSerializer.Deserialize<TestClass>(JsonString);
 
-			obj.Enum.Should().BeSameAs(TestEnum.Instance);
+			obj.Color.Should().BeSameAs(Color.Red);
 		}
 
 		[Test]
@@ -44,13 +45,13 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 
 			TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
 
-			obj.Enum.Should().BeNull();
+			obj.Color.Should().BeNull();
 		}
 
 		[Test]
 		public void DeserializeThrowsWhenNotFound()
 		{
-			string json = @"{ ""Enum"": 999 }";
+			string json = @"{ ""Color"": 999 }";
 
 			Action act = () =>
 			{
@@ -64,7 +65,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		[Test]
 		public void DeserializeThrowsWhenNotValid()
 		{
-			string json = @"{ ""Enum"": -1 }";
+			string json = @"{ ""Color"": -1 }";
 
 			Action act = () =>
 			{
@@ -78,11 +79,11 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		[Test]
 		public void DeserializeWhenNull()
 		{
-			string json = @"{ ""Enum"": null }";
+			string json = @"{ ""Color"": null }";
 
 			TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
 
-			obj.Enum.Should().BeNull();
+			obj.Color.Should().BeNull();
 		}
 
 		[Test]

@@ -61,5 +61,17 @@
 				action.Invoke();
 			}
 		}
+
+		/// <summary>
+		///     Execute this action if no other calls to When/WhenAny have matched.
+		/// </summary>
+		/// <param name="action">The Action to call.</param>
+		public void Default(Action<TEnum> action)
+		{
+			if(!this.stopEvaluating)
+			{
+				action.Invoke((TEnum)this.enumeration);
+			}
+		}
 	}
 }

@@ -2,6 +2,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 {
 	using System.Text.Json;
 	using FluentAssertions;
+	using Fluxera.Enumeration.UnitTests.Enums;
 	using NUnit.Framework;
 
 	[TestFixture]
@@ -9,15 +10,15 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 	{
 		public class TestClass
 		{
-			public TestEnum Enum { get; set; }
+			public Color Color { get; set; }
 		}
 
 		private static readonly TestClass TestInstance = new TestClass
 		{
-			Enum = TestEnum.Instance,
+			Color = Color.Red,
 		};
 
-		private static readonly string JsonString = @"{""Enum"":""Instance""}";
+		private static readonly string JsonString = @"{""Color"":""Red""}";
 
 		private static readonly JsonSerializerOptions options;
 
@@ -32,7 +33,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		{
 			TestClass? obj = JsonSerializer.Deserialize<TestClass>(JsonString, options);
 
-			obj.Enum.Should().BeSameAs(TestEnum.Instance);
+			obj.Color.Should().BeSameAs(Color.Red);
 		}
 
 		[Test]

@@ -9,7 +9,7 @@
 		public static readonly Status Unknown = new Status(0, nameof(Unknown));
 
 		private Status(int value, string name)
-			: base(name, value)
+			: base(value, name)
 		{
 		}
 	}

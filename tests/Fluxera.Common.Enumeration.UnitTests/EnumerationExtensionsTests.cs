@@ -2,33 +2,28 @@ namespace Fluxera.Enumeration.UnitTests
 {
 	using System;
 	using System.Collections.Generic;
+	using Enums;
 	using FluentAssertions;
 	using NUnit.Framework;
 
 	[TestFixture]
 	public class EnumerationExtensionsTests
 	{
-		public abstract class AbstractEnum : Enumeration<AbstractEnum>
+		public static IEnumerable<object[]> IsEnumerationTestData => new List<object[]>
 		{
-			protected AbstractEnum(string name, int value) : base(name, value)
-			{
-			}
-		}
-
-		public static IEnumerable<object[]> IsEnumerationData =>
-			new List<object[]>
-			{
-				new object[] { typeof(int), false, null },
-				new object[] { typeof(AbstractEnum), false, null },
-				new object[] { typeof(TestEnum), true, new Type[] { typeof(TestEnum), typeof(int) } },
-			};
+			new object[] { typeof(int), false },
+			new object[] { typeof(Animal), false },
+			new object[] { typeof(Reptile), true },
+			new object[] { typeof(Mammal), true },
+			new object[] { typeof(Color), true },
+			new object[] { typeof(MessageType), true },
+		};
 
 		[Test]
-		[TestCaseSource(nameof(IsEnumerationData))]
-		public void IsEnumerationReturnsExpected(Type type, bool expectedResult, Type[] _)
+		[TestCaseSource(nameof(IsEnumerationTestData))]
+		public void IsEnumerationReturnsExpected(Type type, bool expectedResult)
 		{
 			bool result = type.IsEnumeration();
-
 			result.Should().Be(expectedResult);
 		}
 	}

@@ -2,6 +2,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 {
 	using System;
 	using FluentAssertions;
+	using Fluxera.Enumeration.UnitTests.Enums;
 	using Newtonsoft.Json;
 	using NUnit.Framework;
 
@@ -10,16 +11,16 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 	{
 		public class TestClass
 		{
-			[JsonConverter(typeof(EnumerationValueConverter<TestEnum>))]
-			public TestEnum Enum { get; set; }
+			[JsonConverter(typeof(EnumerationValueConverter<Color>))]
+			public Color Color { get; set; }
 		}
 
 		private static readonly TestClass TestInstance = new TestClass
 		{
-			Enum = TestEnum.Instance,
+			Color = Color.Red,
 		};
 
-		private static readonly string JsonString = @"{""Enum"":1}";
+		private static readonly string JsonString = @"{""Color"":0}";
 
 		[Test]
 		public void DeserializesNullByDefault()
@@ -28,7 +29,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 
 			TestClass? obj = JsonConvert.DeserializeObject<TestClass>(json);
 
-			obj.Enum.Should().BeNull();
+			obj.Color.Should().BeNull();
 		}
 
 		[Test]
@@ -36,13 +37,13 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		{
 			TestClass? obj = JsonConvert.DeserializeObject<TestClass>(JsonString);
 
-			obj.Enum.Should().BeSameAs(TestEnum.Instance);
+			obj.Color.Should().BeSameAs(Color.Red);
 		}
 
 		[Test]
 		public void DeserializeThrowsWhenNotFound()
 		{
-			string json = @"{ ""Enum"": 999 }";
+			string json = @"{ ""Color"": 999 }";
 
 			Action act = () => JsonConvert.DeserializeObject<TestClass>(json);
 
@@ -53,7 +54,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		[Test]
 		public void DeserializeThrowsWhenNotValid()
 		{
-			string json = @"{ ""Enum"": -1 }";
+			string json = @"{ ""Color"": -1 }";
 
 			Action act = () => JsonConvert.DeserializeObject<TestClass>(json);
 
@@ -64,11 +65,11 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		[Test]
 		public void DeserializeWhenNull()
 		{
-			string json = @"{ ""Enum"": null }";
+			string json = @"{ ""Color"": null }";
 
 			TestClass? obj = JsonConvert.DeserializeObject<TestClass>(json);
 
-			obj.Enum.Should().BeNull();
+			obj.Color.Should().BeNull();
 		}
 
 		[Test]

@@ -4,6 +4,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 	using System.Text.Json;
 	using System.Text.Json.Serialization;
 	using FluentAssertions;
+	using Fluxera.Enumeration.UnitTests.Enums;
 	using NUnit.Framework;
 
 	[TestFixture]
@@ -11,23 +12,23 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 	{
 		public class TestClass
 		{
-			[JsonConverter(typeof(EnumerationNameConverter<TestEnum>))]
-			public TestEnum Enum { get; set; }
+			[JsonConverter(typeof(EnumerationNameConverter<Color>))]
+			public Color Color { get; set; }
 		}
 
 		private static readonly TestClass TestInstance = new TestClass
 		{
-			Enum = TestEnum.Instance,
+			Color = Color.Red,
 		};
 
-		private static readonly string JsonString = @"{""Enum"":""Instance""}";
+		private static readonly string JsonString = @"{""Color"":""Red""}";
 
 		[Test]
 		public void DeserializesNames()
 		{
 			TestClass? obj = JsonSerializer.Deserialize<TestClass>(JsonString);
 
-			obj.Enum.Should().BeSameAs(TestEnum.Instance);
+			obj.Color.Should().BeSameAs(Color.Red);
 		}
 
 		[Test]
@@ -37,13 +38,13 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 
 			TestClass? obj = JsonSerializer.Deserialize<TestClass>(json);
 
-			obj.Enum.Should().BeNull();
+			obj.Color.Should().BeNull();
 		}
 
 		[Test]
 		public void DeserializeThrowsWhenNotFound()
 		{
-			string json = @"{ ""Enum"": ""Not Found"" }";
+			string json = @"{ ""Color"": ""Not Found"" }";
 
 			Action act = () => JsonSerializer.Deserialize<TestClass>(json);
 
@@ -54,11 +55,11 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		[Test]
 		public void DeserializeWhenNull()
 		{
-			string json = @"{ ""Enum"": null }";
+			string json = @"{ ""Color"": null }";
 
 			TestClass? obj = JsonSerializer.Deserialize<TestClass>(json);
 
-			obj.Enum.Should().BeNull();
+			obj.Color.Should().BeNull();
 		}
 
 		[Test]

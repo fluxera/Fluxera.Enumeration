@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Fluxera.Common.Enumeration.MongoDB\Fluxera.Enumeration.MongoDB.csproj" />
+    <ProjectReference Include="..\Fluxera.Enumeration.UnitTests.Enums\Fluxera.Enumeration.UnitTests.Enums.csproj" />
   </ItemGroup>
 
 </Project>

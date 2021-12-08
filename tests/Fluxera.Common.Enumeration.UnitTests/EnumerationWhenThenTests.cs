@@ -1,139 +1,164 @@
 namespace Fluxera.Enumeration.UnitTests
 {
 	using System.Collections.Generic;
+	using Enums;
 	using FluentAssertions;
 	using NUnit.Framework;
 
 	[TestFixture]
 	public class EnumerationWhenThenTests
 	{
-		public static IEnumerable<TestEnum> NameData =>
-			new List<TestEnum>
-			{
-				TestEnum.One,
-				TestEnum.Two,
-				TestEnum.Three,
-			};
-
 		[Test]
-		public void DefaultConditionDoesNotRunWhenConditionMet()
+		public void ShouldExecuteDefaultActionWhenNoConditionMet()
 		{
-			TestEnum one = TestEnum.One;
+			Color enumeration = Color.Blue;
 
-			bool firstActionRun = false;
-			bool defaultActionRun = false;
+			bool firstActionExecuted = false;
+			bool secondActionExecuted = false;
+			bool defaultActionExecuted = false;
 
-			one
-				.When(TestEnum.One).Then(() => firstActionRun = true)
-				.Default(() => defaultActionRun = true);
+			enumeration
+				.When(Color.Red).Then(() => firstActionExecuted = true)
+				.When(Color.Green).Then(() => secondActionExecuted = true)
+				.Default(() => defaultActionExecuted = true);
 
-			firstActionRun.Should().BeTrue();
-			defaultActionRun.Should().BeFalse();
+			firstActionExecuted.Should().BeFalse();
+			secondActionExecuted.Should().BeFalse();
+			defaultActionExecuted.Should().BeTrue();
 		}
 
 		[Test]
-		public void DefaultConditionRunsWhenNoConditionMet()
+		public void ShouldExecuteDefaultActionWhenNoConditionMet_ParameterAction()
 		{
-			TestEnum three = TestEnum.Three;
+			Color enumeration = Color.Blue;
 
-			bool firstActionRun = false;
-			bool secondActionRun = false;
-			bool defaultActionRun = false;
+			bool whenActionExecuted = false;
+			bool defaultActionExecuted = false;
 
-			three
-				.When(TestEnum.One).Then(() => firstActionRun = true)
-				.When(TestEnum.Two).Then(() => secondActionRun = true)
-				.Default(() => defaultActionRun = true);
+			enumeration
+				.When(Color.Red).Then(e => whenActionExecuted = true)
+				.Default(e => defaultActionExecuted = true);
 
-			firstActionRun.Should().BeFalse();
-			secondActionRun.Should().BeFalse();
-			defaultActionRun.Should().BeTrue();
+			whenActionExecuted.Should().BeFalse();
+			defaultActionExecuted.Should().BeTrue();
 		}
 
 		[Test]
-		public void WhenFirstConditionMetFirstActionRuns()
+		public void ShouldExecutedFirstActionWhenFirstConditionMet()
 		{
-			TestEnum one = TestEnum.One;
+			Color enumeration = Color.Red;
 
-			bool firstActionRun = false;
-			bool secondActionRun = false;
+			bool firstActionExecuted = false;
+			bool secondActionExecuted = false;
 
-			one
-				.When(TestEnum.One).Then(() => firstActionRun = true)
-				.When(TestEnum.Two).Then(() => secondActionRun = true);
+			enumeration
+				.When(Color.Red).Then(() => firstActionExecuted = true)
+				.When(Color.Green).Then(() => secondActionExecuted = true);
 
-			firstActionRun.Should().BeTrue();
-			secondActionRun.Should().BeFalse();
+			firstActionExecuted.Should().BeTrue();
+			secondActionExecuted.Should().BeFalse();
 		}
 
 		[Test]
-		public void WhenFirstConditionMetSubsequentActionsNotRun()
+		public void ShouldExecutedSecondActionWhenSecondConditionMet()
 		{
-			TestEnum one = TestEnum.One;
+			Color enumeration = Color.Green;
 
-			bool firstActionRun = false;
-			bool secondActionRun = false;
+			bool firstActionExecuted = false;
+			bool secondActionExecuted = false;
 
-			one
-				.When(TestEnum.One).Then(() => firstActionRun = true)
-				.When(TestEnum.One).Then(() => secondActionRun = true);
+			enumeration
+				.When(Color.Red).Then(() => firstActionExecuted = true)
+				.When(Color.Green).Then(() => secondActionExecuted = true);
 
-			firstActionRun.Should().BeTrue();
-			secondActionRun.Should().BeFalse();
+			firstActionExecuted.Should().BeFalse();
+			secondActionExecuted.Should().BeTrue();
 		}
 
 		[Test]
-		public void WhenMatchesLastListActionRuns()
+		public void ShouldExecuteFirstActionWhenConditionMet_ParameterAction()
 		{
-			TestEnum three = TestEnum.Three;
+			Color enumeration = Color.Red;
 
-			bool firstActionRun = false;
-			bool secondActionRun = false;
-			bool thirdActionRun = false;
+			bool whenActionExecuted = false;
+			bool defaultActionExecuted = false;
 
-			three
-				.When(TestEnum.One).Then(() => firstActionRun = true)
-				.When(TestEnum.Two).Then(() => secondActionRun = true)
-				.WhenAny(new List<TestEnum> { TestEnum.One, TestEnum.Two, TestEnum.Three }).Then(() => thirdActionRun = true);
+			enumeration
+				.When(Color.Red).Then(e => whenActionExecuted = true)
+				.Default(e => defaultActionExecuted = true);
 
-			firstActionRun.Should().BeFalse();
-			secondActionRun.Should().BeFalse();
-			thirdActionRun.Should().BeTrue();
+			whenActionExecuted.Should().BeTrue();
+			defaultActionExecuted.Should().BeFalse();
 		}
 
 		[Test]
-		public void WhenMatchesLastParameterActionRuns()
+		public void ShouldExecuteLastActionWhenMatchesLastList()
 		{
-			TestEnum three = TestEnum.Three;
+			Color enumeration = Color.Blue;
 
-			bool firstActionRun = false;
-			bool secondActionRun = false;
-			bool thirdActionRun = false;
+			bool firstActionExecuted = false;
+			bool secondActionExecuted = false;
+			bool thirdActionExecuted = false;
 
-			three
-				.When(TestEnum.One).Then(() => firstActionRun = true)
-				.When(TestEnum.Two).Then(() => secondActionRun = true)
-				.WhenAny(TestEnum.One, TestEnum.Two, TestEnum.Three).Then(() => thirdActionRun = true);
+			enumeration
+				.When(Color.Red).Then(() => firstActionExecuted = true)
+				.When(Color.Green).Then(() => secondActionExecuted = true)
+				.WhenAny(new List<Color> { Color.Red, Color.Green, Color.Blue }).Then(() => thirdActionExecuted = true);
 
-			firstActionRun.Should().BeFalse();
-			secondActionRun.Should().BeFalse();
-			thirdActionRun.Should().BeTrue();
+			firstActionExecuted.Should().BeFalse();
+			secondActionExecuted.Should().BeFalse();
+			thirdActionExecuted.Should().BeTrue();
 		}
 
 		[Test]
-		public void WhenSecondConditionMetSecondActionRuns()
+		public void ShouldExecuteLastActionWhenMatchesLastParams()
 		{
-			TestEnum two = TestEnum.Two;
+			Color enumeration = Color.Blue;
 
-			bool firstActionRun = false;
-			bool secondActionRun = false;
+			bool firstActionExecuted = false;
+			bool secondActionExecuted = false;
+			bool thirdActionExecuted = false;
 
-			two
-				.When(TestEnum.One).Then(() => firstActionRun = true)
-				.When(TestEnum.Two).Then(() => secondActionRun = true);
+			enumeration
+				.When(Color.Red).Then(() => firstActionExecuted = true)
+				.When(Color.Green).Then(() => secondActionExecuted = true)
+				.WhenAny(Color.Red, Color.Green, Color.Blue).Then(() => thirdActionExecuted = true);
 
-			firstActionRun.Should().BeFalse();
-			secondActionRun.Should().BeTrue();
+			firstActionExecuted.Should().BeFalse();
+			secondActionExecuted.Should().BeFalse();
+			thirdActionExecuted.Should().BeTrue();
+		}
+
+		[Test]
+		public void ShouldNotExecuteDefaultActionWhenConditionMet()
+		{
+			Color enumeration = Color.Red;
+
+			bool whenActionExecuted = false;
+			bool defaultActionExecuted = false;
+
+			enumeration
+				.When(Color.Red).Then(() => whenActionExecuted = true)
+				.Default(() => defaultActionExecuted = true);
+
+			whenActionExecuted.Should().BeTrue();
+			defaultActionExecuted.Should().BeFalse();
+		}
+
+		[Test]
+		public void ShouldNotExecuteSubsequentActionsWhenFirstConditionMet()
+		{
+			Color enumeration = Color.Red;
+
+			bool firstActionExecuted = false;
+			bool secondActionExecuted = false;
+
+			enumeration
+				.When(Color.Red).Then(() => firstActionExecuted = true)
+				.When(Color.Green).Then(() => secondActionExecuted = true);
+
+			firstActionExecuted.Should().BeTrue();
+			secondActionExecuted.Should().BeFalse();
 		}
 	}
 }

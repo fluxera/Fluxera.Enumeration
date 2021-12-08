@@ -1,6 +1,7 @@
 namespace Fluxera.Enumeration.JsonNet.UnitTests
 {
 	using FluentAssertions;
+	using Fluxera.Enumeration.UnitTests.Enums;
 	using Newtonsoft.Json;
 	using NUnit.Framework;
 
@@ -9,15 +10,15 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 	{
 		public class TestClass
 		{
-			public TestEnum Enum { get; set; }
+			public Color Color { get; set; }
 		}
 
 		private static readonly TestClass TestInstance = new TestClass
 		{
-			Enum = TestEnum.Instance,
+			Color = Color.Red,
 		};
 
-		private static readonly string JsonString = @"{""Enum"":""Instance""}";
+		private static readonly string JsonString = @"{""Color"":""Red""}";
 
 		static EnumerationRegistrationGlobalNameConverterTests()
 		{
@@ -32,7 +33,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		{
 			TestClass? obj = JsonConvert.DeserializeObject<TestClass>(JsonString);
 
-			obj.Enum.Should().BeSameAs(TestEnum.Instance);
+			obj.Color.Should().BeSameAs(Color.Red);
 		}
 
 		[Test]
