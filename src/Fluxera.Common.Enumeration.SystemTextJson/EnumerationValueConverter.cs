@@ -1,0 +1,45 @@
+namespace Fluxera.Enumeration.SystemTextJson
+{
+	using System;
+	using System.Text.Json;
+	using System.Text.Json.Serialization;
+	using JetBrains.Annotations;
+
+	[PublicAPI]
+	public class EnumerationValueConverter<TEnum> : JsonConverter<TEnum>
+		where TEnum : Enumeration<TEnum>
+	{
+		public override void Write(Utf8JsonWriter writer, TEnum? value, JsonSerializerOptions options)
+		{
+			if(value is null)
+			{
+				writer.WriteNullValue();
+			}
+			else
+			{
+				writer.WriteNumberValue(value.Value);
+			}
+		}
+
+		public override TEnum? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+		{
+			if(reader.TokenType == JsonTokenType.Null)
+			{
+				return null;
+			}
+
+			if(reader.TokenType == JsonTokenType.Number)
+			{
+				int value = reader.GetInt32();
+				if(!Enumeration<TEnum>.TryParseValue(value, out TEnum? result))
+				{
+					throw new JsonException($"Error converting value '{value}' to enumeration '{typeToConvert.Name}'.");
+				}
+
+				return result;
+			}
+
+			throw new JsonException($"Unexpected token {reader.TokenType} when parsing an enumeration.");
+		}
+	}
+}
