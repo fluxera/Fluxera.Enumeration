@@ -116,6 +116,104 @@ public void PrintColorInfo(Color color)
 }
 ```
 
+## Serialization Support
+
+At the moment serialization support is available for:
+
+- [Entity Framework Core](https://github.com/dotnet/efcore)
+- [Newtonsoft.Json (JSON.NET)](https://github.com/JamesNK/Newtonsoft.Json)
+- [LiteDB](https://github.com/mbdavid/LiteDB)
+- [MongoDB](https://github.com/mongodb/mongo-csharp-driver)
+- [System.Text.Json](https://github.com/dotnet/corefx/tree/master/src/System.Text.Json)
+
+### Entity Framework Core
+
+To support ```Enumeration<TEnum>``` in EFCore use **one** of the available extension methods on the ```ModelBuilder```.
+
+```c#
+// Store the name in the database.
+modelBuilder.ApplyEnumerationNameConversions();
+
+// Store the value in the database.
+modelBuilder.ApplyEnumerationValueConversions();
+```
+
+### Newtonsoft.Json (JSON.NET)
+
+To support ```Enumeration<TEnum>``` in JSON.NET use **one** of the available extensions methods on the ```JsonSerializerSettings```.
+
+```c#
+JsonSerializerSettings settings = new JsonSerializerSettings();
+
+// Use the name to serialize all enumerations.
+settings.UseEnumerationNameConverter();
+
+// Use the value to serialize all enumerations.
+settings.UseEnumerationValueConverter();
+
+// Use the name to serialize just the Color enumeration.
+settings.UseEnumerationNameConverter<Color>();
+
+// Use the value to serialize just the Color enumeration.
+settings.UseEnumerationValueConverter<Color>();
+
+JsonConvert.DefaultSettings = () => settings;
+```
+
+### LiteDB
+
+To support ```Enumeration<TEnum>``` in LiteDB use **one** of the available extensions methods on the ```BsonMapper```.
+
+```c#
+// Store the name in the database for all enumerations available in the given assembly.
+BsonMapper.Global.UseEnumerationName(Assembly.GetExecutingAssembly());
+
+// Store the value in the database for all enumerations available in the given assembly.
+BsonMapper.Global.UseEnumerationValue(Assembly.GetExecutingAssembly());
+
+// Store the name in the database just for the Color enumeration.
+BsonMapper.Global.UseEnumerationName<Color>();
+
+// Store the value in the database just for the Color enumeration.
+BsonMapper.Global.UseEnumerationName<Color>();
+```
+
+### MongoDB
+
+To support ```Enumeration<TEnum>``` in MongoDB use **one** of the available extensions methods on the ```ConventionPack```.
+
+```c#
+ConventionPack pack = new ConventionPack();
+
+// Store the name in the database.
+pack.AddEnumerationNameConvention();
+
+// Store the value in the database.
+pack.AddEnumerationValueConvention();
+
+ConventionRegistry.Register("ConventionPack", pack, t => true);
+```
+
+### System.Text.Json
+
+To support ```Enumeration<TEnum>``` in System.Text.Json use **one** of the available extensions methods on the ```JsonSerializerOptions```.
+
+```c#
+JsonSerializerOptions options = new JsonSerializerOptions();
+
+// Use the name to serialize all enumerations.
+options.UseEnumerationNameConverter();
+
+// Use the value to serialize all enumerations.
+options.UseEnumerationValueConverter();
+
+// Use the name to serialize just the Color enumeration.
+settings.UseEnumerationNameConverter<Color>();
+
+// Use the value to serialize just the Color enumeration.
+settings.UseEnumerationValueConverter<Color>();
+```
+
 ## Future
 
 We plan to implement support for OData server- and client-side to enable queries on ```Enumeration``` like is was an simple C# ```enum```. 
