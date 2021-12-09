@@ -29,7 +29,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		}
 
 		[Test]
-		public void DeserializesValues()
+		public void ShouldDeserializeFromValue()
 		{
 			TestClass? obj = JsonSerializer.Deserialize<TestClass>(JsonString, options);
 
@@ -37,7 +37,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		}
 
 		[Test]
-		public void SerializesValues()
+		public void ShouldSerializeForValue()
 		{
 			string json = JsonSerializer.Serialize(TestInstance, options);
 

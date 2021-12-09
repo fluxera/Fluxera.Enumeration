@@ -9,11 +9,11 @@
 	using Microsoft.EntityFrameworkCore.Metadata.Builders;
 	using Microsoft.Extensions.Logging;
 
-	public class TestingContext : DbContext
+	public class TestDbContext : DbContext
 	{
 		private readonly bool useValueConverter;
 
-		public TestingContext(bool useValueConverter)
+		public TestDbContext(bool useValueConverter)
 		{
 			this.useValueConverter = useValueConverter;
 		}
@@ -22,7 +22,7 @@
 
 		public ILoggerFactory LoggerFactory { get; set; }
 
-		public DbSet<PersonEntity> People { get; set; }
+		public DbSet<Person> People { get; set; }
 
 		public IEnumerable<object> SeedData { get; set; }
 

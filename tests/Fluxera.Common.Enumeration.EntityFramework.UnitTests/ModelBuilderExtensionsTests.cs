@@ -9,11 +9,11 @@
 	public class ModelBuilderExtensionsTests
 	{
 		[Test]
-		public void ApplyTheValueConversions()
+		public void ShouldApplyTheValueConversions()
 		{
 			int seedCount = 1;
-			using TestingContext context = DbContextFactory.Generate(seedCount);
-			List<PersonEntity> people = context.Set<PersonEntity>().ToList();
+			using TestDbContext context = DbContextFactory.Generate(seedCount);
+			List<Person> people = context.Set<Person>().ToList();
 
 			people.Should().BeEquivalentTo(context.SeedData);
 		}

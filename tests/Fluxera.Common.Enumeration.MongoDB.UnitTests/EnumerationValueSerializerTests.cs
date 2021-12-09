@@ -31,7 +31,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		}
 
 		[Test]
-		public void DeserializesNames()
+		public void ShouldDeserializeFromValue()
 		{
 			TestClass? obj = BsonSerializer.Deserialize<TestClass>(JsonString);
 
@@ -39,7 +39,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		}
 
 		[Test]
-		public void DeserializesNullByDefault()
+		public void ShouldDeserializeNullProperty()
 		{
 			string json = "{}";
 
@@ -49,7 +49,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		}
 
 		[Test]
-		public void DeserializeThrowsWhenNotFound()
+		public void ShouldThrowWhenNotFound()
 		{
 			string json = @"{ ""Color"": 999 }";
 
@@ -63,7 +63,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		}
 
 		[Test]
-		public void DeserializeThrowsWhenNotValid()
+		public void ShouldThrowWhenNotInvalid()
 		{
 			string json = @"{ ""Color"": -1 }";
 
@@ -77,7 +77,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		}
 
 		[Test]
-		public void DeserializeWhenNull()
+		public void ShouldDeserializeNullValue()
 		{
 			string json = @"{ ""Color"": null }";
 
@@ -87,7 +87,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		}
 
 		[Test]
-		public void SerializesNames()
+		public void ShouldSerializeForValue()
 		{
 			string json = TestInstance.ToJson();
 

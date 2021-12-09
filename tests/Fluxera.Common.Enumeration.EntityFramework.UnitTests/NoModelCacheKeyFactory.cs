@@ -5,7 +5,7 @@
 	using Microsoft.EntityFrameworkCore.Infrastructure;
 
 	/// <summary>
-	///     Creates a unique cache key every time to ensure no caching happens.
+	///     Creates a unique cache key every time to prevent caching.
 	/// </summary>
 	public class NoModelCacheKeyFactory : IModelCacheKeyFactory
 	{

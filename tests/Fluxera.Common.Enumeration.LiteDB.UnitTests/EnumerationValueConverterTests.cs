@@ -27,7 +27,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		}
 
 		[Test]
-		public void DeserializesNames()
+		public void ShouldDeserializeFromValue()
 		{
 			BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(JsonString);
 			TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
@@ -36,7 +36,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		}
 
 		[Test]
-		public void DeserializesNullByDefault()
+		public void ShouldDeserializeNullProperty()
 		{
 			string json = "{}";
 
@@ -47,7 +47,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		}
 
 		[Test]
-		public void DeserializeThrowsWhenNotFound()
+		public void ShouldThrowWhenNotFound()
 		{
 			string json = @"{ ""Color"": 999 }";
 
@@ -62,7 +62,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		}
 
 		[Test]
-		public void DeserializeThrowsWhenNotValid()
+		public void ShouldThrowWhenNotInvalid()
 		{
 			string json = @"{ ""Color"": -1 }";
 
@@ -77,7 +77,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		}
 
 		[Test]
-		public void DeserializeWhenNull()
+		public void ShouldDeserializeNullValue()
 		{
 			string json = @"{ ""Color"": null }";
 
@@ -88,7 +88,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		}
 
 		[Test]
-		public void SerializesNames()
+		public void ShouldSerializeForValue()
 		{
 			BsonDocument? doc = BsonMapper.Global.ToDocument(TestInstance);
 			string json = JsonSerializer.Serialize(doc);

@@ -23,7 +23,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		private static readonly string JsonString = @"{""Color"":""Red""}";
 
 		[Test]
-		public void DeserializesNames()
+		public void ShouldDeserializeFromName()
 		{
 			TestClass? obj = JsonConvert.DeserializeObject<TestClass>(JsonString);
 
@@ -31,7 +31,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		}
 
 		[Test]
-		public void DeserializesNullByDefault()
+		public void ShouldDeserializeNullProperty()
 		{
 			string json = @"{}";
 
@@ -41,7 +41,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		}
 
 		[Test]
-		public void DeserializeThrowsWhenNotFound()
+		public void ShouldThrowWhenNotFound()
 		{
 			string json = @"{ ""Color"": ""Not Found"" }";
 
@@ -52,7 +52,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		}
 
 		[Test]
-		public void DeserializeWhenNull()
+		public void ShouldDeserializeNullValue()
 		{
 			string json = @"{ ""Color"": null }";
 
@@ -62,7 +62,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		}
 
 		[Test]
-		public void SerializesNames()
+		public void ShouldSerializeForName()
 		{
 			string json = JsonConvert.SerializeObject(TestInstance, Formatting.None);
 

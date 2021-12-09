@@ -5,11 +5,11 @@
 	using System.Linq;
 	using Bogus;
 
-	public static class PersonEntityFactory
+	public static class PersonFactory
 	{
-		public static IList<PersonEntity> Generate(int count)
+		public static IList<Person> Generate(int count)
 		{
-			return new Faker<PersonEntity>()
+			return new Faker<Person>()
 				.RuleFor(e => e.Name, (f, e) => f.Person.FullName)
 				.RuleFor(e => e.Id, (f, e) => f.Random.Guid().ToString())
 				.RuleFor(e => e.Status, (f, e) => f.PickRandomParam(GetAll()))

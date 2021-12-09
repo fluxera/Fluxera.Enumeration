@@ -29,7 +29,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		}
 
 		[Test]
-		public void DeserializesNames()
+		public void ShouldDeserializeFromName()
 		{
 			TestClass? obj = JsonConvert.DeserializeObject<TestClass>(JsonString);
 
@@ -37,7 +37,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		}
 
 		[Test]
-		public void SerializesNames()
+		public void ShouldSerializeForName()
 		{
 			string json = JsonConvert.SerializeObject(TestInstance, Formatting.None);
 
