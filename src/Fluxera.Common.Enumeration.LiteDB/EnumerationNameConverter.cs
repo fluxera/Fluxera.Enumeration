@@ -7,11 +7,14 @@
 	[PublicAPI]
 	public static class EnumerationNameConverter
 	{
-		public static readonly Func<object, BsonValue?> Serialize = obj =>
+		public static Func<object, BsonValue?> Serialize(Type enumerationType)
 		{
-			IEnumeration? enumeration = obj as IEnumeration;
-			return enumeration?.Name;
-		};
+			return obj =>
+			{
+				IEnumeration? enumeration = obj as IEnumeration;
+				return enumeration?.Name;
+			};
+		}
 
 		public static Func<BsonValue, object?> Deserialize(Type enumerationType)
 		{

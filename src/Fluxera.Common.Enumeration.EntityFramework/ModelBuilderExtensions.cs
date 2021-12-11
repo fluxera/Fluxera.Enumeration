@@ -14,12 +14,12 @@
 	public static class ModelBuilderExtensions
 	{
 		/// <summary>
-		///     Applies the value conversions for all <see cref="Enumeration{TEnum}" /> based properties
+		///     Applies the value conversions for all <see cref="Enumeration{TEnum, TValue}" /> based properties
 		///     for all entities present on the given <see cref="ModelBuilder" />.
 		/// </summary>
 		/// <param name="modelBuilder">The <see cref="ModelBuilder" /> for which to apply the value conversions.</param>
 		/// <returns>The <see cref="ModelBuilder" /> passed in.</returns>
-		public static void ApplyEnumerationNameConversions(this ModelBuilder modelBuilder)
+		public static void UseEnumerationNameConverter(this ModelBuilder modelBuilder)
 		{
 			Guard.Against.Null(modelBuilder, nameof(modelBuilder));
 
@@ -33,8 +33,9 @@
 				foreach(PropertyInfo property in properties)
 				{
 					Type enumerationType = property.PropertyType;
-					Type converterTypeTemplate = typeof(EnumerationNameConverter<>);
-					Type converterType = converterTypeTemplate.MakeGenericType(enumerationType);
+					Type valueType = enumerationType.GetValueType();
+					Type converterTypeTemplate = typeof(EnumerationNameConverter<,>);
+					Type converterType = converterTypeTemplate.MakeGenericType(enumerationType, valueType);
 
 					ValueConverter? converter = (ValueConverter?)Activator.CreateInstance(converterType);
 
@@ -47,12 +48,12 @@
 		}
 
 		/// <summary>
-		///     Applies the value conversions for all <see cref="Enumeration{TEnum}" /> based properties
+		///     Applies the value conversions for all <see cref="Enumeration{TEnum, TValue}" /> based properties
 		///     for all entities present on the given <see cref="ModelBuilder" />.
 		/// </summary>
 		/// <param name="modelBuilder">The <see cref="ModelBuilder" /> for which to apply the value conversions.</param>
 		/// <returns>The <see cref="ModelBuilder" /> passed in.</returns>
-		public static void ApplyEnumerationValueConversions(this ModelBuilder modelBuilder)
+		public static void UseEnumerationValueConverter(this ModelBuilder modelBuilder)
 		{
 			Guard.Against.Null(modelBuilder, nameof(modelBuilder));
 
@@ -66,8 +67,9 @@
 				foreach(PropertyInfo property in properties)
 				{
 					Type enumerationType = property.PropertyType;
-					Type converterTypeTemplate = typeof(EnumerationValueConverter<>);
-					Type converterType = converterTypeTemplate.MakeGenericType(enumerationType);
+					Type valueType = enumerationType.GetValueType();
+					Type converterTypeTemplate = typeof(EnumerationValueConverter<,>);
+					Type converterType = converterTypeTemplate.MakeGenericType(enumerationType, valueType);
 
 					ValueConverter? converter = (ValueConverter?)Activator.CreateInstance(converterType);
 

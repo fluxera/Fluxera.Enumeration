@@ -8,8 +8,8 @@
 	[PublicAPI]
 	public class EnumerationContractResolver : DefaultContractResolver
 	{
-		private static readonly Type nameConverterType = typeof(EnumerationNameConverter<>);
-		private static readonly Type valueConverterType = typeof(EnumerationValueConverter<>);
+		private static readonly Type nameConverterType = typeof(EnumerationNameConverter<,>);
+		private static readonly Type valueConverterType = typeof(EnumerationValueConverter<,>);
 		private readonly bool useValueConverter;
 
 		public EnumerationContractResolver(bool useValueConverter = false)
@@ -22,8 +22,9 @@
 		{
 			if(objectType.IsEnumeration())
 			{
+				Type valueType = objectType.GetValueType();
 				Type converterTypeTemplate = this.useValueConverter ? valueConverterType : nameConverterType;
-				Type converterType = converterTypeTemplate.MakeGenericType(objectType);
+				Type converterType = converterTypeTemplate.MakeGenericType(objectType, valueType);
 
 				return (JsonConverter)Activator.CreateInstance(converterType);
 			}

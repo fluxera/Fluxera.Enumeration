@@ -12,7 +12,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 	{
 		public class TestClass
 		{
-			[JsonConverter(typeof(EnumerationNameConverter<Color>))]
+			[JsonConverter(typeof(EnumerationNameConverter<Color, int>))]
 			public Color Color { get; set; }
 		}
 

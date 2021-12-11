@@ -2,7 +2,7 @@
 {
 	using System.Runtime.CompilerServices;
 
-	public sealed class Color : Enumeration<Color>
+	public sealed class Color : Enumeration<Color, int>
 	{
 		public static readonly Color Red = new Color(0, "FF0000");
 		public static readonly Color Green = new Color(1, "00FF00");

@@ -12,24 +12,6 @@
 
 	/// <summary>
 	///     A base class for implementing object-oriented enumerations.
-	///		This enumeration uses <see cref="int"/> as value type.
-	/// </summary>
-	/// <typeparam name="TEnum">The type of the enumeration.</typeparam>
-	[PublicAPI]
-	[Serializable]
-	[DebuggerDisplay("{Name}")]
-	public abstract class Enumeration<TEnum> : Enumeration<TEnum, int>
-		where TEnum : Enumeration<TEnum>
-	{
-		protected Enumeration(int value, string name) 
-			: base(value, name)
-		{
-			Guard.Against.Negative(value, nameof(value));
-		}
-	}
-
-	/// <summary>
-	///     A base class for implementing object-oriented enumerations.
 	/// </summary>
 	/// <typeparam name="TEnum">The type of the enumeration.</typeparam>
 	/// <typeparam name="TValue">The type of the value.</typeparam>
@@ -38,7 +20,7 @@
 	[DebuggerDisplay("{Name}")]
 	public abstract class Enumeration<TEnum, TValue> : IEnumeration, IComparable<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : struct, IComparable, IComparable<TValue>
+		where TValue : IComparable, IComparable<TValue>
 	{
 		private static Lazy<TEnum[]> enumOptions = new Lazy<TEnum[]>(GetAllOptions, LazyThreadSafetyMode.ExecutionAndPublication);
 		private static Lazy<IDictionary<TValue, TEnum>> parseValue = new Lazy<IDictionary<TValue, TEnum>>(GetParseValueDict);
@@ -48,6 +30,7 @@
 		protected Enumeration(TValue value, string name)
 		{
 			Guard.Against.NullOrWhiteSpace(name, nameof(name));
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 
 			this.Value = value;
 			this.Name = name;
@@ -136,6 +119,7 @@
 		/// </returns>
 		public static TEnum ParseValue(TValue value, TEnum defaultValue)
 		{
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 			Guard.Against.Null(defaultValue, nameof(defaultValue));
 
 			if(!parseValue.Value.TryGetValue(value, out TEnum? result))
@@ -157,6 +141,7 @@
 		/// <returns><c>true</c> if the name is found, <c>false</c> otherwise.</returns>
 		public static bool TryParseValue(TValue value, out TEnum? result)
 		{
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 			return parseValue.Value.TryGetValue(value, out result);
 		}
 
@@ -303,8 +288,13 @@
 			return ParseValue(value);
 		}
 
-		public static explicit operator Enumeration<TEnum, TValue>(string name)
+		public static explicit operator Enumeration<TEnum, TValue>?(string? name)
 		{
+			if(name is null)
+			{
+				return null;
+			}
+
 			return ParseName(name);
 		}
 
@@ -396,6 +386,10 @@
 		/// <returns>The associated enum option.</returns>
 		public static IEnumeration ParseValue(Type enumerationType, object value)
 		{
+			Guard.Against.UnsupportedValueType(value, nameof(value));
+
+			value = Convert.ChangeType(value, enumerationType.GetValueType());
+
 			IDictionary<object, IEnumeration> parseValue = GetParseValueDict(enumerationType);
 			if(!parseValue.TryGetValue(value, out IEnumeration? result))
 			{
@@ -417,7 +411,10 @@
 		/// </returns>
 		public static IEnumeration ParseValue(Type enumerationType, object value, IEnumeration defaultValue)
 		{
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 			Guard.Against.Null(defaultValue, nameof(defaultValue));
+
+			value = Convert.ChangeType(value, enumerationType.GetValueType());
 
 			IDictionary<object, IEnumeration> parseValue = GetParseValueDict(enumerationType);
 			if(!parseValue.TryGetValue(value, out IEnumeration? result))
@@ -440,6 +437,10 @@
 		/// <returns><c>true</c> if the name is found, <c>false</c> otherwise.</returns>
 		public static bool TryParseValue(Type enumerationType, object value, out IEnumeration? result)
 		{
+			Guard.Against.UnsupportedValueType(value, nameof(value));
+
+			value = Convert.ChangeType(value, enumerationType.GetValueType());
+
 			IDictionary<object, IEnumeration> parseValue = GetParseValueDict(enumerationType);
 			return parseValue.TryGetValue(value, out result);
 		}
@@ -545,7 +546,7 @@
 			// Populate the global from value dictionary.
 			if(!globalParseValue.ContainsKey(enumerationType))
 			{
-				globalParseValue.Add(enumerationType, enumOptions.ToDictionary(item => (object)item.Value));
+				globalParseValue.Add(enumerationType, enumOptions.ToDictionary(item => item.Value));
 			}
 
 			IDictionary<object, IEnumeration> parseValueDict = globalParseValue[enumerationType];

@@ -1,6 +1,6 @@
 ﻿namespace Fluxera.Enumeration.EntityFramework.UnitTests
 {
-	public class Status : Enumeration<Status>
+	public class Status : Enumeration<Status, int>
 	{
 		public static readonly Status Active = new Status(1, nameof(Active));
 		public static readonly Status Deleted = new Status(2, nameof(Deleted));

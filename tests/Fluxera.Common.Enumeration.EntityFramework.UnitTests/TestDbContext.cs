@@ -69,11 +69,11 @@
 
 			if(this.useValueConverter)
 			{
-				modelBuilder.ApplyEnumerationValueConversions();
+				modelBuilder.UseEnumerationValueConverter();
 			}
 			else
 			{
-				modelBuilder.ApplyEnumerationNameConversions();
+				modelBuilder.UseEnumerationNameConverter();
 			}
 
 

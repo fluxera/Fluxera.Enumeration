@@ -1,6 +1,7 @@
 namespace Fluxera.Enumeration.LiteDB.UnitTests
 {
 	using System;
+	using System.Reflection;
 	using FluentAssertions;
 	using Fluxera.Enumeration.UnitTests.Enums;
 	using global::LiteDB;
@@ -23,7 +24,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 
 		static EnumerationValueConverterTests()
 		{
-			BsonMapper.Global.UseEnumerationValue<Color>();
+			BsonMapper.Global.UseEnumerationValueConverter(Assembly.GetAssembly(typeof(Color)));
 		}
 
 		[Test]

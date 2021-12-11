@@ -5,8 +5,9 @@
 	using Newtonsoft.Json;
 
 	[PublicAPI]
-	public class EnumerationValueConverter<TEnum> : JsonConverter<TEnum>
-		where TEnum : Enumeration<TEnum>
+	public class EnumerationValueConverter<TEnum, TValue> : JsonConverter<TEnum>
+		where TEnum : Enumeration<TEnum, TValue>
+		where TValue : struct, IComparable, IComparable<TValue>
 	{
 		/// <inheritdoc />
 		public override bool CanWrite => true;
@@ -37,20 +38,8 @@
 
 			if(reader.TokenType == JsonToken.Integer)
 			{
-				int value = -1;
-				if(reader.Value != null)
-				{
-					if(reader.Value.GetType() != typeof(int))
-					{
-						value = (int)Convert.ChangeType(reader.Value, typeof(int));
-					}
-					else
-					{
-						value = (int)reader.Value;
-					}
-				}
-
-				if(!Enumeration<TEnum>.TryParseValue(value, out TEnum? result))
+				TValue value = (TValue)Convert.ChangeType(reader.Value, typeof(TValue));
+				if(!Enumeration<TEnum, TValue>.TryParseValue(value, out TEnum? result))
 				{
 					throw new JsonSerializationException($"Error converting value '{reader.Value ?? "null"}' to enumeration '{objectType.Name}'.");
 				}

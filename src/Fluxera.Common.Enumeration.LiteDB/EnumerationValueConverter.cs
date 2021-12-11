@@ -7,11 +7,14 @@
 	[PublicAPI]
 	public static class EnumerationValueConverter
 	{
-		public static readonly Func<object, BsonValue?> Serialize = obj =>
+		public static Func<object, BsonValue?> Serialize(Type enumerationType)
 		{
-			IEnumeration? enumeration = obj as IEnumeration;
-			return enumeration?.Value;
-		};
+			return obj =>
+			{
+				IEnumeration? enumeration = obj as IEnumeration;
+				return new BsonValue(enumeration?.Value);
+			};
+		}
 
 		public static Func<BsonValue, object?> Deserialize(Type enumerationType)
 		{
@@ -22,9 +25,10 @@
 					return null;
 				}
 
-				if(bson.IsNumber)
+				if(bson.IsNumber || bson.IsString || bson.IsBoolean || bson.IsDecimal)
 				{
-					int value = bson.AsInt32;
+					Type valueType = enumerationType.GetValueType();
+					object value = ReadValue(bson, valueType);
 
 					if(!Enumeration.TryParseValue(enumerationType, value, out IEnumeration? result))
 					{
@@ -36,6 +40,50 @@
 
 				throw new LiteException(0, $"Unexpected token {bson.Type} when parsing an enumeration.");
 			};
+		}
+
+		private static object ReadValue(BsonValue bsonValue, Type typeValue)
+		{
+			object value;
+
+			if(typeValue == typeof(byte))
+			{
+				value = bsonValue.AsInt32;
+			}
+			else if(typeValue == typeof(short))
+			{
+				value = bsonValue.AsInt32;
+			}
+			else if(typeValue == typeof(int))
+			{
+				value = bsonValue.AsInt32;
+			}
+			else if(typeValue == typeof(long))
+			{
+				value = bsonValue.AsInt64;
+			}
+			else if(typeValue == typeof(float))
+			{
+				value = bsonValue.AsDouble;
+			}
+			else if(typeValue == typeof(double))
+			{
+				value = bsonValue.AsDouble;
+			}
+			else if(typeValue == typeof(decimal))
+			{
+				value = bsonValue.AsDecimal;
+			}
+			else if(typeValue == typeof(string))
+			{
+				value = bsonValue.AsString;
+			}
+			else
+			{
+				throw new LiteException(0, $"The value type {typeValue.Name} is not supported.");
+			}
+
+			return value;
 		}
 	}
 }
