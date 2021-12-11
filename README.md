@@ -100,8 +100,7 @@ public sealed class Reptile : Animal
 }
 ```
 
-The default type for the valu is ```int```, but several other types can be used as the value:
-```byte```, ```short```,```int```,```long```,```decimal```,```float```,```double```,```string``` and ```Guid```.    
+The default type for the value is ```int```, but several other types can be used as the value: ```byte```, ```short```,```int```,```long```,```decimal```,```float```,```double```,```string``` and ```Guid```.    
 
 ```C#
 public class GuidEnum : Enumeration<GuidEnum, Guid>

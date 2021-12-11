@@ -117,6 +117,8 @@
 		/// <returns>The associated enum option.</returns>
 		public static TEnum ParseValue(TValue value)
 		{
+			Guard.Against.UnsupportedValueType(value, nameof(value));
+
 			if(!parseValue.Value.TryGetValue(value, out TEnum? result))
 			{
 				throw new InvalidEnumArgumentException($"No {typeof(TEnum).Name} with value '{value}' found.");
@@ -159,6 +161,7 @@
 		public static bool TryParseValue(TValue value, out TEnum? result)
 		{
 			Guard.Against.UnsupportedValueType(value, nameof(value));
+
 			return parseValue.Value.TryGetValue(value, out result);
 		}
 
