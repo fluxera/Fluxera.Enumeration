@@ -11,8 +11,45 @@
 		{
 			return obj =>
 			{
-				IEnumeration? enumeration = obj as IEnumeration;
-				return new BsonValue(enumeration?.Value);
+				if(obj is not IEnumeration enumeration)
+				{
+					return BsonValue.Null;
+				}
+
+				BsonValue bsonValue;
+
+				switch(enumeration)
+				{
+					case { Value: byte writeValue }:
+						bsonValue = new BsonValue(writeValue);
+						break;
+					case { Value: short writeValue }:
+						bsonValue = new BsonValue(writeValue);
+						break;
+					case { Value: int writeValue }:
+						bsonValue = new BsonValue(writeValue);
+						break;
+					case { Value: long writeValue }:
+						bsonValue = new BsonValue(writeValue);
+						break;
+					case { Value: decimal writeValue }:
+						bsonValue = new BsonValue(writeValue);
+						break;
+					case { Value: float writeValue }:
+						bsonValue = new BsonValue(writeValue);
+						break;
+					case { Value: double writeValue }:
+						bsonValue = new BsonValue(writeValue);
+						break;
+					case { Value: Guid writeValue }:
+						bsonValue = new BsonValue(writeValue);
+						break;
+					default:
+						bsonValue = new BsonValue(enumeration.Value.ToString());
+						break;
+				}
+
+				return bsonValue;
 			};
 		}
 
@@ -25,7 +62,7 @@
 					return null;
 				}
 
-				if(bson.IsNumber || bson.IsString || bson.IsBoolean || bson.IsDecimal)
+				if(bson.IsNumber || bson.IsString || bson.IsBoolean || bson.IsDecimal || bson.IsGuid)
 				{
 					Type valueType = enumerationType.GetValueType();
 					object value = ReadValue(bson, valueType);

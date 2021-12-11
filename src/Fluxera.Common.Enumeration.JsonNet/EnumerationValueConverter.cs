@@ -36,9 +36,19 @@
 				return null;
 			}
 
-			if(reader.TokenType is JsonToken.Integer or JsonToken.String)
+			if(reader.TokenType is JsonToken.Integer or JsonToken.String or JsonToken.Float)
 			{
-				TValue value = (TValue)Convert.ChangeType(reader.Value, typeof(TValue));
+				TValue value;
+
+				if(typeof(TValue) == typeof(Guid))
+				{
+					value = (TValue)(object)Guid.Parse((string)reader.Value);
+				}
+				else
+				{
+					value = (TValue)Convert.ChangeType(reader.Value, typeof(TValue));
+				}
+
 				if(!Enumeration<TEnum, TValue>.TryParseValue(value, out TEnum? result))
 				{
 					throw new JsonSerializationException($"Error converting value '{reader.Value ?? "null"}' to enumeration '{objectType.Name}'.");

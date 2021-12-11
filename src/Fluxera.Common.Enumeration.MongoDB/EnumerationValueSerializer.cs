@@ -59,7 +59,7 @@
 				return null!;
 			}
 
-			if(context.Reader.CurrentBsonType == BsonType.Int32)
+			if(context.Reader.CurrentBsonType is BsonType.Int32 or BsonType.Int64 or BsonType.Decimal128 or BsonType.Double or BsonType.String)
 			{
 				TValue value = ReadValue(context.Reader);
 				if(!Enumeration<TEnum, TValue>.TryParseValue(value, out TEnum? result))
@@ -79,11 +79,11 @@
 
 			if(typeof(TValue) == typeof(byte))
 			{
-				value = (TValue)(object)reader.ReadInt32();
+				value = (TValue)Convert.ChangeType(reader.ReadInt32(), typeof(byte));
 			}
 			else if(typeof(TValue) == typeof(short))
 			{
-				value = (TValue)(object)reader.ReadInt32();
+				value = (TValue)Convert.ChangeType(reader.ReadInt32(), typeof(short));
 			}
 			else if(typeof(TValue) == typeof(int))
 			{
@@ -95,7 +95,7 @@
 			}
 			else if(typeof(TValue) == typeof(float))
 			{
-				value = (TValue)(object)reader.ReadDouble();
+				value = (TValue)Convert.ChangeType(reader.ReadDouble(), typeof(float));
 			}
 			else if(typeof(TValue) == typeof(double))
 			{
@@ -103,7 +103,7 @@
 			}
 			else if(typeof(TValue) == typeof(decimal))
 			{
-				value = (TValue)(object)reader.ReadDecimal128();
+				value = (TValue)Convert.ChangeType(reader.ReadDecimal128(), typeof(decimal));
 			}
 			else if(typeof(TValue) == typeof(string))
 			{
