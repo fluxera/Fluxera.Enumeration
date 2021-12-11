@@ -36,7 +36,7 @@
 				return null;
 			}
 
-			if(reader.TokenType == JsonToken.Integer)
+			if(reader.TokenType is JsonToken.Integer or JsonToken.String)
 			{
 				TValue value = (TValue)Convert.ChangeType(reader.Value, typeof(TValue));
 				if(!Enumeration<TEnum, TValue>.TryParseValue(value, out TEnum? result))

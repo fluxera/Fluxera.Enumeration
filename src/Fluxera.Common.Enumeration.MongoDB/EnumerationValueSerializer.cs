@@ -109,6 +109,10 @@
 			{
 				value = (TValue)(object)reader.ReadString();
 			}
+			else if(typeof(TValue) == typeof(Guid))
+			{
+				value = (TValue)(object)Guid.Parse(reader.ReadString());
+			}
 			else
 			{
 				throw new FormatException($"The value type {typeof(TValue).Name} is not supported.");

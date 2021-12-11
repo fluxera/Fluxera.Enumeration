@@ -11,6 +11,23 @@
 	using JetBrains.Annotations;
 
 	/// <summary>
+	///     A base class for implementing object-oriented enumerations. This implementation supports <see cref="int"/> values.
+	/// </summary>
+	/// <typeparam name="TEnum">The type of the enumeration.</typeparam>
+	[PublicAPI]
+	[Serializable]
+	[DebuggerDisplay("{Name}")]
+	public abstract class Enumeration<TEnum> : Enumeration<TEnum, int>
+		where TEnum : Enumeration<TEnum, int>
+	{
+		/// <inheritdoc />
+		protected Enumeration(int value, string name) 
+			: base(value, name)
+		{
+		}
+	}
+
+	/// <summary>
 	///     A base class for implementing object-oriented enumerations.
 	/// </summary>
 	/// <typeparam name="TEnum">The type of the enumeration.</typeparam>

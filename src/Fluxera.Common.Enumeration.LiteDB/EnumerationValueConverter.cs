@@ -78,6 +78,10 @@
 			{
 				value = bsonValue.AsString;
 			}
+			else if(typeValue == typeof(Guid))
+			{
+				value = bsonValue.AsGuid;
+			}
 			else
 			{
 				throw new LiteException(0, $"The value type {typeValue.Name} is not supported.");

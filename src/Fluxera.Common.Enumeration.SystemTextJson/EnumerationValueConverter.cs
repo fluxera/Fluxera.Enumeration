@@ -104,6 +104,10 @@ namespace Fluxera.Enumeration.SystemTextJson
 			{
 				value = (TValue)(object)reader.GetString();
 			}
+			else if(typeof(TValue) == typeof(Guid))
+			{
+				value = (TValue)(object)reader.GetGuid();
+			}
 			else
 			{
 				throw new JsonException($"The value type {typeof(TValue).Name} is not supported.");

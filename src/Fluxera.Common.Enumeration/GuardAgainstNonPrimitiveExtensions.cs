@@ -31,9 +31,6 @@
 			   valueType != typeof(double) &&
 			   valueType != typeof(decimal) &&
 			   valueType != typeof(string) &&
-			   valueType != typeof(DateTime) &&
-			   valueType != typeof(DateTimeOffset) &&
-			   valueType != typeof(TimeSpan) &&
 			   valueType != typeof(Guid))
 			{
 				throw CreateArgumentException(parameterName, message ?? "Value cannot be an unsupported type.");

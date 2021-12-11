@@ -1,6 +1,6 @@
 ﻿namespace Fluxera.Enumeration.UnitTests.Enums
 {
-	public class MessageType : Enumeration<MessageType, int>
+	public class MessageType : Enumeration<MessageType>
 	{
 		public static readonly MessageType Email = new EmailType();
 		public static readonly MessageType Postal = new PostalType();
