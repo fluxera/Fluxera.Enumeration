@@ -23,7 +23,6 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 
 		private static readonly string JsonString = @"{""Color"":0}";
 
-		
 		[Test]
 		public void ShouldDeserializeFromValue()
 		{

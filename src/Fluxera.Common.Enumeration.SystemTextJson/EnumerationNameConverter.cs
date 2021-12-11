@@ -8,7 +8,7 @@ namespace Fluxera.Enumeration.SystemTextJson
 	[PublicAPI]
 	public class EnumerationNameConverter<TEnum, TValue> : JsonConverter<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : struct, IComparable, IComparable<TValue>
+		where TValue : IComparable, IComparable<TValue>
 	{
 		public override void Write(Utf8JsonWriter writer, TEnum? value, JsonSerializerOptions options)
 		{

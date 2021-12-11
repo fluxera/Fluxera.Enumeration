@@ -19,5 +19,18 @@
 		public StringEnum StringEnum { get; set; }
 
 		public GuidEnum GuidEnum { get; set; }
+
+		public static readonly ValueEnumsTestClass Instance = new ValueEnumsTestClass
+		{
+			ByteEnum = ByteEnum.One,
+			ShortEnum = ShortEnum.One,
+			IntEnum = IntEnum.One,
+			LongEnum = LongEnum.One,
+			FloatEnum = FloatEnum.One,
+			DoubleEnum = DoubleEnum.One,
+			DecimalEnum = DecimalEnum.One,
+			StringEnum = StringEnum.One,
+			GuidEnum = GuidEnum.One,
+		};
 	}
 }

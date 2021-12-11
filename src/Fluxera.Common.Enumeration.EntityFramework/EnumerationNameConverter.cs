@@ -5,7 +5,7 @@
 
 	public class EnumerationNameConverter<TEnum, TValue> : ValueConverter<TEnum?, string?>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : struct, IComparable, IComparable<TValue>
+		where TValue : IComparable, IComparable<TValue>
 	{
 		public EnumerationNameConverter()
 			: base(enumeration => Serialize(enumeration), name => Deserialize(name))

@@ -7,7 +7,7 @@
 	[PublicAPI]
 	public class EnumerationValueConverter<TEnum, TValue> : JsonConverter<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : struct, IComparable, IComparable<TValue>
+		where TValue : IComparable, IComparable<TValue>
 	{
 		/// <inheritdoc />
 		public override bool CanWrite => true;

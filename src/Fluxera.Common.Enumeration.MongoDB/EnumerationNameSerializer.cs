@@ -9,7 +9,7 @@
 	[PublicAPI]
 	public class EnumerationNameSerializer<TEnum, TValue> : SerializerBase<TEnum>
 		where TEnum : Enumeration<TEnum, TValue> 
-		where TValue : struct, IComparable, IComparable<TValue>
+		where TValue : IComparable, IComparable<TValue>
 	{
 		/// <inheritdoc />
 		public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TEnum? value)
