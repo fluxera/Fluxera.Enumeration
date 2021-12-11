@@ -4,11 +4,11 @@
 
 	public static class DbContextFactory
 	{
-		public static TestDbContext Generate(int seedCount)
+		public static TestDbContext Generate(int seedCount, bool useValueConverter)
 		{
 			PersonFactory.Initialize();
 
-			TestDbContext context = new TestDbContext(false)
+			TestDbContext context = new TestDbContext(useValueConverter)
 			{
 				SeedData = PersonFactory.Generate(seedCount).ToArray(),
 			};

@@ -7,8 +7,9 @@
 
 	internal static class TypeExtensions
 	{
-		public static IEnumerable<TEnum> GetEnumFields<TEnum>(this Type type)
-			where TEnum : Enumeration<TEnum>
+		public static IEnumerable<TEnum> GetEnumFields<TEnum, TValue>(this Type type)
+			where TEnum : Enumeration<TEnum, TValue>
+			where TValue : IComparable, IComparable<TValue>
 		{
 			return type
 				.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)

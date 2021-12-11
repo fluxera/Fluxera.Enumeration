@@ -12,8 +12,8 @@
 		string Name { get; }
 
 		/// <summary>
-		///     Gets the numeric value of the enum option.
+		///     Gets the value of the enum option.
 		/// </summary>
-		int Value { get; }
+		object Value { get; }
 	}
 }

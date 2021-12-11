@@ -23,10 +23,11 @@
 
 			if(memberType.IsEnumeration())
 			{
+				Type valueType = memberType.GetValueType();
 				Type serializerTypeTemplate = this.useValueConverter
-					? typeof(EnumerationValueSerializer<>)
-					: typeof(EnumerationNameSerializer<>);
-				Type serializerType = serializerTypeTemplate.MakeGenericType(memberType);
+					? typeof(EnumerationValueSerializer<,>)
+					: typeof(EnumerationNameSerializer<,>);
+				Type serializerType = serializerTypeTemplate.MakeGenericType(memberType, valueType);
 
 				IBsonSerializer enumerationSerializer = (IBsonSerializer)Activator.CreateInstance(serializerType);
 				memberMap.SetSerializer(enumerationSerializer);

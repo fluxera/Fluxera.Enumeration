@@ -6,12 +6,14 @@
 	using JetBrains.Annotations;
 
 	[PublicAPI]
-	public readonly struct EnumerationWhen<TEnum> where TEnum : Enumeration<TEnum>
+	public readonly struct EnumerationWhen<TEnum, TValue> 
+		where TEnum : Enumeration<TEnum, TValue>
+		where TValue : IComparable, IComparable<TValue>
 	{
-		private readonly Enumeration<TEnum> enumeration;
+		private readonly Enumeration<TEnum, TValue> enumeration;
 		private readonly bool stopEvaluating;
 
-		internal EnumerationWhen(bool stopEvaluating, Enumeration<TEnum> enumeration)
+		internal EnumerationWhen(bool stopEvaluating, Enumeration<TEnum, TValue> enumeration)
 		{
 			this.stopEvaluating = stopEvaluating;
 			this.enumeration = enumeration;
@@ -23,9 +25,9 @@
 		/// </summary>
 		/// <param name="enumerationWhen">A <see cref="Enumeration{TEnum}" /> value to compare to this instance.</param>
 		/// <returns>A executor object to execute a supplied action.</returns>
-		public EnumerationThen<TEnum> When(Enumeration<TEnum> enumerationWhen)
+		public EnumerationThen<TEnum, TValue> When(Enumeration<TEnum, TValue> enumerationWhen)
 		{
-			return new EnumerationThen<TEnum>(this.enumeration.Equals(enumerationWhen), this.stopEvaluating, this.enumeration);
+			return new EnumerationThen<TEnum, TValue>(this.enumeration.Equals(enumerationWhen), this.stopEvaluating, this.enumeration);
 		}
 
 		/// <summary>
@@ -34,9 +36,9 @@
 		/// </summary>
 		/// <param name="enumerations">A collection of <see cref="Enumeration{TEnum}" /> values to compare to this instance.</param>
 		/// <returns>A executor object to execute a supplied action.</returns>
-		public EnumerationThen<TEnum> WhenAny(params Enumeration<TEnum>[] enumerations)
+		public EnumerationThen<TEnum, TValue> WhenAny(params Enumeration<TEnum, TValue>[] enumerations)
 		{
-			return new EnumerationThen<TEnum>(enumerations.Contains(this.enumeration), this.stopEvaluating, this.enumeration);
+			return new EnumerationThen<TEnum, TValue>(enumerations.Contains(this.enumeration), this.stopEvaluating, this.enumeration);
 		}
 
 		/// <summary>
@@ -45,9 +47,9 @@
 		/// </summary>
 		/// <param name="enumerations">A collection of <see cref="Enumeration{TEnum}" /> values to compare to this instance.</param>
 		/// <returns>A executor object to execute a supplied action.</returns>
-		public EnumerationThen<TEnum> WhenAny(IEnumerable<Enumeration<TEnum>> enumerations)
+		public EnumerationThen<TEnum, TValue> WhenAny(IEnumerable<Enumeration<TEnum, TValue>> enumerations)
 		{
-			return new EnumerationThen<TEnum>(enumerations.Contains(this.enumeration), this.stopEvaluating, this.enumeration);
+			return new EnumerationThen<TEnum, TValue>(enumerations.Contains(this.enumeration), this.stopEvaluating, this.enumeration);
 		}
 
 		/// <summary>

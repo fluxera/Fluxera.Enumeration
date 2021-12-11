@@ -11,24 +11,43 @@
 	using JetBrains.Annotations;
 
 	/// <summary>
-	///     A base class for implementing object-oriented enumerations.
+	///     A base class for implementing object-oriented enumerations. This implementation supports <see cref="int"/> values.
 	/// </summary>
 	/// <typeparam name="TEnum">The type of the enumeration.</typeparam>
 	[PublicAPI]
 	[Serializable]
 	[DebuggerDisplay("{Name}")]
-	public abstract class Enumeration<TEnum> : IEnumeration, IComparable<TEnum>, IEquatable<TEnum>
-		where TEnum : Enumeration<TEnum>
+	public abstract class Enumeration<TEnum> : Enumeration<TEnum, int>
+		where TEnum : Enumeration<TEnum, int>
+	{
+		/// <inheritdoc />
+		protected Enumeration(int value, string name) 
+			: base(value, name)
+		{
+		}
+	}
+
+	/// <summary>
+	///     A base class for implementing object-oriented enumerations.
+	/// </summary>
+	/// <typeparam name="TEnum">The type of the enumeration.</typeparam>
+	/// <typeparam name="TValue">The type of the value.</typeparam>
+	[PublicAPI]
+	[Serializable]
+	[DebuggerDisplay("{Name}")]
+	public abstract class Enumeration<TEnum, TValue> : IEnumeration, IComparable<TEnum>
+		where TEnum : Enumeration<TEnum, TValue>
+		where TValue : IComparable, IComparable<TValue>
 	{
 		private static Lazy<TEnum[]> enumOptions = new Lazy<TEnum[]>(GetAllOptions, LazyThreadSafetyMode.ExecutionAndPublication);
-		private static Lazy<IDictionary<int, TEnum>> parseValue = new Lazy<IDictionary<int, TEnum>>(GetParseValueDict);
+		private static Lazy<IDictionary<TValue, TEnum>> parseValue = new Lazy<IDictionary<TValue, TEnum>>(GetParseValueDict);
 		private static Lazy<IDictionary<string, TEnum>> parseName = new Lazy<IDictionary<string, TEnum>>(GetParseNameDict);
 		private static Lazy<IDictionary<string, TEnum>> parseNameIgnoreCase = new Lazy<IDictionary<string, TEnum>>(GetParseNameIgnoreCaseDict);
 
-		protected Enumeration(int value, string name)
+		protected Enumeration(TValue value, string name)
 		{
-			Guard.Against.Negative(value, nameof(value));
 			Guard.Against.NullOrWhiteSpace(name, nameof(name));
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 
 			this.Value = value;
 			this.Name = name;
@@ -56,14 +75,17 @@
 		}
 
 		/// <summary>
-		///     Gets the value of the enum option.
-		/// </summary>
-		public int Value { get; }
-
-		/// <summary>
 		///     Gets the name of the enum option.
 		/// </summary>
 		public string Name { get; }
+
+		/// <summary>
+		///     Gets the value of the enum option.
+		/// </summary>
+		public TValue Value { get; }
+
+		/// <inheritdoc />
+		object IEnumeration.Value => this.Value;
 
 		/// <inheritdoc />
 		public int CompareTo(object? obj)
@@ -88,32 +110,14 @@
 			return this.CompareTo((TEnum)obj);
 		}
 
-		/// <inheritdoc />
-		public bool Equals(TEnum? other)
-		{
-			// Check if it's the same instance.
-			if(ReferenceEquals(this, other))
-			{
-				return true;
-			}
-
-			// It's not the same instance check if it is not null and has the same value.
-			if(other is null)
-			{
-				return false;
-			}
-
-			return this.Value.Equals(other.Value);
-		}
-
 		/// <summary>
 		///     Gets an option associated with the specified value.
 		/// </summary>
 		/// <param name="value">The value of the option to get.</param>
 		/// <returns>The associated enum option.</returns>
-		public static TEnum ParseValue(int value)
+		public static TEnum ParseValue(TValue value)
 		{
-			Guard.Against.Negative(value, nameof(value));
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 
 			if(!parseValue.Value.TryGetValue(value, out TEnum? result))
 			{
@@ -132,14 +136,10 @@
 		///     The associated enum option. If the desired option is not found the <paramref name="defaultValue" /> is
 		///     returned.
 		/// </returns>
-		public static TEnum ParseValue(int value, TEnum defaultValue)
+		public static TEnum ParseValue(TValue value, TEnum defaultValue)
 		{
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 			Guard.Against.Null(defaultValue, nameof(defaultValue));
-
-			if(value < 0)
-			{
-				return defaultValue;
-			}
 
 			if(!parseValue.Value.TryGetValue(value, out TEnum? result))
 			{
@@ -158,13 +158,9 @@
 		///     otherwise, <c>null</c>.
 		/// </param>
 		/// <returns><c>true</c> if the name is found, <c>false</c> otherwise.</returns>
-		public static bool TryParseValue(int value, out TEnum? result)
+		public static bool TryParseValue(TValue value, out TEnum? result)
 		{
-			if(value < 0)
-			{
-				result = default;
-				return false;
-			}
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 
 			return parseValue.Value.TryGetValue(value, out result);
 		}
@@ -244,98 +240,115 @@
 		/// <inheritdoc />
 		public sealed override bool Equals(object? obj)
 		{
-			return obj is Enumeration<TEnum> other && this.Equals((TEnum)other);
-		}
-
-		public static bool operator ==(Enumeration<TEnum>? left, Enumeration<TEnum>? right)
-		{
-			// Handle null on the left side.
-			if(left is null)
+			if (obj is null)
 			{
-				// null == null = true
-				return right is null;
+				return false;
 			}
 
-			// Equals handles null on the right side.
+			if (ReferenceEquals(this, obj))
+			{
+				return true;
+			}
+
+			if (obj is not Enumeration<TEnum, TValue> other)
+			{
+				return false;
+			}
+
+			return this.Value.Equals(other.Value);
+		}
+
+		public static bool operator ==(Enumeration<TEnum, TValue>? left, Enumeration<TEnum, TValue>? right)
+		{
+			if(left is null)
+			{
+				return right is null;
+			}
+			
 			return left.Equals(right);
 		}
 
-		public static bool operator !=(Enumeration<TEnum>? left, Enumeration<TEnum>? right)
+		public static bool operator !=(Enumeration<TEnum, TValue>? left, Enumeration<TEnum, TValue>? right)
 		{
 			return !(left == right);
 		}
 
-		public static bool operator <(Enumeration<TEnum> left, Enumeration<TEnum> right)
+		public static bool operator <(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
 		{
 			return left.CompareTo(right) < 0;
 		}
 
-		public static bool operator <=(Enumeration<TEnum> left, Enumeration<TEnum> right)
+		public static bool operator <=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
 		{
 			return left.CompareTo((TEnum)right) <= 0;
 		}
 
-		public static bool operator >(Enumeration<TEnum> left, Enumeration<TEnum> right)
+		public static bool operator >(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
 		{
 			return left.CompareTo((TEnum)right) > 0;
 		}
 
-		public static bool operator >=(Enumeration<TEnum> left, Enumeration<TEnum> right)
+		public static bool operator >=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
 		{
 			return left.CompareTo((TEnum)right) >= 0;
 		}
 
-		public static explicit operator int(Enumeration<TEnum> enumeration)
+		public static explicit operator TValue(Enumeration<TEnum, TValue> enumeration)
 		{
 			return enumeration.Value;
 		}
 
-		public static explicit operator string(Enumeration<TEnum> enumeration)
+		public static explicit operator string(Enumeration<TEnum, TValue> enumeration)
 		{
 			return enumeration.Name;
 		}
 
-		public static explicit operator Enumeration<TEnum>(int value)
+		public static explicit operator Enumeration<TEnum, TValue>(TValue value)
 		{
 			return ParseValue(value);
 		}
 
-		public static explicit operator Enumeration<TEnum>(string name)
+		public static explicit operator Enumeration<TEnum, TValue>?(string? name)
 		{
-			return name is not null ? ParseName(name) : null;
+			if(name is null)
+			{
+				return null;
+			}
+
+			return ParseName(name);
 		}
 
 		/// <summary>
 		///     When this instance is one of the specified <see cref="TEnum" /> parameters.
-		///     Execute the action that is configured in the <see cref="EnumerationThen{TEnum}" />.
+		///     Execute the action that is configured in the <see cref="EnumerationThen{TEnum, TValue}" />.
 		/// </summary>
 		/// <param name="enumeration">A <see cref="TEnum" /> value to compare to this instance.</param>
 		/// <returns>An object to configure an action to execute.</returns>
-		public EnumerationThen<TEnum> When(Enumeration<TEnum> enumeration)
+		public EnumerationThen<TEnum, TValue> When(Enumeration<TEnum, TValue> enumeration)
 		{
-			return new EnumerationThen<TEnum>(this.Equals(enumeration), false, this);
+			return new EnumerationThen<TEnum, TValue>(this.Equals(enumeration), false, this);
 		}
 
 		/// <summary>
 		///     When this instance is one of the specified <see cref="TEnum" /> parameters.
-		///     Execute the action that is configured in the <see cref="EnumerationThen{TEnum}" />.
+		///     Execute the action that is configured in the <see cref="EnumerationThen{TEnum, TValue}" />.
 		/// </summary>
 		/// <param name="enumerations">A collection of <see cref="TEnum" /> values to compare to this instance.</param>
 		/// <returns>An object to configure an action to execute.</returns>
-		public EnumerationThen<TEnum> WhenAny(params Enumeration<TEnum>[] enumerations)
+		public EnumerationThen<TEnum, TValue> WhenAny(params Enumeration<TEnum, TValue>[] enumerations)
 		{
-			return new EnumerationThen<TEnum>(enumerations.Contains(this), false, this);
+			return new EnumerationThen<TEnum, TValue>(enumerations.Contains(this), false, this);
 		}
 
 		/// <summary>
 		///     When this instance is one of the specified <see cref="TEnum" /> parameters.
-		///     Execute the action that is configured in the <see cref="EnumerationThen{TEnum}" />.
+		///     Execute the action that is configured in the <see cref="EnumerationThen{TEnum, TValue}" />.
 		/// </summary>
 		/// <param name="enumerations">A collection of <see cref="Enumeration{TEnum}" /> values to compare to this instance.</param>
 		/// <returns>An object to configure an action to execute.</returns>
-		public EnumerationThen<TEnum> WhenAny(IEnumerable<Enumeration<TEnum>> enumerations)
+		public EnumerationThen<TEnum, TValue> WhenAny(IEnumerable<Enumeration<TEnum, TValue>> enumerations)
 		{
-			return new EnumerationThen<TEnum>(enumerations.Contains(this), false, this);
+			return new EnumerationThen<TEnum, TValue>(enumerations.Contains(this), false, this);
 		}
 
 		private static TEnum[] GetAllOptions()
@@ -344,7 +357,7 @@
 			return Assembly.GetAssembly(enumType)
 				.GetTypes()
 				.Where(t => enumType.IsAssignableFrom(t))
-				.SelectMany(t => t.GetEnumFields<TEnum>())
+				.SelectMany(t => t.GetEnumFields<TEnum, TValue>())
 				.OrderBy(t => t.Value)
 				.ToArray();
 		}
@@ -360,10 +373,10 @@
 		}
 
 		/// <exception cref="KeyNotFoundException"></exception>
-		private static IDictionary<int, TEnum> GetParseValueDict()
+		private static IDictionary<TValue, TEnum> GetParseValueDict()
 		{
 			// Multiple enum options with same value are not allowed.
-			IDictionary<int, TEnum> dictionary = new Dictionary<int, TEnum>();
+			IDictionary<TValue, TEnum> dictionary = new Dictionary<TValue, TEnum>();
 			foreach(TEnum item in enumOptions.Value)
 			{
 				dictionary.Add(item.Value, item);
@@ -381,7 +394,7 @@
 	public static class Enumeration
 	{
 		private static IDictionary<Type, IEnumeration[]> globalEnumOptions = new Dictionary<Type, IEnumeration[]>();
-		private static IDictionary<Type, IDictionary<int, IEnumeration>> globalParseValue = new Dictionary<Type, IDictionary<int, IEnumeration>>();
+		private static IDictionary<Type, IDictionary<object, IEnumeration>> globalParseValue = new Dictionary<Type, IDictionary<object, IEnumeration>>();
 		private static IDictionary<Type, IDictionary<string, IEnumeration>> globalParseName = new Dictionary<Type, IDictionary<string, IEnumeration>>();
 		private static IDictionary<Type, IDictionary<string, IEnumeration>> globalParseNameIgnoreCase = new Dictionary<Type, IDictionary<string, IEnumeration>>();
 
@@ -391,11 +404,13 @@
 		/// <param name="enumerationType">The enum type to parse for.</param>
 		/// <param name="value">The value of the option to get.</param>
 		/// <returns>The associated enum option.</returns>
-		public static IEnumeration ParseValue(Type enumerationType, int value)
+		public static IEnumeration ParseValue(Type enumerationType, object value)
 		{
-			Guard.Against.Negative(value, nameof(value));
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 
-			IDictionary<int, IEnumeration> parseValue = GetParseValueDict(enumerationType);
+			value = Convert.ChangeType(value, enumerationType.GetValueType());
+
+			IDictionary<object, IEnumeration> parseValue = GetParseValueDict(enumerationType);
 			if(!parseValue.TryGetValue(value, out IEnumeration? result))
 			{
 				throw new InvalidEnumArgumentException($"No {enumerationType.Name} with value '{value}' found.");
@@ -414,16 +429,14 @@
 		///     The associated enum option. If the desired option is not found the <paramref name="defaultValue" /> is
 		///     returned.
 		/// </returns>
-		public static IEnumeration ParseValue(Type enumerationType, int value, IEnumeration defaultValue)
+		public static IEnumeration ParseValue(Type enumerationType, object value, IEnumeration defaultValue)
 		{
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 			Guard.Against.Null(defaultValue, nameof(defaultValue));
 
-			if(value < 0)
-			{
-				return defaultValue;
-			}
+			value = Convert.ChangeType(value, enumerationType.GetValueType());
 
-			IDictionary<int, IEnumeration> parseValue = GetParseValueDict(enumerationType);
+			IDictionary<object, IEnumeration> parseValue = GetParseValueDict(enumerationType);
 			if(!parseValue.TryGetValue(value, out IEnumeration? result))
 			{
 				return defaultValue;
@@ -442,15 +455,13 @@
 		///     otherwise, <c>null</c>.
 		/// </param>
 		/// <returns><c>true</c> if the name is found, <c>false</c> otherwise.</returns>
-		public static bool TryParseValue(Type enumerationType, int value, out IEnumeration? result)
+		public static bool TryParseValue(Type enumerationType, object value, out IEnumeration? result)
 		{
-			if(value < 0)
-			{
-				result = default;
-				return false;
-			}
+			Guard.Against.UnsupportedValueType(value, nameof(value));
 
-			IDictionary<int, IEnumeration> parseValue = GetParseValueDict(enumerationType);
+			value = Convert.ChangeType(value, enumerationType.GetValueType());
+
+			IDictionary<object, IEnumeration> parseValue = GetParseValueDict(enumerationType);
 			return parseValue.TryGetValue(value, out result);
 		}
 
@@ -548,7 +559,7 @@
 			return enumOptions;
 		}
 
-		private static IDictionary<int, IEnumeration> GetParseValueDict(Type enumerationType)
+		private static IDictionary<object, IEnumeration> GetParseValueDict(Type enumerationType)
 		{
 			IEnumeration[] enumOptions = GetAllOptions(enumerationType);
 
@@ -558,7 +569,7 @@
 				globalParseValue.Add(enumerationType, enumOptions.ToDictionary(item => item.Value));
 			}
 
-			IDictionary<int, IEnumeration> parseValueDict = globalParseValue[enumerationType];
+			IDictionary<object, IEnumeration> parseValueDict = globalParseValue[enumerationType];
 			return parseValueDict;
 		}
 

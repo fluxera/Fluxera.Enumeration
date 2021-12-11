@@ -7,8 +7,9 @@
 	using JetBrains.Annotations;
 
 	[PublicAPI]
-	public class EnumerationNameSerializer<TEnum> : SerializerBase<TEnum>
-		where TEnum : Enumeration<TEnum>
+	public class EnumerationNameSerializer<TEnum, TValue> : SerializerBase<TEnum>
+		where TEnum : Enumeration<TEnum, TValue> 
+		where TValue : IComparable, IComparable<TValue>
 	{
 		/// <inheritdoc />
 		public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TEnum? value)
@@ -35,7 +36,7 @@
 			if(context.Reader.CurrentBsonType == BsonType.String)
 			{
 				string? name = context.Reader.ReadString();
-				if(!Enumeration<TEnum>.TryParseName(name, out TEnum? result))
+				if(!Enumeration<TEnum, TValue>.TryParseName(name, out TEnum? result))
 				{
 					throw new FormatException($"Error converting name '{name ?? "null"}' to enumeration '{args.NominalType.Name}'.");
 				}

@@ -12,7 +12,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 	{
 		public class TestClass
 		{
-			[JsonConverter(typeof(EnumerationValueConverter<Color>))]
+			[JsonConverter(typeof(EnumerationValueConverter<Color, int>))]
 			public Color Color { get; set; }
 		}
 
@@ -23,7 +23,6 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 
 		private static readonly string JsonString = @"{""Color"":0}";
 
-		
 		[Test]
 		public void ShouldDeserializeFromValue()
 		{

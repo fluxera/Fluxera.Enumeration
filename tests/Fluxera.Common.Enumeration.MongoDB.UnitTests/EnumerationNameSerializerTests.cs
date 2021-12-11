@@ -26,7 +26,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		static EnumerationNameSerializerTests()
 		{
 			ConventionPack pack = new ConventionPack();
-			pack.AddEnumerationNameConvention();
+			pack.UseEnumerationNameConverter();
 			ConventionRegistry.Register("ConventionPack", pack, t => true);
 		}
 

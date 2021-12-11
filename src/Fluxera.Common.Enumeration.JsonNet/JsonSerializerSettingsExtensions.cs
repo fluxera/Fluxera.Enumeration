@@ -21,17 +21,5 @@
 				new EnumerationContractResolver(true)
 			};
 		}
-
-		public static void UseEnumerationNameConverter<TEnum>(this JsonSerializerSettings settings)
-			where TEnum : Enumeration<TEnum>
-		{
-			settings.Converters.Add(new EnumerationNameConverter<TEnum>());
-		}
-
-		public static void UseEnumerationValueConverter<TEnum>(this JsonSerializerSettings settings)
-			where TEnum : Enumeration<TEnum>
-		{
-			settings.Converters.Add(new EnumerationValueConverter<TEnum>());
-		}
 	}
 }

@@ -18,17 +18,5 @@ namespace Fluxera.Enumeration.SystemTextJson
 		{
 			options.Converters.Add(new EnumerationJsonConverterFactory(true));
 		}
-
-		public static void UseEnumerationNameConverter<TEnum>(this JsonSerializerOptions options)
-			where TEnum : Enumeration<TEnum>
-		{
-			options.Converters.Add(new EnumerationNameConverter<TEnum>());
-		}
-
-		public static void UseEnumerationValueConverter<TEnum>(this JsonSerializerOptions options)
-			where TEnum : Enumeration<TEnum>
-		{
-			options.Converters.Add(new EnumerationValueConverter<TEnum>());
-		}
 	}
 }

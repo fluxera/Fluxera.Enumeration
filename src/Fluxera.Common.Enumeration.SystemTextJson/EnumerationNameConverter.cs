@@ -6,8 +6,9 @@ namespace Fluxera.Enumeration.SystemTextJson
 	using JetBrains.Annotations;
 
 	[PublicAPI]
-	public class EnumerationNameConverter<TEnum> : JsonConverter<TEnum>
-		where TEnum : Enumeration<TEnum>
+	public class EnumerationNameConverter<TEnum, TValue> : JsonConverter<TEnum>
+		where TEnum : Enumeration<TEnum, TValue>
+		where TValue : IComparable, IComparable<TValue>
 	{
 		public override void Write(Utf8JsonWriter writer, TEnum? value, JsonSerializerOptions options)
 		{
@@ -31,7 +32,7 @@ namespace Fluxera.Enumeration.SystemTextJson
 			if(reader.TokenType == JsonTokenType.String)
 			{
 				string? name = reader.GetString();
-				if(!Enumeration<TEnum>.TryParseName(name, out TEnum? result))
+				if(!Enumeration<TEnum, TValue>.TryParseName(name, out TEnum? result))
 				{
 					throw new JsonException($"Error converting name '{name ?? "null"}' to enumeration '{typeToConvert.Name}'.");
 				}

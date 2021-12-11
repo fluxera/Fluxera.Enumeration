@@ -1,6 +1,7 @@
 namespace Fluxera.Enumeration.SystemTextJson
 {
 	using System;
+	using System.Linq;
 	using System.Text.Json;
 	using System.Text.Json.Serialization;
 	using JetBrains.Annotations;
@@ -8,8 +9,8 @@ namespace Fluxera.Enumeration.SystemTextJson
 	[PublicAPI]
 	public class EnumerationJsonConverterFactory : JsonConverterFactory
 	{
-		private static readonly Type nameConverterType = typeof(EnumerationNameConverter<>);
-		private static readonly Type valueConverterType = typeof(EnumerationValueConverter<>);
+		private static readonly Type nameConverterType = typeof(EnumerationNameConverter<,>);
+		private static readonly Type valueConverterType = typeof(EnumerationValueConverter<,>);
 		private readonly bool useValueConverter;
 
 		public EnumerationJsonConverterFactory(bool useValueConverter = false)
@@ -27,8 +28,9 @@ namespace Fluxera.Enumeration.SystemTextJson
 		/// <inheritdoc />
 		public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 		{
+			Type valueType = typeToConvert.GetValueType();
 			Type converterTypeTemplate = this.useValueConverter ? valueConverterType : nameConverterType;
-			Type converterType = converterTypeTemplate.MakeGenericType(typeToConvert);
+			Type converterType = converterTypeTemplate.MakeGenericType(typeToConvert, valueType);
 
 			return (JsonConverter)Activator.CreateInstance(converterType);
 		}

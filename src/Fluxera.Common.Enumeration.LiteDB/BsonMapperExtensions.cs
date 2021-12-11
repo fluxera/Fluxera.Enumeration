@@ -11,21 +11,7 @@
 	[PublicAPI]
 	public static class BsonMapperExtensions
 	{
-		public static BsonMapper UseEnumerationName<TEnum>(this BsonMapper mapper)
-			where TEnum : Enumeration<TEnum>
-		{
-			mapper.RegisterNameType(typeof(TEnum));
-			return mapper;
-		}
-
-		public static BsonMapper UseEnumerationValue<TEnum>(this BsonMapper mapper)
-			where TEnum : Enumeration<TEnum>
-		{
-			mapper.RegisterValueType(typeof(TEnum));
-			return mapper;
-		}
-
-		public static BsonMapper UseEnumerationName(this BsonMapper mapper, Assembly assembly)
+		public static BsonMapper UseEnumerationNameConverter(this BsonMapper mapper, Assembly assembly)
 		{
 			Guard.Against.Null(mapper, nameof(mapper));
 			Guard.Against.Null(assembly, nameof(assembly));
@@ -39,7 +25,7 @@
 			return mapper;
 		}
 
-		public static BsonMapper UseEnumerationValue(this BsonMapper mapper, Assembly assembly)
+		public static BsonMapper UseEnumerationValueConverter(this BsonMapper mapper, Assembly assembly)
 		{
 			Guard.Against.Null(mapper, nameof(mapper));
 			Guard.Against.Null(assembly, nameof(assembly));
@@ -56,14 +42,14 @@
 		private static void RegisterNameType(this BsonMapper mapper, Type enumerationType)
 		{
 			mapper.RegisterType(enumerationType,
-				EnumerationNameConverter.Serialize,
+				EnumerationNameConverter.Serialize(enumerationType),
 				EnumerationNameConverter.Deserialize(enumerationType));
 		}
 
 		private static void RegisterValueType(this BsonMapper mapper, Type enumerationType)
 		{
 			mapper.RegisterType(enumerationType,
-				EnumerationValueConverter.Serialize,
+				EnumerationValueConverter.Serialize(enumerationType),
 				EnumerationValueConverter.Deserialize(enumerationType));
 		}
 	}

@@ -100,6 +100,32 @@ public sealed class Reptile : Animal
 }
 ```
 
+The default type for the value is ```int```, but several other types can be used as the value: ```byte```, ```short```,```int```,```long```,```decimal```,```float```,```double```,```string``` and ```Guid```.    
+
+```C#
+public class GuidEnum : Enumeration<GuidEnum, Guid>
+{
+    public static readonly GuidEnum One = new GuidEnum(Guid.Parse("7a524c5a-7724-442d-a906-8219bce4a0fd"), "One");
+
+    /// <inheritdoc />
+    public GuidEnum(Guid value, string name) 
+        : base(value, name)
+    {
+    }
+}
+
+public class LongEnum : Enumeration<LongEnum, long>
+{
+    public static readonly LongEnum One = new LongEnum(999999999999999999, "One");
+
+    /// <inheritdoc />
+    public LongEnum(long value, string name) 
+        : base(value, name)
+    {
+    }
+}
+```
+
 The ```Enumeration<TEnum>``` provides a fluent API to configure switch-case like structures
 to simplify the execution of action for specific cases.
 

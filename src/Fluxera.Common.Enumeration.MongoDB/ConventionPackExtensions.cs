@@ -6,14 +6,14 @@
 	[PublicAPI]
 	public static class ConventionPackExtensions
 	{
-		public static ConventionPack AddEnumerationNameConvention(this ConventionPack pack)
+		public static ConventionPack UseEnumerationNameConverter(this ConventionPack pack)
 		{
 			pack.Add(new EnumerationConvention());
 
 			return pack;
 		}
 
-		public static ConventionPack AddEnumerationValueConvention(this ConventionPack pack)
+		public static ConventionPack UseEnumerationValueConverter(this ConventionPack pack)
 		{
 			pack.Add(new EnumerationConvention(true));
 

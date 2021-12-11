@@ -12,7 +12,7 @@
 	{
 		static IntegrationTests()
 		{
-			BsonMapper.Global.UseEnumerationName(Assembly.GetExecutingAssembly());
+			BsonMapper.Global.UseEnumerationNameConverter(Assembly.GetExecutingAssembly());
 		}
 
 		[Test]

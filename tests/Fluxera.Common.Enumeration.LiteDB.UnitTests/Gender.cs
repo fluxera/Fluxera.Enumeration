@@ -2,7 +2,7 @@
 {
 	using System.Runtime.CompilerServices;
 
-	public sealed class Gender : Enumeration<Gender>
+	public sealed class Gender : Enumeration<Gender, int>
 	{
 		public static readonly Gender Male = new Gender(0);
 		public static readonly Gender Female = new Gender(1);
