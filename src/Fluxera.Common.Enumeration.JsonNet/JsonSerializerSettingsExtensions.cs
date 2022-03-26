@@ -6,19 +6,11 @@
 	[PublicAPI]
 	public static class JsonSerializerSettingsExtensions
 	{
-		public static void UseEnumerationNameConverter(this JsonSerializerSettings settings)
+		public static void UseEnumeration(this JsonSerializerSettings settings, bool useValue = false)
 		{
 			settings.ContractResolver = new CompositeContractResolver
 			{
-				new EnumerationContractResolver()
-			};
-		}
-
-		public static void UseEnumerationValueConverter(this JsonSerializerSettings settings)
-		{
-			settings.ContractResolver = new CompositeContractResolver
-			{
-				new EnumerationContractResolver(true)
+				new EnumerationContractResolver(useValue)
 			};
 		}
 	}

@@ -6,16 +6,9 @@
 	[PublicAPI]
 	public static class ConventionPackExtensions
 	{
-		public static ConventionPack UseEnumerationNameConverter(this ConventionPack pack)
+		public static ConventionPack UseEnumeration(this ConventionPack pack, bool useValue = false)
 		{
-			pack.Add(new EnumerationConvention());
-
-			return pack;
-		}
-
-		public static ConventionPack UseEnumerationValueConverter(this ConventionPack pack)
-		{
-			pack.Add(new EnumerationConvention(true));
+			pack.Add(new EnumerationConvention(useValue));
 
 			return pack;
 		}

@@ -3,7 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using EntityFrameworkCore;
+	using Fluxera.Enumeration.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore.Infrastructure;
 	using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -67,15 +67,7 @@
 				}
 			}
 
-			if(this.useValueConverter)
-			{
-				modelBuilder.UseEnumerationValueConverter();
-			}
-			else
-			{
-				modelBuilder.UseEnumerationNameConverter();
-			}
-
+			modelBuilder.UseEnumeration(this.useValueConverter);
 
 			base.OnModelCreating(modelBuilder);
 		}

@@ -7,7 +7,7 @@
 	[PublicAPI]
 	public static class EnumerationNameConverter
 	{
-		public static Func<object, BsonValue?> Serialize(Type enumerationType)
+		public static Func<object, BsonValue?> Serialize()
 		{
 			return obj =>
 			{

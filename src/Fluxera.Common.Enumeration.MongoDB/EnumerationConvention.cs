@@ -6,7 +6,7 @@
 	using JetBrains.Annotations;
 
 	[PublicAPI]
-	public class EnumerationConvention : ConventionBase, IMemberMapConvention
+	public sealed class EnumerationConvention : ConventionBase, IMemberMapConvention
 	{
 		private readonly bool useValueConverter;
 

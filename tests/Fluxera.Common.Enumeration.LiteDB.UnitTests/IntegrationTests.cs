@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.IO;
-	using System.Reflection;
 	using FluentAssertions;
 	using global::LiteDB;
 	using NUnit.Framework;
@@ -12,7 +11,7 @@
 	{
 		static IntegrationTests()
 		{
-			BsonMapper.Global.UseEnumerationNameConverter(Assembly.GetExecutingAssembly());
+			BsonMapper.Global.UseEnumeration();
 		}
 
 		[Test]

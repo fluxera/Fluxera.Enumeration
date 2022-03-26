@@ -3,37 +3,32 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using System.Reflection;
+	using Fluxera.Guards;
 	using global::LiteDB;
-	using Guards;
 	using JetBrains.Annotations;
 
 	[PublicAPI]
 	public static class BsonMapperExtensions
 	{
-		public static BsonMapper UseEnumerationNameConverter(this BsonMapper mapper, Assembly assembly)
+		public static BsonMapper UseEnumeration(this BsonMapper mapper, bool useValue = false)
 		{
 			Guard.Against.Null(mapper, nameof(mapper));
-			Guard.Against.Null(assembly, nameof(assembly));
 
-			IEnumerable<Type> enumerationTypes = assembly.GetTypes().Where(type => type.IsEnumeration());
+			IEnumerable<Type> enumerationTypes = AppDomain.CurrentDomain
+				.GetAssemblies()
+				.SelectMany(x => x.GetExportedTypes())
+				.Where(x => x.IsEnumeration());
+
 			foreach(Type enumerationType in enumerationTypes)
 			{
-				mapper.RegisterNameType(enumerationType);
-			}
-
-			return mapper;
-		}
-
-		public static BsonMapper UseEnumerationValueConverter(this BsonMapper mapper, Assembly assembly)
-		{
-			Guard.Against.Null(mapper, nameof(mapper));
-			Guard.Against.Null(assembly, nameof(assembly));
-
-			IEnumerable<Type> enumerationTypes = assembly.GetTypes().Where(type => type.IsEnumeration());
-			foreach(Type enumerationType in enumerationTypes)
-			{
-				mapper.RegisterValueType(enumerationType);
+				if(useValue)
+				{
+					mapper.RegisterValueType(enumerationType);
+				}
+				else
+				{
+					mapper.RegisterNameType(enumerationType);
+				}
 			}
 
 			return mapper;
@@ -42,14 +37,14 @@
 		private static void RegisterNameType(this BsonMapper mapper, Type enumerationType)
 		{
 			mapper.RegisterType(enumerationType,
-				EnumerationNameConverter.Serialize(enumerationType),
+				EnumerationNameConverter.Serialize(),
 				EnumerationNameConverter.Deserialize(enumerationType));
 		}
 
 		private static void RegisterValueType(this BsonMapper mapper, Type enumerationType)
 		{
 			mapper.RegisterType(enumerationType,
-				EnumerationValueConverter.Serialize(enumerationType),
+				EnumerationValueConverter.Serialize(),
 				EnumerationValueConverter.Deserialize(enumerationType));
 		}
 	}

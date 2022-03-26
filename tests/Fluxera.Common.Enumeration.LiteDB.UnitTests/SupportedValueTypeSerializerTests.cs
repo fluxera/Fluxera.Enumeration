@@ -1,10 +1,6 @@
 ﻿namespace Fluxera.Enumeration.LiteDB.UnitTests
 {
-	using System;
-	using System.Reflection;
 	using FluentAssertions;
-	using Fluxera.Enumeration.LiteDB;
-	using Fluxera.Enumeration.UnitTests.Enums;
 	using Fluxera.Enumeration.UnitTests.Enums.ValueEnums;
 	using global::LiteDB;
 	using NUnit.Framework;
@@ -14,10 +10,19 @@
 	{
 		static SupportedValueTypeSerializerTests()
 		{
-			BsonMapper.Global.UseEnumerationValueConverter(Assembly.GetAssembly(typeof(Color)));
+			BsonMapper.Global.UseEnumeration(true);
 		}
 
 		private static readonly string JsonString = @"{""ByteEnum"":1,""ShortEnum"":1,""IntEnum"":1,""LongEnum"":{""$numberLong"":""1""},""FloatEnum"":1.0,""DoubleEnum"":1.0,""DecimalEnum"":{""$numberDecimal"":""1""},""StringEnum"":""1"",""GuidEnum"":{""$guid"":""00000000-0000-0000-0000-000000000000""}}";
+
+		[Test]
+		public void ShouldDeserializeForValue()
+		{
+			BsonDocument? doc = BsonMapper.Global.ToDocument(ValueEnumsTestClass.Instance);
+			string json = JsonSerializer.Serialize(doc);
+
+			json.Should().Be(JsonString);
+		}
 
 		[Test]
 		public void ShouldDeserializeFromValue()
@@ -34,15 +39,6 @@
 			obj.DecimalEnum.Should().BeSameAs(DecimalEnum.One);
 			obj.StringEnum.Should().BeSameAs(StringEnum.One);
 			obj.GuidEnum.Should().BeSameAs(GuidEnum.One);
-		}
-
-		[Test]
-		public void ShouldDeserializeForValue()
-		{
-			BsonDocument? doc = BsonMapper.Global.ToDocument(ValueEnumsTestClass.Instance);
-			string json = JsonSerializer.Serialize(doc);
-
-			json.Should().Be(JsonString);
 		}
 	}
 }

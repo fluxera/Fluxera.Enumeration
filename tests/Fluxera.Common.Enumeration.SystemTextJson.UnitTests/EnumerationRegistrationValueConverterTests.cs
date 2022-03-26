@@ -25,7 +25,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		static EnumerationRegistrationValueConverterTests()
 		{
 			options = new JsonSerializerOptions();
-			options.UseEnumerationValueConverter();
+			options.UseEnumeration(true);
 		}
 
 		[Test]

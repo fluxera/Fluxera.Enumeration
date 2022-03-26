@@ -7,8 +7,8 @@
 	using JetBrains.Annotations;
 
 	[PublicAPI]
-	public class EnumerationNameSerializer<TEnum, TValue> : SerializerBase<TEnum>
-		where TEnum : Enumeration<TEnum, TValue> 
+	public sealed class EnumerationNameSerializer<TEnum, TValue> : SerializerBase<TEnum>
+		where TEnum : Enumeration<TEnum, TValue>
 		where TValue : IComparable, IComparable<TValue>
 	{
 		/// <inheritdoc />
