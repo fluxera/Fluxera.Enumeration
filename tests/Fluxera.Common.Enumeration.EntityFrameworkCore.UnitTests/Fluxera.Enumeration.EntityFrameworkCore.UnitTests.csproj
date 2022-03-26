@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Fluxera.Common.Enumeration.EntityFramework\Fluxera.Enumeration.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\src\Fluxera.Common.Enumeration.EntityFrameworkCore\Fluxera.Enumeration.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Fluxera.Enumeration.UnitTests.Enums\Fluxera.Enumeration.UnitTests.Enums.csproj" />
   </ItemGroup>
 

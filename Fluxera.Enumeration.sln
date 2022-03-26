@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F18D2D58
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration", "src\Fluxera.Common.Enumeration\Fluxera.Enumeration.csproj", "{1253CAF4-C093-44C3-B4E5-B91A45FEF860}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.EntityFrameworkCore", "src\Fluxera.Common.Enumeration.EntityFramework\Fluxera.Enumeration.EntityFrameworkCore.csproj", "{2FD6047E-18B0-405B-A8BA-7B20493ED34F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.EntityFrameworkCore", "src\Fluxera.Common.Enumeration.EntityFrameworkCore\Fluxera.Enumeration.EntityFrameworkCore.csproj", "{2FD6047E-18B0-405B-A8BA-7B20493ED34F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.JsonNet", "src\Fluxera.Common.Enumeration.JsonNet\Fluxera.Enumeration.JsonNet.csproj", "{78C4E9A0-855E-4DE3-8CA9-AF0962F29039}"
 EndProject
@@ -38,7 +38,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.SystemT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.UnitTests", "tests\Fluxera.Common.Enumeration.UnitTests\Fluxera.Enumeration.UnitTests.csproj", "{AC3130A6-865E-4638-8B13-57AA9605A7BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.EntityFramework.UnitTests", "tests\Fluxera.Common.Enumeration.EntityFramework.UnitTests\Fluxera.Enumeration.EntityFramework.UnitTests.csproj", "{D7F39DE2-2BB4-4B65-9BF2-F08EB91E10A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.EntityFrameworkCore.UnitTests", "tests\Fluxera.Common.Enumeration.EntityFrameworkCore.UnitTests\Fluxera.Enumeration.EntityFrameworkCore.UnitTests.csproj", "{D7F39DE2-2BB4-4B65-9BF2-F08EB91E10A6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.JsonNet.UnitTests", "tests\Fluxera.Common.Enumeration.JsonNet.UnitTests\Fluxera.Enumeration.JsonNet.UnitTests.csproj", "{67A64413-B839-41BA-BE39-D22F1545C704}"
 EndProject
