@@ -16,7 +16,7 @@
 
 			IEnumerable<Type> enumerationTypes = AppDomain.CurrentDomain
 				.GetAssemblies()
-				.SelectMany(x => x.GetExportedTypes())
+				.SelectMany(x => x.GetTypes())
 				.Where(x => x.IsEnumeration());
 
 			foreach(Type enumerationType in enumerationTypes)

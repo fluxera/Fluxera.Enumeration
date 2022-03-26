@@ -14,7 +14,7 @@
 		static SupportedValueTypeSerializerTests()
 		{
 			ConventionPack pack = new ConventionPack();
-			pack.UseEnumeration();
+			pack.UseEnumeration(true);
 			ConventionRegistry.Register("ConventionPack", pack, t => true);
 		}
 
