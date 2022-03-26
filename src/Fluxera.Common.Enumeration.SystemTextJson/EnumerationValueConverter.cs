@@ -6,7 +6,7 @@ namespace Fluxera.Enumeration.SystemTextJson
 	using JetBrains.Annotations;
 
 	[PublicAPI]
-	public class EnumerationValueConverter<TEnum, TValue> : JsonConverter<TEnum>
+	public sealed class EnumerationValueConverter<TEnum, TValue> : JsonConverter<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
 		where TValue : IComparable, IComparable<TValue>
 	{
@@ -56,7 +56,7 @@ namespace Fluxera.Enumeration.SystemTextJson
 
 			if(reader.TokenType is JsonTokenType.Number or JsonTokenType.String)
 			{
-				TValue value = ReadValue(ref reader);
+				TValue value = this.ReadValue(ref reader);
 				if(!Enumeration<TEnum, TValue>.TryParseValue(value, out TEnum? result))
 				{
 					throw new JsonException($"Error converting value '{value}' to enumeration '{typeToConvert.Name}'.");

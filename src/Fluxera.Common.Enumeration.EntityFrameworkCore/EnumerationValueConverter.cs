@@ -1,9 +1,11 @@
 ﻿namespace Fluxera.Enumeration.EntityFrameworkCore
 {
 	using System;
+	using JetBrains.Annotations;
 	using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-	public class EnumerationValueConverter<TEnum, TValue> : ValueConverter<TEnum?, TValue?>
+	[PublicAPI]
+	public sealed class EnumerationValueConverter<TEnum, TValue> : ValueConverter<TEnum?, TValue?>
 		where TEnum : Enumeration<TEnum, TValue>
 		where TValue : IComparable, IComparable<TValue>
 	{

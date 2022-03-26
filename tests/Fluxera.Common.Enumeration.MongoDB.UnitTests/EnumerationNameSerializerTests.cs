@@ -26,7 +26,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		static EnumerationNameSerializerTests()
 		{
 			ConventionPack pack = new ConventionPack();
-			pack.UseEnumerationNameConverter();
+			pack.UseEnumeration();
 			ConventionRegistry.Register("ConventionPack", pack, t => true);
 		}
 
@@ -49,20 +49,6 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		}
 
 		[Test]
-		public void ShouldThrowWhenNotFound()
-		{
-			string json = @"{ ""Color"": ""Not Found"" }";
-
-			Action act = () =>
-			{
-				TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
-			};
-
-			act.Should()
-				.Throw<FormatException>();
-		}
-
-		[Test]
 		public void ShouldDeserializeNullValue()
 		{
 			string json = @"{ ""Color"": null }";
@@ -78,6 +64,20 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 			string json = TestInstance.ToJson();
 
 			json.Should().Be(JsonString);
+		}
+
+		[Test]
+		public void ShouldThrowWhenNotFound()
+		{
+			string json = @"{ ""Color"": ""Not Found"" }";
+
+			Action act = () =>
+			{
+				TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
+			};
+
+			act.Should()
+				.Throw<FormatException>();
 		}
 	}
 }

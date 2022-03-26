@@ -8,7 +8,7 @@
 	using JetBrains.Annotations;
 
 	[PublicAPI]
-	public class EnumerationValueSerializer<TEnum, TValue> : SerializerBase<TEnum>
+	public sealed class EnumerationValueSerializer<TEnum, TValue> : SerializerBase<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
 		where TValue : IComparable, IComparable<TValue>
 	{
@@ -61,7 +61,7 @@
 
 			if(context.Reader.CurrentBsonType is BsonType.Int32 or BsonType.Int64 or BsonType.Decimal128 or BsonType.Double or BsonType.String)
 			{
-				TValue value = ReadValue(context.Reader);
+				TValue value = this.ReadValue(context.Reader);
 				if(!Enumeration<TEnum, TValue>.TryParseValue(value, out TEnum? result))
 				{
 					throw new FormatException($"Error converting value '{value}' to enumeration '{args.NominalType.Name}'.");

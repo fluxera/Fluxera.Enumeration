@@ -4,12 +4,12 @@
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
-	using Guards;
+	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Newtonsoft.Json.Serialization;
 
 	[PublicAPI]
-	public class CompositeContractResolver : IContractResolver, IEnumerable<IContractResolver>
+	public sealed class CompositeContractResolver : IContractResolver, IEnumerable<IContractResolver>
 	{
 		private readonly IList<IContractResolver> contractResolvers = new List<IContractResolver>();
 		private readonly DefaultContractResolver defaultContractResolver = new DefaultContractResolver();

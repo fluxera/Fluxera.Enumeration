@@ -26,7 +26,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		static EnumerationValueSerializerTests()
 		{
 			ConventionPack pack = new ConventionPack();
-			pack.UseEnumerationValueConverter();
+			pack.UseEnumeration(true);
 			ConventionRegistry.Register("ConventionPack", pack, t => true);
 		}
 
@@ -46,6 +46,24 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 			TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
 
 			obj.Color.Should().BeNull();
+		}
+
+		[Test]
+		public void ShouldDeserializeNullValue()
+		{
+			string json = @"{ ""Color"": null }";
+
+			TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
+
+			obj.Color.Should().BeNull();
+		}
+
+		[Test]
+		public void ShouldSerializeForValue()
+		{
+			string json = TestInstance.ToJson();
+
+			json.Should().Be(JsonString);
 		}
 
 		[Test]
@@ -74,24 +92,6 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 
 			act.Should()
 				.Throw<FormatException>();
-		}
-
-		[Test]
-		public void ShouldDeserializeNullValue()
-		{
-			string json = @"{ ""Color"": null }";
-
-			TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
-
-			obj.Color.Should().BeNull();
-		}
-
-		[Test]
-		public void ShouldSerializeForValue()
-		{
-			string json = TestInstance.ToJson();
-
-			json.Should().Be(JsonString);
 		}
 	}
 }

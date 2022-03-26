@@ -5,7 +5,7 @@
 	using Newtonsoft.Json;
 
 	[PublicAPI]
-	public class EnumerationValueConverter<TEnum, TValue> : JsonConverter<TEnum>
+	public sealed class EnumerationValueConverter<TEnum, TValue> : JsonConverter<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
 		where TValue : IComparable, IComparable<TValue>
 	{

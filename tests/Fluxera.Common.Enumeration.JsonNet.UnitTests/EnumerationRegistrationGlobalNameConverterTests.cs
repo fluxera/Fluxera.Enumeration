@@ -23,7 +23,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		static EnumerationRegistrationGlobalNameConverterTests()
 		{
 			JsonSerializerSettings settings = new JsonSerializerSettings();
-			settings.UseEnumerationNameConverter();
+			settings.UseEnumeration();
 
 			JsonConvert.DefaultSettings = () => settings;
 		}

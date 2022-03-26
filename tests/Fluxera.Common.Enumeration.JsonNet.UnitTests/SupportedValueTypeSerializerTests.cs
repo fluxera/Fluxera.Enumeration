@@ -3,7 +3,6 @@
 	using System;
 	using System.Text.Json;
 	using FluentAssertions;
-	using Fluxera.Enumeration.JsonNet;
 	using Fluxera.Enumeration.UnitTests.Enums.ValueEnums;
 	using Newtonsoft.Json;
 	using NUnit.Framework;
@@ -16,12 +15,20 @@
 		static SupportedValueTypeSerializerTests()
 		{
 			JsonSerializerSettings settings = new JsonSerializerSettings();
-			settings.UseEnumerationValueConverter();
+			settings.UseEnumeration(true);
 
 			JsonConvert.DefaultSettings = () => settings;
 		}
 
 		private static readonly string JsonString = @"{""ByteEnum"":1,""ShortEnum"":1,""IntEnum"":1,""LongEnum"":1,""FloatEnum"":1.0,""DoubleEnum"":1.0,""DecimalEnum"":1.0,""StringEnum"":""1"",""GuidEnum"":""" + Guid.Empty.ToString("D") + @"""" + "}";
+
+		[Test]
+		public void ShouldDeserializeForValue()
+		{
+			string json = JsonConvert.SerializeObject(ValueEnumsTestClass.Instance, Formatting.None);
+
+			json.Should().Be(JsonString);
+		}
 
 		[Test]
 		public void ShouldDeserializeFromValue()
@@ -37,14 +44,6 @@
 			obj.DecimalEnum.Should().BeSameAs(DecimalEnum.One);
 			obj.StringEnum.Should().BeSameAs(StringEnum.One);
 			obj.GuidEnum.Should().BeSameAs(GuidEnum.One);
-		}
-
-		[Test]
-		public void ShouldDeserializeForValue()
-		{
-			string json = JsonConvert.SerializeObject(ValueEnumsTestClass.Instance, Formatting.None);
-
-			json.Should().Be(JsonString);
 		}
 	}
 }

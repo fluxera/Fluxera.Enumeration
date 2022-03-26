@@ -9,14 +9,9 @@ namespace Fluxera.Enumeration.SystemTextJson
 	[PublicAPI]
 	public static class JsonSerializerOptionsExtensions
 	{
-		public static void UseEnumerationNameConverter(this JsonSerializerOptions options)
+		public static void UseEnumeration(this JsonSerializerOptions options, bool useValue = false)
 		{
-			options.Converters.Add(new EnumerationJsonConverterFactory());
-		}
-
-		public static void UseEnumerationValueConverter(this JsonSerializerOptions options)
-		{
-			options.Converters.Add(new EnumerationJsonConverterFactory(true));
+			options.Converters.Add(new EnumerationJsonConverterFactory(useValue));
 		}
 	}
 }

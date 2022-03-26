@@ -1,7 +1,6 @@
 namespace Fluxera.Enumeration.LiteDB.UnitTests
 {
 	using System;
-	using System.Reflection;
 	using FluentAssertions;
 	using Fluxera.Enumeration.UnitTests.Enums;
 	using global::LiteDB;
@@ -24,7 +23,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 
 		static EnumerationNameConverterTests()
 		{
-			BsonMapper.Global.UseEnumerationNameConverter(Assembly.GetAssembly(typeof(Color)));
+			BsonMapper.Global.UseEnumeration();
 		}
 
 		[Test]
@@ -48,21 +47,6 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		}
 
 		[Test]
-		public void ShouldThrowWhenNotFound()
-		{
-			string json = @"{ ""Color"": ""Not Found"" }";
-
-			Action act = () =>
-			{
-				BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(json);
-				TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
-			};
-
-			act.Should()
-				.Throw<LiteException>();
-		}
-
-		[Test]
 		public void ShouldDeserializeNullValue()
 		{
 			string json = @"{ ""Color"": null }";
@@ -80,6 +64,21 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 			string json = JsonSerializer.Serialize(doc);
 
 			json.Should().Be(JsonString);
+		}
+
+		[Test]
+		public void ShouldThrowWhenNotFound()
+		{
+			string json = @"{ ""Color"": ""Not Found"" }";
+
+			Action act = () =>
+			{
+				BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(json);
+				TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
+			};
+
+			act.Should()
+				.Throw<LiteException>();
 		}
 	}
 }

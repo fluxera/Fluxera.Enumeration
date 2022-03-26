@@ -6,7 +6,7 @@
 	using Newtonsoft.Json.Serialization;
 
 	[PublicAPI]
-	public class EnumerationContractResolver : DefaultContractResolver
+	public sealed class EnumerationContractResolver : DefaultContractResolver
 	{
 		private static readonly Type nameConverterType = typeof(EnumerationNameConverter<,>);
 		private static readonly Type valueConverterType = typeof(EnumerationValueConverter<,>);

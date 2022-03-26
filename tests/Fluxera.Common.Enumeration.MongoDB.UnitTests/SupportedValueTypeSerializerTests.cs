@@ -14,11 +14,19 @@
 		static SupportedValueTypeSerializerTests()
 		{
 			ConventionPack pack = new ConventionPack();
-			pack.UseEnumerationValueConverter();
+			pack.UseEnumeration(true);
 			ConventionRegistry.Register("ConventionPack", pack, t => true);
 		}
 
 		private static readonly string JsonString = @"{ ""ByteEnum"" : 1, ""ShortEnum"" : 1, ""IntEnum"" : 1, ""LongEnum"" : NumberLong(1), ""FloatEnum"" : 1.0, ""DoubleEnum"" : 1.0, ""DecimalEnum"" : NumberDecimal(""1""), ""StringEnum"" : ""1"", ""GuidEnum"" : """ + Guid.Empty.ToString("D") + @"""" + " }";
+
+		[Test]
+		public void ShouldDeserializeForValue()
+		{
+			string json = ValueEnumsTestClass.Instance.ToJson();
+
+			json.Should().Be(JsonString);
+		}
 
 		[Test]
 		public void ShouldDeserializeFromValue()
@@ -34,14 +42,6 @@
 			obj.DecimalEnum.Should().BeSameAs(DecimalEnum.One);
 			obj.StringEnum.Should().BeSameAs(StringEnum.One);
 			obj.GuidEnum.Should().BeSameAs(GuidEnum.One);
-		}
-
-		[Test]
-		public void ShouldDeserializeForValue()
-		{
-			string json = ValueEnumsTestClass.Instance.ToJson();
-
-			json.Should().Be(JsonString);
 		}
 	}
 }

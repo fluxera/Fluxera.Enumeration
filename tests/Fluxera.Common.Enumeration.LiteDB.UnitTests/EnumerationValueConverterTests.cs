@@ -1,7 +1,6 @@
 namespace Fluxera.Enumeration.LiteDB.UnitTests
 {
 	using System;
-	using System.Reflection;
 	using FluentAssertions;
 	using Fluxera.Enumeration.UnitTests.Enums;
 	using global::LiteDB;
@@ -24,7 +23,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 
 		static EnumerationValueConverterTests()
 		{
-			BsonMapper.Global.UseEnumerationValueConverter(Assembly.GetAssembly(typeof(Color)));
+			BsonMapper.Global.UseEnumeration(true);
 		}
 
 		[Test]
@@ -45,6 +44,26 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 			TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
 
 			obj.Color.Should().BeNull();
+		}
+
+		[Test]
+		public void ShouldDeserializeNullValue()
+		{
+			string json = @"{ ""Color"": null }";
+
+			BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(json);
+			TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
+
+			obj.Color.Should().BeNull();
+		}
+
+		[Test]
+		public void ShouldSerializeForValue()
+		{
+			BsonDocument? doc = BsonMapper.Global.ToDocument(TestInstance);
+			string json = JsonSerializer.Serialize(doc);
+
+			json.Should().Be(JsonString);
 		}
 
 		[Test]
@@ -75,26 +94,6 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 
 			act.Should()
 				.Throw<LiteException>();
-		}
-
-		[Test]
-		public void ShouldDeserializeNullValue()
-		{
-			string json = @"{ ""Color"": null }";
-
-			BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(json);
-			TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
-
-			obj.Color.Should().BeNull();
-		}
-
-		[Test]
-		public void ShouldSerializeForValue()
-		{
-			BsonDocument? doc = BsonMapper.Global.ToDocument(TestInstance);
-			string json = JsonSerializer.Serialize(doc);
-
-			json.Should().Be(JsonString);
 		}
 	}
 }

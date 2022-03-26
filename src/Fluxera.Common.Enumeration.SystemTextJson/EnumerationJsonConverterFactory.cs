@@ -6,7 +6,7 @@ namespace Fluxera.Enumeration.SystemTextJson
 	using JetBrains.Annotations;
 
 	[PublicAPI]
-	public class EnumerationJsonConverterFactory : JsonConverterFactory
+	public sealed class EnumerationJsonConverterFactory : JsonConverterFactory
 	{
 		private static readonly Type nameConverterType = typeof(EnumerationNameConverter<,>);
 		private static readonly Type valueConverterType = typeof(EnumerationValueConverter<,>);
