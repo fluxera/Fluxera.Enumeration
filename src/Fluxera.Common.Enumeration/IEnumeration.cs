@@ -3,6 +3,9 @@
 	using System;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///     A contract for using the enumeration is contexts that do not provide type information.
+	/// </summary>
 	[PublicAPI]
 	public interface IEnumeration : IComparable
 	{

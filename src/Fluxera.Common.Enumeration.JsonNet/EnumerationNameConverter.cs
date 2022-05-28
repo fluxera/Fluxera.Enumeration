@@ -4,6 +4,7 @@
 	using JetBrains.Annotations;
 	using Newtonsoft.Json;
 
+	/// <inheritdoc />
 	[PublicAPI]
 	public sealed class EnumerationNameConverter<TEnum, TValue> : JsonConverter<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
@@ -16,7 +17,7 @@
 		public override bool CanRead => true;
 
 		/// <inheritdoc />
-		public override void WriteJson(JsonWriter writer, TEnum? value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer, TEnum value, JsonSerializer serializer)
 		{
 			if(value is null)
 			{
@@ -29,7 +30,7 @@
 		}
 
 		/// <inheritdoc />
-		public override TEnum? ReadJson(JsonReader reader, Type objectType, TEnum? existingValue, bool hasExistingValue, JsonSerializer serializer)
+		public override TEnum ReadJson(JsonReader reader, Type objectType, TEnum existingValue, bool hasExistingValue, JsonSerializer serializer)
 		{
 			if(reader.TokenType == JsonToken.Null)
 			{
@@ -38,8 +39,8 @@
 
 			if(reader.TokenType == JsonToken.String)
 			{
-				string? name = (string?)reader.Value;
-				if(!Enumeration<TEnum, TValue>.TryParseName(name, out TEnum? result))
+				string name = (string)reader.Value;
+				if(!Enumeration<TEnum, TValue>.TryParseName(name, out TEnum result))
 				{
 					throw new JsonSerializationException($"Error converting name '{name ?? "null"}' to enumeration '{objectType.Name}'.");
 				}

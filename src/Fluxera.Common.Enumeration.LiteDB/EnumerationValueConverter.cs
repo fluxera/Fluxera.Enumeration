@@ -4,10 +4,17 @@
 	using global::LiteDB;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///     A value-based enumeration converter.
+	/// </summary>
 	[PublicAPI]
 	public static class EnumerationValueConverter
 	{
-		public static Func<object, BsonValue?> Serialize()
+		/// <summary>
+		///     Serializes the enumeration.
+		/// </summary>
+		/// <returns></returns>
+		public static Func<object, BsonValue> Serialize()
 		{
 			return obj =>
 			{
@@ -53,7 +60,13 @@
 			};
 		}
 
-		public static Func<BsonValue, object?> Deserialize(Type enumerationType)
+		/// <summary>
+		///     Deserializes the enumeration.
+		/// </summary>
+		/// <param name="enumerationType"></param>
+		/// <returns></returns>
+		/// <exception cref="LiteException"></exception>
+		public static Func<BsonValue, object> Deserialize(Type enumerationType)
 		{
 			return bson =>
 			{
@@ -67,7 +80,7 @@
 					Type valueType = enumerationType.GetValueType();
 					object value = ReadValue(bson, valueType);
 
-					if(!Enumeration.TryParseValue(enumerationType, value, out IEnumeration? result))
+					if(!Enumeration.TryParseValue(enumerationType, value, out IEnumeration result))
 					{
 						throw new LiteException(0, $"Error converting value '{value}' to enumeration '{enumerationType.Name}'.");
 					}

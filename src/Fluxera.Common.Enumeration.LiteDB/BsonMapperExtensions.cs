@@ -7,12 +7,21 @@
 	using global::LiteDB;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///     Extension methods for the <see cref="BsonMapper" /> type.
+	/// </summary>
 	[PublicAPI]
 	public static class BsonMapperExtensions
 	{
+		/// <summary>
+		///     Configures the serialization of enumerations.
+		/// </summary>
+		/// <param name="mapper"></param>
+		/// <param name="useValue"></param>
+		/// <returns></returns>
 		public static BsonMapper UseEnumeration(this BsonMapper mapper, bool useValue = false)
 		{
-			Guard.Against.Null(mapper, nameof(mapper));
+			Guard.Against.Null(mapper);
 
 			IEnumerable<Type> enumerationTypes = AppDomain.CurrentDomain
 				.GetAssemblies()

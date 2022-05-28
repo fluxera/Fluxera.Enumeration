@@ -10,6 +10,9 @@
 	using Microsoft.EntityFrameworkCore.Metadata;
 	using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+	/// <summary>
+	///     Extension methods for the <see cref="ModelBuilder" /> type.
+	/// </summary>
 	[PublicAPI]
 	public static class ModelBuilderExtensions
 	{
@@ -42,7 +45,7 @@
 
 					Type converterType = converterTypeTemplate.MakeGenericType(enumerationType, valueType);
 
-					ValueConverter? converter = (ValueConverter?)Activator.CreateInstance(converterType);
+					ValueConverter converter = (ValueConverter)Activator.CreateInstance(converterType);
 
 					modelBuilder
 						.Entity(entityType.ClrType)
