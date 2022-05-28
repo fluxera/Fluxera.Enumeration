@@ -5,11 +5,18 @@
 	using global::MongoDB.Bson.Serialization.Conventions;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///     A member configuration to serialize enumeration properties.
+	/// </summary>
 	[PublicAPI]
 	public sealed class EnumerationConvention : ConventionBase, IMemberMapConvention
 	{
 		private readonly bool useValueConverter;
 
+		/// <summary>
+		///     Initializes a new instance of the <see cref="EnumerationConvention" /> type.
+		/// </summary>
+		/// <param name="useValueConverter"></param>
 		public EnumerationConvention(bool useValueConverter = false)
 		{
 			this.useValueConverter = useValueConverter;

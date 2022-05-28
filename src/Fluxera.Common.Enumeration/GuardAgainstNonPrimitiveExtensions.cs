@@ -1,15 +1,19 @@
 ﻿namespace Fluxera.Enumeration
 {
 	using System;
+	using System.Runtime.CompilerServices;
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using static Fluxera.Guards.ExceptionHelpers;
 
+	/// <summary>
+	///     Extensions methods for the <see cref="IGuard" /> type.
+	/// </summary>
 	[PublicAPI]
 	public static class GuardAgainstNonPrimitiveExtensions
 	{
 		/// <summary>
-		///		Checks if the type of the value is one of the supported ones.
+		///     Checks if the type of the value is one of the supported ones.
 		/// </summary>
 		/// <typeparam name="T">The type of the value.</typeparam>
 		/// <param name="guard">The guard.</param>
@@ -17,9 +21,9 @@
 		/// <param name="parameterName">The parameter name.</param>
 		/// <param name="message">The optional error message.</param>
 		/// <returns>The input if the check was successful.</returns>
-		public static T UnsupportedValueType<T>(this IGuard guard, T input, [InvokerParameterName] string parameterName, string? message = null)
+		public static T UnsupportedValueType<T>(this IGuard guard, T input, [InvokerParameterName] [CallerArgumentExpression("input")] string parameterName = null, string message = null)
 		{
-			Guard.Against.Null(input, nameof(input));
+			Guard.Against.Null(input);
 
 			Type valueType = input.GetType();
 

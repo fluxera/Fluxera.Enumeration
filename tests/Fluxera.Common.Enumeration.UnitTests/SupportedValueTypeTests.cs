@@ -9,6 +9,19 @@
 	[TestFixture]
 	public class SupportedValueTypeTests
 	{
+		private static IEnumerable<object[]> TestData = new List<object[]>
+		{
+			new object[] { typeof(ByteEnum), 1, ByteEnum.One },
+			new object[] { typeof(ShortEnum), 1, ShortEnum.One },
+			new object[] { typeof(IntEnum), 1, IntEnum.One },
+			new object[] { typeof(LongEnum), 1, LongEnum.One },
+			new object[] { typeof(DecimalEnum), 1, DecimalEnum.One },
+			new object[] { typeof(FloatEnum), 1, FloatEnum.One },
+			new object[] { typeof(DoubleEnum), 1, DoubleEnum.One },
+			new object[] { typeof(StringEnum), "1", StringEnum.One },
+			new object[] { typeof(GuidEnum), Guid.Empty, GuidEnum.One },
+		};
+
 		[Test]
 		public void ShouldParse_Generic()
 		{
@@ -25,6 +38,14 @@
 		}
 
 		[Test]
+		[TestCaseSource(nameof(TestData))]
+		public void ShouldParse_NonGeneric(Type enumType, object enumValue, IEnumeration expected)
+		{
+			IEnumeration result = Enumeration.ParseValue(enumType, enumValue);
+			result.Should().BeSameAs(expected);
+		}
+
+		[Test]
 		public void ShouldThrowForUnsupportedValueType_Generic()
 		{
 			Action action = () => UnsupportedEnum.ParseValue(false);
@@ -37,26 +58,5 @@
 			Action action = () => Enumeration.ParseValue(typeof(UnsupportedEnum), false);
 			action.Should().Throw<ArgumentException>();
 		}
-
-		[Test]
-		[TestCaseSource(nameof(TestData))]
-		public void ShouldParse_NonGeneric(Type enumType, object enumValue, IEnumeration expected)
-		{
-			IEnumeration result = Enumeration.ParseValue(enumType, enumValue);
-			result.Should().BeSameAs(expected);
-		}
-
-		private static IEnumerable<object[]> TestData = new List<object[]>
-		{
-			new object[] { typeof(ByteEnum), 1, ByteEnum.One },
-			new object[] { typeof(ShortEnum), 1, ShortEnum.One },
-			new object[] { typeof(IntEnum), 1, IntEnum.One },
-			new object[] { typeof(LongEnum), 1, LongEnum.One },
-			new object[] { typeof(DecimalEnum), 1, DecimalEnum.One },
-			new object[] { typeof(FloatEnum), 1, FloatEnum.One },
-			new object[] { typeof(DoubleEnum), 1, DoubleEnum.One },
-			new object[] { typeof(StringEnum), "1", StringEnum.One },
-			new object[] { typeof(GuidEnum), Guid.Empty, GuidEnum.One },
-		};
 	}
 }

@@ -8,19 +8,24 @@
 	using JetBrains.Annotations;
 	using Newtonsoft.Json.Serialization;
 
+	/// <summary>
+	///     A <see cref="IContractResolver" /> that allows to have multiple other resolver instances added.
+	/// </summary>
 	[PublicAPI]
 	public sealed class CompositeContractResolver : IContractResolver, IEnumerable<IContractResolver>
 	{
 		private readonly IList<IContractResolver> contractResolvers = new List<IContractResolver>();
 		private readonly DefaultContractResolver defaultContractResolver = new DefaultContractResolver();
 
+		/// <inheritdoc />
 		public JsonContract ResolveContract(Type type)
 		{
 			return this.contractResolvers
 				.Select(x => x.ResolveContract(type))
-				.FirstOrDefault(x => x != null)!;
+				.FirstOrDefault();
 		}
 
+		/// <inheritdoc />
 		public IEnumerator<IContractResolver> GetEnumerator()
 		{
 			return this.contractResolvers.GetEnumerator();
@@ -31,9 +36,13 @@
 			return this.GetEnumerator();
 		}
 
+		/// <summary>
+		///     Add a resolver instance.
+		/// </summary>
+		/// <param name="contractResolver"></param>
 		public void Add(IContractResolver contractResolver)
 		{
-			Guard.Against.Null(contractResolver, nameof(contractResolver));
+			Guard.Against.Null(contractResolver);
 
 			if(this.contractResolvers.Contains(this.defaultContractResolver))
 			{

@@ -9,6 +9,11 @@ namespace Fluxera.Enumeration.SystemTextJson
 	[PublicAPI]
 	public static class JsonSerializerOptionsExtensions
 	{
+		/// <summary>
+		///     Configures the JSON converter to use.
+		/// </summary>
+		/// <param name="options"></param>
+		/// <param name="useValue"></param>
 		public static void UseEnumeration(this JsonSerializerOptions options, bool useValue = false)
 		{
 			options.Converters.Add(new EnumerationJsonConverterFactory(useValue));

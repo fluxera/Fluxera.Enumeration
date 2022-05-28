@@ -7,13 +7,18 @@
 	using global::MongoDB.Bson.Serialization.Serializers;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///     A value-based enumeration serializer implementation.
+	/// </summary>
+	/// <typeparam name="TEnum"></typeparam>
+	/// <typeparam name="TValue"></typeparam>
 	[PublicAPI]
 	public sealed class EnumerationValueSerializer<TEnum, TValue> : SerializerBase<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
 		where TValue : IComparable, IComparable<TValue>
 	{
 		/// <inheritdoc />
-		public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TEnum? value)
+		public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TEnum value)
 		{
 			if(value is null)
 			{
@@ -56,18 +61,18 @@
 			if(context.Reader.CurrentBsonType == BsonType.Null)
 			{
 				context.Reader.ReadNull();
-				return null!;
+				return null;
 			}
 
 			if(context.Reader.CurrentBsonType is BsonType.Int32 or BsonType.Int64 or BsonType.Decimal128 or BsonType.Double or BsonType.String)
 			{
 				TValue value = this.ReadValue(context.Reader);
-				if(!Enumeration<TEnum, TValue>.TryParseValue(value, out TEnum? result))
+				if(!Enumeration<TEnum, TValue>.TryParseValue(value, out TEnum result))
 				{
 					throw new FormatException($"Error converting value '{value}' to enumeration '{args.NominalType.Name}'.");
 				}
 
-				return result!;
+				return result;
 			}
 
 			throw new FormatException($"Unexpected token {context.Reader.CurrentBsonType} when parsing an enumeration.");

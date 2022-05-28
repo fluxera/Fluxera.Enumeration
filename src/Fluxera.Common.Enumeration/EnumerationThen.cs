@@ -3,8 +3,13 @@
 	using System;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///     A utility struct to provide a fluent API for building conditional execution rules.
+	/// </summary>
+	/// <typeparam name="TEnum"></typeparam>
+	/// <typeparam name="TValue"></typeparam>
 	[PublicAPI]
-	public readonly struct EnumerationThen<TEnum, TValue> 
+	public readonly struct EnumerationThen<TEnum, TValue>
 		where TEnum : Enumeration<TEnum, TValue>
 		where TValue : IComparable, IComparable<TValue>
 	{
