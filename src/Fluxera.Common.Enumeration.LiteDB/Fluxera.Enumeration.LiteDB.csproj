@@ -7,7 +7,7 @@
 	<PropertyGroup>
 		<Title>Fluxera.Enumeration.LiteDB</Title>
 		<Description>LiteDB serialization support for the object-oriented enumeration.</Description>
-		<PackageTags>fluxera;library;enumeration</PackageTags>
+		<PackageTags>fluxera;library;enumeration;litedb</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>

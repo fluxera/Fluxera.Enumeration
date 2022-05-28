@@ -7,7 +7,7 @@
 	<PropertyGroup>
 		<Title>Fluxera.Enumeration.EntityFrameworkCore</Title>
 		<Description>EF Core serialization support for the object-oriented enumeration.</Description>
-		<PackageTags>fluxera;library;enumeration</PackageTags>
+		<PackageTags>fluxera;library;enumeration;ef-core</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>

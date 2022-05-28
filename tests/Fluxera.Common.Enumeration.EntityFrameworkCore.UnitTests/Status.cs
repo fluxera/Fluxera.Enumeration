@@ -1,4 +1,4 @@
-﻿namespace Fluxera.Enumeration.EntityFramework.UnitTests
+﻿namespace Fluxera.Enumeration.EntityFrameworkCore.UnitTests
 {
 	public class Status : Enumeration<Status, int>
 	{

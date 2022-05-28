@@ -1,9 +1,8 @@
-﻿namespace Fluxera.Enumeration.EntityFramework.UnitTests
+﻿namespace Fluxera.Enumeration.EntityFrameworkCore.UnitTests
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using Fluxera.Enumeration.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore.Infrastructure;
 	using Microsoft.EntityFrameworkCore.Metadata.Builders;

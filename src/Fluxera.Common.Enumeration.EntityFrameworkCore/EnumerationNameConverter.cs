@@ -35,7 +35,7 @@
 				throw new FormatException($"Error converting name '{name}' to enumeration '{typeof(TEnum).Name}'.");
 			}
 
-			return result!;
+			return result;
 		}
 	}
 }
