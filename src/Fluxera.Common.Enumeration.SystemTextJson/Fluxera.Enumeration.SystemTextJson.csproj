@@ -7,7 +7,7 @@
 	<PropertyGroup>
 		<Title>Fluxera.Enumeration.SystemTextJson</Title>
 		<Description>System.Text.Json serialization support for the object-oriented enumeration.</Description>
-		<PackageTags>fluxera;library;enumeration</PackageTags>
+		<PackageTags>fluxera;library;enumeration;json</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>

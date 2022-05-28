@@ -1,4 +1,4 @@
-﻿namespace Fluxera.Enumeration.EntityFramework.UnitTests
+﻿namespace Fluxera.Enumeration.EntityFrameworkCore.UnitTests
 {
 	using System.Linq;
 

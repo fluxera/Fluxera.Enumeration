@@ -40,7 +40,7 @@
 				throw new FormatException($"Error converting value '{value}' to enumeration '{typeof(TEnum).Name}'.");
 			}
 
-			return result!;
+			return result;
 		}
 	}
 }
