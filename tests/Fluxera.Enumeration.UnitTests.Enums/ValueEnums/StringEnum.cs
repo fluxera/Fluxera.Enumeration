@@ -5,7 +5,7 @@
 		public static readonly StringEnum One = new StringEnum("1", "One");
 
 		/// <inheritdoc />
-		public StringEnum(string value, string name) 
+		private StringEnum(string value, string name)
 			: base(value, name)
 		{
 		}

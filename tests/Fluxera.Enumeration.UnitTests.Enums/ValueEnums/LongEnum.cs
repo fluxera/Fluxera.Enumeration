@@ -5,7 +5,7 @@
 		public static readonly LongEnum One = new LongEnum(1, "One");
 
 		/// <inheritdoc />
-		public LongEnum(long value, string name) 
+		private LongEnum(long value, string name)
 			: base(value, name)
 		{
 		}

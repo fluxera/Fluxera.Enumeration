@@ -5,7 +5,7 @@
 		public static readonly DecimalEnum One = new DecimalEnum(1, "One");
 
 		/// <inheritdoc />
-		public DecimalEnum(decimal value, string name) 
+		private DecimalEnum(decimal value, string name)
 			: base(value, name)
 		{
 		}

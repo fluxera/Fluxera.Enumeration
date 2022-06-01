@@ -1,8 +1,8 @@
 namespace Fluxera.Enumeration.UnitTests
 {
 	using System.Collections.Generic;
-	using Enums;
 	using FluentAssertions;
+	using Fluxera.Enumeration.UnitTests.Enums;
 	using NUnit.Framework;
 
 	[TestFixture]
@@ -22,7 +22,7 @@ namespace Fluxera.Enumeration.UnitTests
 		[TestCaseSource(nameof(TestData))]
 		public void ShouldReturnTheEnumName_IEnumeration(IEnumeration color)
 		{
-			string? result = color.ToString();
+			string result = color.ToString();
 			result.Should().Be(color.Name);
 		}
 	}

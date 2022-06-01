@@ -18,7 +18,7 @@
 		[Test]
 		public void ShouldDeserializeForValue()
 		{
-			BsonDocument? doc = BsonMapper.Global.ToDocument(ValueEnumsTestClass.Instance);
+			BsonDocument doc = BsonMapper.Global.ToDocument(ValueEnumsTestClass.Instance);
 			string json = JsonSerializer.Serialize(doc);
 
 			json.Should().Be(JsonString);
@@ -27,8 +27,8 @@
 		[Test]
 		public void ShouldDeserializeFromValue()
 		{
-			BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(JsonString);
-			ValueEnumsTestClass? obj = BsonMapper.Global.ToObject<ValueEnumsTestClass>(doc);
+			BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(JsonString);
+			ValueEnumsTestClass obj = BsonMapper.Global.ToObject<ValueEnumsTestClass>(doc);
 
 			obj.ByteEnum.Should().BeSameAs(ByteEnum.One);
 			obj.ShortEnum.Should().BeSameAs(ShortEnum.One);

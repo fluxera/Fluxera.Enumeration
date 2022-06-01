@@ -26,7 +26,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		[Test]
 		public void ShouldDeserializeFromName()
 		{
-			TestClass? obj = JsonSerializer.Deserialize<TestClass>(JsonString);
+			TestClass obj = JsonSerializer.Deserialize<TestClass>(JsonString);
 
 			obj.Color.Should().BeSameAs(Color.Red);
 		}
@@ -36,20 +36,9 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		{
 			string json = @"{}";
 
-			TestClass? obj = JsonSerializer.Deserialize<TestClass>(json);
+			TestClass obj = JsonSerializer.Deserialize<TestClass>(json);
 
 			obj.Color.Should().BeNull();
-		}
-
-		[Test]
-		public void ShouldThrowWhenNotFound()
-		{
-			string json = @"{ ""Color"": ""Not Found"" }";
-
-			Action act = () => JsonSerializer.Deserialize<TestClass>(json);
-
-			act.Should()
-				.Throw<JsonException>();
 		}
 
 		[Test]
@@ -57,7 +46,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		{
 			string json = @"{ ""Color"": null }";
 
-			TestClass? obj = JsonSerializer.Deserialize<TestClass>(json);
+			TestClass obj = JsonSerializer.Deserialize<TestClass>(json);
 
 			obj.Color.Should().BeNull();
 		}
@@ -71,6 +60,17 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 			});
 
 			json.Should().Be(JsonString);
+		}
+
+		[Test]
+		public void ShouldThrowWhenNotFound()
+		{
+			string json = @"{ ""Color"": ""Not Found"" }";
+
+			Action act = () => JsonSerializer.Deserialize<TestClass>(json);
+
+			act.Should()
+				.Throw<JsonException>();
 		}
 	}
 }

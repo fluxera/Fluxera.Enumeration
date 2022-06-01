@@ -35,9 +35,10 @@
 	[PublicAPI]
 	[Serializable]
 	[DebuggerDisplay("{Name}")]
+	[TypeConverter(typeof(EnumerationConverter))]
 	public abstract class Enumeration<TEnum, TValue> : IEnumeration, IComparable<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : IComparable, IComparable<TValue>
+		where TValue : notnull, IComparable, IComparable<TValue>
 	{
 		private static Lazy<TEnum[]> enumOptions = new Lazy<TEnum[]>(GetAllOptions, LazyThreadSafetyMode.ExecutionAndPublication);
 		private static Lazy<IDictionary<TValue, TEnum>> parseValue = new Lazy<IDictionary<TValue, TEnum>>(GetParseValueDict);

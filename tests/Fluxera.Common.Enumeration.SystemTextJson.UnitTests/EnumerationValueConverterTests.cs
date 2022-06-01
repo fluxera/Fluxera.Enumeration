@@ -26,7 +26,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		[Test]
 		public void ShouldDeserializeFromValue()
 		{
-			TestClass? obj = JsonSerializer.Deserialize<TestClass>(JsonString);
+			TestClass obj = JsonSerializer.Deserialize<TestClass>(JsonString);
 
 			obj.Color.Should().BeSameAs(Color.Red);
 		}
@@ -36,9 +36,30 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		{
 			string json = "{}";
 
-			TestClass? obj = JsonSerializer.Deserialize<TestClass>(json);
+			TestClass obj = JsonSerializer.Deserialize<TestClass>(json);
 
 			obj.Color.Should().BeNull();
+		}
+
+		[Test]
+		public void ShouldDeserializeNullValue()
+		{
+			string json = @"{ ""Color"": null }";
+
+			TestClass obj = JsonSerializer.Deserialize<TestClass>(json);
+
+			obj.Color.Should().BeNull();
+		}
+
+		[Test]
+		public void ShouldSerializeForValue()
+		{
+			string json = JsonSerializer.Serialize(TestInstance, new JsonSerializerOptions
+			{
+				WriteIndented = false
+			});
+
+			json.Should().Be(JsonString);
 		}
 
 		[Test]
@@ -61,27 +82,6 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 
 			act.Should()
 				.Throw<JsonException>();
-		}
-
-		[Test]
-		public void ShouldDeserializeNullValue()
-		{
-			string json = @"{ ""Color"": null }";
-
-			TestClass? obj = JsonSerializer.Deserialize<TestClass>(json);
-
-			obj.Color.Should().BeNull();
-		}
-
-		[Test]
-		public void ShouldSerializeForValue()
-		{
-			string json = JsonSerializer.Serialize(TestInstance, new JsonSerializerOptions
-			{
-				WriteIndented = false
-			});
-
-			json.Should().Be(JsonString);
 		}
 	}
 }

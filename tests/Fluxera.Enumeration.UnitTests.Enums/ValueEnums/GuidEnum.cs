@@ -7,7 +7,7 @@
 		public static readonly GuidEnum One = new GuidEnum(Guid.Empty, "One");
 
 		/// <inheritdoc />
-		public GuidEnum(Guid value, string name) 
+		private GuidEnum(Guid value, string name)
 			: base(value, name)
 		{
 		}

@@ -5,7 +5,7 @@
 		public static readonly ByteEnum One = new ByteEnum(1, "One");
 
 		/// <inheritdoc />
-		public ByteEnum(byte value, string name) 
+		private ByteEnum(byte value, string name)
 			: base(value, name)
 		{
 		}

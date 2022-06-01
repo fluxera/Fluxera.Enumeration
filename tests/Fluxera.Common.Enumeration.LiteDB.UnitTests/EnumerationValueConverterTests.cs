@@ -29,8 +29,8 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		[Test]
 		public void ShouldDeserializeFromValue()
 		{
-			BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(JsonString);
-			TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
+			BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(JsonString);
+			TestClass obj = BsonMapper.Global.ToObject<TestClass>(doc);
 
 			obj.Color.Should().BeSameAs(Color.Red);
 		}
@@ -40,8 +40,8 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		{
 			string json = "{}";
 
-			BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(json);
-			TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
+			BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(json);
+			TestClass obj = BsonMapper.Global.ToObject<TestClass>(doc);
 
 			obj.Color.Should().BeNull();
 		}
@@ -51,8 +51,8 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		{
 			string json = @"{ ""Color"": null }";
 
-			BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(json);
-			TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
+			BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(json);
+			TestClass obj = BsonMapper.Global.ToObject<TestClass>(doc);
 
 			obj.Color.Should().BeNull();
 		}
@@ -60,7 +60,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		[Test]
 		public void ShouldSerializeForValue()
 		{
-			BsonDocument? doc = BsonMapper.Global.ToDocument(TestInstance);
+			BsonDocument doc = BsonMapper.Global.ToDocument(TestInstance);
 			string json = JsonSerializer.Serialize(doc);
 
 			json.Should().Be(JsonString);
@@ -73,8 +73,8 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 
 			Action act = () =>
 			{
-				BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(json);
-				TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
+				BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(json);
+				TestClass obj = BsonMapper.Global.ToObject<TestClass>(doc);
 			};
 
 			act.Should()
@@ -88,8 +88,8 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 
 			Action act = () =>
 			{
-				BsonDocument? doc = (BsonDocument?)JsonSerializer.Deserialize(json);
-				TestClass? obj = BsonMapper.Global.ToObject<TestClass>(doc);
+				BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(json);
+				TestClass obj = BsonMapper.Global.ToObject<TestClass>(doc);
 			};
 
 			act.Should()

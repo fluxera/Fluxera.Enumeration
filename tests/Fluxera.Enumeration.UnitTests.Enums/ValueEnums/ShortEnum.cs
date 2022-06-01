@@ -5,7 +5,7 @@
 		public static readonly ShortEnum One = new ShortEnum(1, "One");
 
 		/// <inheritdoc />
-		public ShortEnum(short value, string name) 
+		private ShortEnum(short value, string name)
 			: base(value, name)
 		{
 		}
