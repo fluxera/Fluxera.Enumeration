@@ -33,7 +33,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		[Test]
 		public void ShouldDeserializeFromValue()
 		{
-			TestClass? obj = BsonSerializer.Deserialize<TestClass>(JsonString);
+			TestClass obj = BsonSerializer.Deserialize<TestClass>(JsonString);
 
 			obj.Color.Should().BeSameAs(Color.Red);
 		}
@@ -43,7 +43,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		{
 			string json = "{}";
 
-			TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
+			TestClass obj = BsonSerializer.Deserialize<TestClass>(json);
 
 			obj.Color.Should().BeNull();
 		}
@@ -53,7 +53,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 		{
 			string json = @"{ ""Color"": null }";
 
-			TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
+			TestClass obj = BsonSerializer.Deserialize<TestClass>(json);
 
 			obj.Color.Should().BeNull();
 		}
@@ -73,7 +73,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 
 			Action act = () =>
 			{
-				TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
+				TestClass obj = BsonSerializer.Deserialize<TestClass>(json);
 			};
 
 			act.Should()
@@ -87,7 +87,7 @@ namespace Fluxera.Enumeration.MongoDB.UnitTests
 
 			Action act = () =>
 			{
-				TestClass? obj = BsonSerializer.Deserialize<TestClass>(json);
+				TestClass obj = BsonSerializer.Deserialize<TestClass>(json);
 			};
 
 			act.Should()

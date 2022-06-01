@@ -1,7 +1,7 @@
 namespace Fluxera.Enumeration.UnitTests
 {
-	using Enums;
 	using FluentAssertions;
+	using Fluxera.Enumeration.UnitTests.Enums;
 	using NUnit.Framework;
 
 	[TestFixture]

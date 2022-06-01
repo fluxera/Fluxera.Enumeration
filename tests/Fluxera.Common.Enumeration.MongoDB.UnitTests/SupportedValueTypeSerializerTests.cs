@@ -31,7 +31,7 @@
 		[Test]
 		public void ShouldDeserializeFromValue()
 		{
-			ValueEnumsTestClass? obj = BsonSerializer.Deserialize<ValueEnumsTestClass>(JsonString);
+			ValueEnumsTestClass obj = BsonSerializer.Deserialize<ValueEnumsTestClass>(JsonString);
 
 			obj.ByteEnum.Should().BeSameAs(ByteEnum.One);
 			obj.ShortEnum.Should().BeSameAs(ShortEnum.One);

@@ -23,7 +23,7 @@
 			using(LiteDatabase db = new LiteDatabase(databaseFile))
 			{
 				// Get a collection (or create, if doesn't exist)
-				ILiteCollection<Person>? collection = db.GetCollection<Person>("people");
+				ILiteCollection<Person> collection = db.GetCollection<Person>("people");
 
 				// Create your new person instance
 				Person person = new Person

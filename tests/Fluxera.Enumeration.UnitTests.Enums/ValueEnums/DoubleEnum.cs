@@ -5,7 +5,7 @@
 		public static readonly DoubleEnum One = new DoubleEnum(1, "One");
 
 		/// <inheritdoc />
-		public DoubleEnum(double value, string name) 
+		private DoubleEnum(double value, string name)
 			: base(value, name)
 		{
 		}

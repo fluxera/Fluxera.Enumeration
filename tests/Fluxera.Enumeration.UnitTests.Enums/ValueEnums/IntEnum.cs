@@ -5,7 +5,7 @@
 		public static readonly IntEnum One = new IntEnum(1, "One");
 
 		/// <inheritdoc />
-		public IntEnum(int value, string name) 
+		private IntEnum(int value, string name)
 			: base(value, name)
 		{
 		}

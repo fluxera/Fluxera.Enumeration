@@ -1,7 +1,7 @@
 namespace Fluxera.Enumeration.UnitTests
 {
-	using Enums;
 	using FluentAssertions;
+	using Fluxera.Enumeration.UnitTests.Enums;
 	using NUnit.Framework;
 
 	[TestFixture]
@@ -75,7 +75,7 @@ namespace Fluxera.Enumeration.UnitTests
 		public void ShouldReturnNullWhenCastingFromNullInt()
 		{
 			int? value = null;
-			Color? result = (Color?)value;
+			Color result = (Color?)value;
 			result.Should().BeNull();
 		}
 

@@ -31,7 +31,7 @@ namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 		[Test]
 		public void ShouldDeserializeFromName()
 		{
-			TestClass? obj = JsonSerializer.Deserialize<TestClass>(JsonString, options);
+			TestClass obj = JsonSerializer.Deserialize<TestClass>(JsonString, options);
 
 			obj.Color.Should().BeSameAs(Color.Red);
 		}

@@ -2,8 +2,8 @@ namespace Fluxera.Enumeration.UnitTests
 {
 	using System;
 	using System.Collections.Generic;
-	using Enums;
 	using FluentAssertions;
+	using Fluxera.Enumeration.UnitTests.Enums;
 	using NUnit.Framework;
 
 	[TestFixture]

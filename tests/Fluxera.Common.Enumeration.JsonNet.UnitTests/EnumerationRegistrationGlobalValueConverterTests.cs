@@ -31,7 +31,7 @@ namespace Fluxera.Enumeration.JsonNet.UnitTests
 		[Test]
 		public void ShouldDeserializeFromValue()
 		{
-			TestClass? obj = JsonConvert.DeserializeObject<TestClass>(JsonString);
+			TestClass obj = JsonConvert.DeserializeObject<TestClass>(JsonString);
 
 			obj.Color.Should().BeSameAs(Color.Red);
 		}
