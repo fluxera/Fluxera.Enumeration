@@ -75,7 +75,7 @@ namespace Fluxera.Enumeration.UnitTests
 		public void ShouldReturnNullWhenCastingFromNullInt()
 		{
 			int? value = null;
-			Color result = (Color?)value;
+			Color result = (Color)value;
 			result.Should().BeNull();
 		}
 
@@ -83,23 +83,23 @@ namespace Fluxera.Enumeration.UnitTests
 		public void ShouldReturnNullWhenCastingFromNullInt_IEnumeration()
 		{
 			int? value = null;
-			IEnumeration? result = (Color?)value;
+			IEnumeration result = (Color)value;
 			result.Should().BeNull();
 		}
 
 		[Test]
 		public void ShouldReturnNullWhenCastingFromNullString()
 		{
-			string? name = null;
-			Color result = (Color?)name!;
+			string name = null;
+			Color result = (Color)name;
 			result.Should().BeNull();
 		}
 
 		[Test]
 		public void ShouldReturnNullWhenCastingFromNullString_IEnumeration()
 		{
-			string? name = null;
-			IEnumeration result = (Color?)name!;
+			string name = null;
+			IEnumeration result = (Color)name;
 			result.Should().BeNull();
 		}
 	}

@@ -43,7 +43,7 @@
 
 				if(typeof(TValue) == typeof(Guid))
 				{
-					value = (TValue)(object)Guid.Parse(((string)reader.Value)!);
+					value = (TValue)(object)Guid.Parse((string)reader.Value);
 				}
 				else
 				{

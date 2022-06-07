@@ -8,7 +8,7 @@
 		public static readonly Mammal Elephant = new Mammal(1);
 
 		/// <inheritdoc />
-		private Mammal(int value, [CallerMemberName] string name = null!)
+		private Mammal(int value, [CallerMemberName] string name = null)
 			: base(value, name)
 		{
 		}

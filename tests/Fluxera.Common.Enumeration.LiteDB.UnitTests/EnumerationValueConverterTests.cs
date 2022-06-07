@@ -29,7 +29,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		[Test]
 		public void ShouldDeserializeFromValue()
 		{
-			BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(JsonString);
+			BsonDocument doc = (BsonDocument)JsonSerializer.Deserialize(JsonString);
 			TestClass obj = BsonMapper.Global.ToObject<TestClass>(doc);
 
 			obj.Color.Should().BeSameAs(Color.Red);
@@ -40,7 +40,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		{
 			string json = "{}";
 
-			BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(json);
+			BsonDocument doc = (BsonDocument)JsonSerializer.Deserialize(json);
 			TestClass obj = BsonMapper.Global.ToObject<TestClass>(doc);
 
 			obj.Color.Should().BeNull();
@@ -51,7 +51,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 		{
 			string json = @"{ ""Color"": null }";
 
-			BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(json);
+			BsonDocument doc = (BsonDocument)JsonSerializer.Deserialize(json);
 			TestClass obj = BsonMapper.Global.ToObject<TestClass>(doc);
 
 			obj.Color.Should().BeNull();
@@ -73,7 +73,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 
 			Action act = () =>
 			{
-				BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(json);
+				BsonDocument doc = (BsonDocument)JsonSerializer.Deserialize(json);
 				TestClass obj = BsonMapper.Global.ToObject<TestClass>(doc);
 			};
 
@@ -88,7 +88,7 @@ namespace Fluxera.Enumeration.LiteDB.UnitTests
 
 			Action act = () =>
 			{
-				BsonDocument doc = (BsonDocument?)JsonSerializer.Deserialize(json);
+				BsonDocument doc = (BsonDocument)JsonSerializer.Deserialize(json);
 				TestClass obj = BsonMapper.Global.ToObject<TestClass>(doc);
 			};
 

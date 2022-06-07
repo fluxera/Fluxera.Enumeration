@@ -54,7 +54,7 @@
 			}
 			while(type is not null);
 
-			return null!;
+			return null;
 		}
 	}
 }
