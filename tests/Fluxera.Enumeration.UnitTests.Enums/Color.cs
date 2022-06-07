@@ -9,7 +9,7 @@
 		public static readonly Color Blue = new Color(2, "0000FF");
 
 		/// <inheritdoc />
-		private Color(int value, string hexValue, [CallerMemberName] string name = null!)
+		private Color(int value, string hexValue, [CallerMemberName] string name = null)
 			: base(value, name)
 		{
 			this.HexValue = hexValue;

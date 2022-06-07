@@ -8,7 +8,7 @@
 		public static readonly Gender Female = new Gender(1);
 		public static readonly Gender Divers = new Gender(2);
 
-		private Gender(int value, [CallerMemberName] string name = null!)
+		private Gender(int value, [CallerMemberName] string name = null)
 			: base(value, name)
 		{
 		}

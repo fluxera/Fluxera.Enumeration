@@ -8,7 +8,7 @@
 		public static readonly Reptile Python = new Reptile(3);
 
 		/// <inheritdoc />
-		private Reptile(int value, [CallerMemberName] string name = null!)
+		private Reptile(int value, [CallerMemberName] string name = null)
 			: base(value, name)
 		{
 		}
