@@ -60,7 +60,7 @@
 		}
 
 		/// <summary>
-		///     Gets an array of all enum options of <see cref="TEnum" />.
+		///     Gets an array of all enum options of TEnum.
 		/// </summary>
 		public static TEnum[] All => parseName.Value.Values.ToArray();
 
@@ -377,10 +377,10 @@
 		}
 
 		/// <summary>
-		///     When this instance is one of the specified <see cref="TEnum" /> parameters.
+		///     When this instance is one of the specified TEnum parameters.
 		///     Execute the action that is configured in the <see cref="EnumerationThen{TEnum, TValue}" />.
 		/// </summary>
-		/// <param name="enumeration">A <see cref="TEnum" /> value to compare to this instance.</param>
+		/// <param name="enumeration">A TEnum value to compare to this instance.</param>
 		/// <returns>An object to configure an action to execute.</returns>
 		public EnumerationThen<TEnum, TValue> When(Enumeration<TEnum, TValue> enumeration)
 		{
@@ -388,10 +388,10 @@
 		}
 
 		/// <summary>
-		///     When this instance is one of the specified <see cref="TEnum" /> parameters.
+		///     When this instance is one of the specified TEnum parameters.
 		///     Execute the action that is configured in the <see cref="EnumerationThen{TEnum, TValue}" />.
 		/// </summary>
-		/// <param name="enumerations">A collection of <see cref="TEnum" /> values to compare to this instance.</param>
+		/// <param name="enumerations">A collection of TEnum values to compare to this instance.</param>
 		/// <returns>An object to configure an action to execute.</returns>
 		public EnumerationThen<TEnum, TValue> WhenAny(params Enumeration<TEnum, TValue>[] enumerations)
 		{
@@ -399,7 +399,7 @@
 		}
 
 		/// <summary>
-		///     When this instance is one of the specified <see cref="TEnum" /> parameters.
+		///     When this instance is one of the specified TEnum parameters.
 		///     Execute the action that is configured in the <see cref="EnumerationThen{TEnum, TValue}" />.
 		/// </summary>
 		/// <param name="enumerations">A collection of <see cref="Enumeration{TEnum}" /> values to compare to this instance.</param>
