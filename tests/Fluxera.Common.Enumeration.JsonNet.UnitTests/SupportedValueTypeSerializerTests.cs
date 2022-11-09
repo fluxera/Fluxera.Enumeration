@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Enumeration.JsonNet.UnitTests
 {
 	using System;
-	using System.Text.Json;
 	using FluentAssertions;
 	using Fluxera.Enumeration.UnitTests.Enums.ValueEnums;
 	using Newtonsoft.Json;
@@ -10,8 +9,6 @@
 	[TestFixture]
 	public class SupportedValueTypeSerializerTests
 	{
-		private static readonly JsonSerializerOptions options;
-
 		static SupportedValueTypeSerializerTests()
 		{
 			JsonSerializerSettings settings = new JsonSerializerSettings();
