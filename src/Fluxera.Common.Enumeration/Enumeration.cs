@@ -412,12 +412,12 @@
 		private static TEnum[] GetAllOptions()
 		{
 			Type enumType = typeof(TEnum);
-			return Assembly.GetAssembly(enumType)
+			return Assembly.GetAssembly(enumType)?
 				.GetTypes()
-				.Where(t => enumType.IsAssignableFrom(t))
+				.Where(enumType.IsAssignableFrom)
 				.SelectMany(t => t.GetEnumFields<TEnum, TValue>())
 				.OrderBy(t => t.Value)
-				.ToArray();
+				.ToArray() ?? Array.Empty<TEnum>();
 		}
 
 		private static IDictionary<string, TEnum> GetParseNameDict()
@@ -599,13 +599,12 @@
 			// Populate the global options dictionary.
 			if(!globalEnumOptions.ContainsKey(enumerationType))
 			{
-				Type baseType = enumerationType;
-				enumOptions = Assembly.GetAssembly(baseType)
+				enumOptions = Assembly.GetAssembly(enumerationType)?
 					.GetTypes()
-					.Where(t => baseType.IsAssignableFrom(t))
+					.Where(enumerationType.IsAssignableFrom)
 					.SelectMany(t => t.GetEnumFields())
 					.OrderBy(t => t.Value)
-					.ToArray();
+					.ToArray() ?? Array.Empty<IEnumeration>();
 
 				globalEnumOptions.Add(enumerationType, enumOptions);
 			}
