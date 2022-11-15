@@ -43,7 +43,10 @@
 
 				if(typeof(TValue) == typeof(Guid))
 				{
-					value = (TValue)(object)Guid.Parse((string)reader.Value);
+					string strValue = (string)reader.Value;
+					value = string.IsNullOrWhiteSpace(strValue)
+						? (TValue)(object)Guid.Empty
+						: (TValue)(object)Guid.Parse(strValue);
 				}
 				else
 				{
