@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/fluxera/Foundation/_apis/build/status/GitHub/fluxera.Fluxera.Enumeration?branchName=main&stageName=BuildAndTest)](https://dev.azure.com/fluxera/Foundation/_build/latest?definitionId=80&branchName=main)
+
 # Fluxera.Enumeration
 An object-oriented enumeration library.
 
