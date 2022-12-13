@@ -61,12 +61,11 @@
 				foreach(Type type in types)
 				{
 					EntityTypeBuilder entityBuilder = modelBuilder.Entity(type);
+					entityBuilder.UseEnumeration(this.useValueConverter);
 					object[] data = this.SeedData.Where(x => x.GetType() == type).ToArray();
 					entityBuilder.HasData(data);
 				}
 			}
-
-			modelBuilder.UseEnumeration(this.useValueConverter);
 
 			base.OnModelCreating(modelBuilder);
 		}
