@@ -7,7 +7,6 @@
 	using System.Linq;
 	using System.Reflection;
 	using System.Threading;
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 
 	/// <summary>
@@ -52,8 +51,8 @@
 		/// <param name="name"></param>
 		protected Enumeration(TValue value, string name)
 		{
-			Guard.Against.NullOrWhiteSpace(name);
-			Guard.Against.UnsupportedValueType(value);
+			Guard.ThrowIfNullOrWhiteSpace(name);
+			Guard.ThrowIfUnsupportedValueType(value);
 
 			this.Value = value;
 			this.Name = name;
@@ -123,7 +122,7 @@
 		/// <returns>The associated enum option.</returns>
 		public static TEnum ParseValue(TValue value)
 		{
-			Guard.Against.UnsupportedValueType(value);
+			Guard.ThrowIfUnsupportedValueType(value);
 
 			if(!parseValue.Value.TryGetValue(value, out TEnum result))
 			{
@@ -144,8 +143,8 @@
 		/// </returns>
 		public static TEnum ParseValue(TValue value, TEnum defaultValue)
 		{
-			Guard.Against.UnsupportedValueType(value);
-			Guard.Against.Null(defaultValue);
+			Guard.ThrowIfUnsupportedValueType(value);
+			Guard.ThrowIfNull(defaultValue);
 
 			if(!parseValue.Value.TryGetValue(value, out TEnum result))
 			{
@@ -166,7 +165,7 @@
 		/// <returns><c>true</c> if the name is found, <c>false</c> otherwise.</returns>
 		public static bool TryParseValue(TValue value, out TEnum result)
 		{
-			Guard.Against.UnsupportedValueType(value);
+			Guard.ThrowIfUnsupportedValueType(value);
 
 			return parseValue.Value.TryGetValue(value, out result);
 		}
@@ -180,7 +179,7 @@
 		/// <exception cref="InvalidEnumArgumentException">Thrown when no option was found for the name.</exception>
 		public static TEnum ParseName(string name, bool ignoreCase = false)
 		{
-			Guard.Against.NullOrWhiteSpace(name, nameof(name));
+			Guard.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
 			IDictionary<string, TEnum> dictionary = ignoreCase
 				? parseNameIgnoreCase.Value
@@ -464,7 +463,7 @@
 		/// <returns>The associated enum option.</returns>
 		public static IEnumeration ParseValue(Type enumerationType, object value)
 		{
-			Guard.Against.UnsupportedValueType(value);
+			Guard.ThrowIfUnsupportedValueType(value);
 
 			value = Convert.ChangeType(value, enumerationType.GetValueType());
 
@@ -489,8 +488,8 @@
 		/// </returns>
 		public static IEnumeration ParseValue(Type enumerationType, object value, IEnumeration defaultValue)
 		{
-			Guard.Against.UnsupportedValueType(value);
-			Guard.Against.Null(defaultValue);
+			Guard.ThrowIfUnsupportedValueType(value);
+			Guard.ThrowIfNull(defaultValue);
 
 			value = Convert.ChangeType(value, enumerationType.GetValueType());
 
@@ -515,7 +514,7 @@
 		/// <returns><c>true</c> if the name is found, <c>false</c> otherwise.</returns>
 		public static bool TryParseValue(Type enumerationType, object value, out IEnumeration result)
 		{
-			Guard.Against.UnsupportedValueType(value);
+			Guard.ThrowIfUnsupportedValueType(value);
 
 			value = Convert.ChangeType(value, enumerationType.GetValueType());
 
@@ -533,7 +532,7 @@
 		/// <exception cref="InvalidEnumArgumentException">Thrown when no option was found for the name.</exception>
 		public static IEnumeration ParseName(Type enumerationType, string name, bool ignoreCase = false)
 		{
-			Guard.Against.NullOrWhiteSpace(name, nameof(name));
+			Guard.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
 			IDictionary<string, IEnumeration> parseName = GetParseNameDict(enumerationType, ignoreCase);
 			if(!parseName.TryGetValue(name, out IEnumeration result))
@@ -596,21 +595,21 @@
 		{
 			IEnumeration[] enumOptions;
 
-			// Populate the global options dictionary.
-			if(!globalEnumOptions.ContainsKey(enumerationType))
+			// Populate the global option dictionary.
+			if(!globalEnumOptions.TryGetValue(enumerationType, out IEnumeration[] option))
 			{
 				enumOptions = Assembly.GetAssembly(enumerationType)?
 					.GetTypes()
 					.Where(enumerationType.IsAssignableFrom)
 					.SelectMany(t => t.GetEnumFields())
 					.OrderBy(t => t.Value)
-					.ToArray() ?? Array.Empty<IEnumeration>();
+					.ToArray() ?? [];
 
 				globalEnumOptions.Add(enumerationType, enumOptions);
 			}
 			else
 			{
-				enumOptions = globalEnumOptions[enumerationType];
+				enumOptions = option;
 			}
 
 			return enumOptions;

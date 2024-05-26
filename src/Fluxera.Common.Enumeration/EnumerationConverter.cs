@@ -4,7 +4,6 @@
 	using System.Collections.Concurrent;
 	using System.ComponentModel;
 	using System.Globalization;
-	using Fluxera.Guards;
 
 	internal sealed class EnumerationConverter : TypeConverter
 	{
@@ -94,7 +93,7 @@
 		/// <inheritdoc />
 		public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
 		{
-			Guard.Against.Null(value);
+			Guard.ThrowIfNull(value);
 
 			Enumeration<TEnum, TValue> enumeration = (Enumeration<TEnum, TValue>)value;
 
