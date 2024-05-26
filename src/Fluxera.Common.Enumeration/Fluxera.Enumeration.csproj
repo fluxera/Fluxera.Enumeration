@@ -22,10 +22,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Fluxera.Guards" Version="8.0.*" />
+		<InternalsVisibleTo Include="Fluxera.Enumeration.EntityFrameworkCore" />
+		<InternalsVisibleTo Include="Fluxera.Enumeration.JsonNet" />
+		<InternalsVisibleTo Include="Fluxera.Enumeration.LiteDB" />
+		<InternalsVisibleTo Include="Fluxera.Enumeration.MongoDB" />
+		<InternalsVisibleTo Include="Fluxera.Enumeration.SystemTextJson" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="JetBrains.Annotations" Version="2023.3.0" PrivateAssets="All" />
 	</ItemGroup>
