@@ -40,7 +40,7 @@
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns>The type of the value.</returns>
-		public static Type GetValueType(this Type type)
+		public static Type GetEnumerationValueType(this Type type)
 		{
 			do
 			{

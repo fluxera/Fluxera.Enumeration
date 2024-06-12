@@ -15,7 +15,7 @@
 	/// <typeparam name="TEnum">The type of the enumeration.</typeparam>
 	[PublicAPI]
 	[Serializable]
-	[DebuggerDisplay("{Name}")]
+	[DebuggerDisplay("{Name} ({Value})")]
 	public abstract class Enumeration<TEnum> : Enumeration<TEnum, int>
 		where TEnum : Enumeration<TEnum, int>
 	{
@@ -35,9 +35,11 @@
 	[Serializable]
 	[DebuggerDisplay("{Name}")]
 	[TypeConverter(typeof(EnumerationConverter))]
-	public abstract class Enumeration<TEnum, TValue> : IEnumeration, IComparable<TEnum>
+	public abstract class Enumeration<TEnum, TValue> : IEnumeration, 
+		IComparable<Enumeration<TEnum, TValue>>, 
+		IEquatable<Enumeration<TEnum, TValue>>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : notnull, IComparable, IComparable<TValue>
+		where TValue : IComparable<TValue>, IEquatable<TValue>
 	{
 		private static Lazy<TEnum[]> enumOptions = new Lazy<TEnum[]>(GetAllOptions, LazyThreadSafetyMode.ExecutionAndPublication);
 		private static Lazy<IDictionary<TValue, TEnum>> parseValue = new Lazy<IDictionary<TValue, TEnum>>(GetParseValueDict);
@@ -69,7 +71,7 @@
 		public TValue Value { get; }
 
 		/// <inheritdoc />
-		public int CompareTo(TEnum other)
+		public int CompareTo(Enumeration<TEnum, TValue> other)
 		{
 			// https://stackoverflow.com/a/23787253
 			// http://msdn.microsoft.com/en-us/library/43hc6wht.aspx
@@ -243,6 +245,12 @@
 		}
 
 		/// <inheritdoc />
+		public bool Equals(Enumeration<TEnum, TValue> other)
+		{
+			return this.Equals(other as object);
+		}
+
+		/// <inheritdoc />
 		public sealed override bool Equals(object obj)
 		{
 			if(obj is null)
@@ -338,7 +346,7 @@
 		///     Explicitly converts an enumeration instance to the value.
 		/// </summary>
 		/// <param name="enumeration"></param>
-		public static explicit operator TValue(Enumeration<TEnum, TValue> enumeration)
+		public static implicit operator TValue(Enumeration<TEnum, TValue> enumeration)
 		{
 			return enumeration.Value;
 		}
@@ -347,7 +355,7 @@
 		///     Explicitly converts an enumeration instance to string.
 		/// </summary>
 		/// <param name="enumeration"></param>
-		public static explicit operator string(Enumeration<TEnum, TValue> enumeration)
+		public static implicit operator string(Enumeration<TEnum, TValue> enumeration)
 		{
 			return enumeration.Name;
 		}
@@ -367,12 +375,7 @@
 		/// <param name="name"></param>
 		public static explicit operator Enumeration<TEnum, TValue>(string name)
 		{
-			if(name is null)
-			{
-				return null;
-			}
-
-			return ParseName(name);
+			return name is not null ? ParseName(name) : null;
 		}
 
 		/// <summary>
@@ -416,7 +419,7 @@
 				.Where(enumType.IsAssignableFrom)
 				.SelectMany(t => t.GetEnumFields<TEnum, TValue>())
 				.OrderBy(t => t.Value)
-				.ToArray() ?? Array.Empty<TEnum>();
+				.ToArray() ?? [];
 		}
 
 		private static IDictionary<string, TEnum> GetParseNameDict()
@@ -465,7 +468,7 @@
 		{
 			Guard.ThrowIfUnsupportedValueType(value);
 
-			value = Convert.ChangeType(value, enumerationType.GetValueType());
+			value = Convert.ChangeType(value, enumerationType.GetEnumerationValueType());
 
 			IDictionary<object, IEnumeration> parseValue = GetParseValueDict(enumerationType);
 			if(!parseValue.TryGetValue(value, out IEnumeration result))
@@ -491,7 +494,7 @@
 			Guard.ThrowIfUnsupportedValueType(value);
 			Guard.ThrowIfNull(defaultValue);
 
-			value = Convert.ChangeType(value, enumerationType.GetValueType());
+			value = Convert.ChangeType(value, enumerationType.GetEnumerationValueType());
 
 			IDictionary<object, IEnumeration> parseValue = GetParseValueDict(enumerationType);
 			if(!parseValue.TryGetValue(value, out IEnumeration result))
@@ -516,7 +519,7 @@
 		{
 			Guard.ThrowIfUnsupportedValueType(value);
 
-			value = Convert.ChangeType(value, enumerationType.GetValueType());
+			value = Convert.ChangeType(value, enumerationType.GetEnumerationValueType());
 
 			IDictionary<object, IEnumeration> parseValue = GetParseValueDict(enumerationType);
 			return parseValue.TryGetValue(value, out result);

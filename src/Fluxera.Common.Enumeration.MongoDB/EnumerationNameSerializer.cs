@@ -14,7 +14,7 @@
 	[PublicAPI]
 	public sealed class EnumerationNameSerializer<TEnum, TValue> : SerializerBase<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : IComparable, IComparable<TValue>
+		where TValue : IComparable<TValue>, IEquatable<TValue>
 	{
 		/// <inheritdoc />
 		public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TEnum value)

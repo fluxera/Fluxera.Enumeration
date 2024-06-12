@@ -6,6 +6,7 @@
 	using System.Reflection;
 	using JetBrains.Annotations;
 	using Microsoft.EntityFrameworkCore;
+	using Microsoft.EntityFrameworkCore.ChangeTracking;
 	using Microsoft.EntityFrameworkCore.Metadata.Builders;
 	using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -34,19 +35,23 @@
 			foreach(PropertyInfo property in properties)
 			{
 				Type enumerationType = property.PropertyType;
-				Type valueType = enumerationType.GetValueType();
 
-				Type converterTypeTemplate = useValue
-					? typeof(EnumerationValueConverter<,>)
-					: typeof(EnumerationNameConverter<,>);
+				if(enumerationType.IsEnumeration())
+				{
+					Type valueType = enumerationType.GetEnumerationValueType();
 
-				Type converterType = converterTypeTemplate.MakeGenericType(enumerationType, valueType);
+					Type converterTypeTemplate = useValue
+						? typeof(EnumerationValueConverter<,>)
+						: typeof(EnumerationNameConverter<,>);
 
-				ValueConverter converter = (ValueConverter)Activator.CreateInstance(converterType);
+					Type converterType = converterTypeTemplate.MakeGenericType(enumerationType, valueType);
 
-				entityTypeBuilder
-					.Property(property.Name)
-					.HasConversion(converter);
+					ValueConverter converter = (ValueConverter)Activator.CreateInstance(converterType);
+
+					entityTypeBuilder
+						.Property(property.Name)
+						.HasConversion(converter);
+				}
 			}
 		}
 	}

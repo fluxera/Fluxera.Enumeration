@@ -8,7 +8,7 @@
 	[PublicAPI]
 	public sealed class EnumerationValueConverter<TEnum, TValue> : ValueConverter<TEnum, TValue>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : IComparable, IComparable<TValue>
+		where TValue : IComparable<TValue>, IEquatable<TValue>
 	{
 		/// <summary>
 		///     Initializes a new instance of the <see cref="EnumerationValueConverter{TEnum,TValue}" /> type.
@@ -25,7 +25,16 @@
 				return default;
 			}
 
-			return enumeration.Value;
+			switch(enumeration.Value)
+			{
+				case byte:
+				case short:
+				case int:
+				case long:
+					return enumeration.Value;
+				default:
+					throw new FormatException($"Unsupported enum value type: {enumeration.Value.GetType()}");
+			}
 		}
 
 		private static TEnum Deserialize(TValue value)

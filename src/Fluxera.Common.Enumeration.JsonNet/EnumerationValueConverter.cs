@@ -8,7 +8,7 @@
 	[PublicAPI]
 	public sealed class EnumerationValueConverter<TEnum, TValue> : JsonConverter<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : IComparable, IComparable<TValue>
+		where TValue : IComparable<TValue>, IEquatable<TValue>
 	{
 		/// <inheritdoc />
 		public override bool CanWrite => true;
@@ -25,7 +25,17 @@
 			}
 			else
 			{
-				writer.WriteValue(value.Value);
+				switch(value.Value)
+				{
+					case byte:
+					case short:
+					case int:
+					case long:
+						writer.WriteValue(value.Value);
+						break;
+					default:
+						throw new JsonSerializationException($"Unsupported enum value type: {value.Value.GetType()}");
+				}
 			}
 		}
 

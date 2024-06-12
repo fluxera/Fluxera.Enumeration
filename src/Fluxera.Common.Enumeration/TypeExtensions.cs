@@ -9,7 +9,7 @@
 	{
 		public static IEnumerable<TEnum> GetEnumFields<TEnum, TValue>(this Type type)
 			where TEnum : Enumeration<TEnum, TValue>
-			where TValue : IComparable, IComparable<TValue>
+			where TValue : IComparable<TValue>, IEquatable<TValue>
 		{
 			return type
 				.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)

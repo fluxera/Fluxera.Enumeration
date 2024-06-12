@@ -1,4 +1,4 @@
-﻿namespace Fluxera.Enumeration.EntityFrameworkCore.UnitTests
+﻿namespace Fluxera.Enumeration.EntityFrameworkCore.UnitTests.Model
 {
 	using System.ComponentModel.DataAnnotations;
 	using Fluxera.Enumeration.UnitTests.Enums.ValueEnums;
@@ -19,15 +19,5 @@
 		public IntEnum IntEnum { get; set; }
 
 		public LongEnum LongEnum { get; set; }
-
-		public FloatEnum FloatEnum { get; set; }
-
-		public DoubleEnum DoubleEnum { get; set; }
-
-		public DecimalEnum DecimalEnum { get; set; }
-
-		public StringEnum StringEnum { get; set; }
-
-		public GuidEnum GuidEnum { get; set; }
 	}
 }
