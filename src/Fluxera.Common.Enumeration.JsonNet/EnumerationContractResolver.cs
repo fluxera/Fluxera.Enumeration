@@ -28,7 +28,7 @@
 		{
 			if(objectType.IsEnumeration())
 			{
-				Type valueType = objectType.GetValueType();
+				Type valueType = objectType.GetEnumerationValueType();
 				Type converterTypeTemplate = this.useValueConverter ? ValueConverterType : NameConverterType;
 				Type converterType = converterTypeTemplate.MakeGenericType(objectType, valueType);
 

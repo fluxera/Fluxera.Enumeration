@@ -1,4 +1,4 @@
-﻿namespace Fluxera.Enumeration.LiteDB.UnitTests
+﻿namespace Fluxera.Enumeration.LiteDB.UnitTests.Model
 {
 	using global::LiteDB;
 

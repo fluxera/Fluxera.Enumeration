@@ -1,6 +1,7 @@
 ﻿namespace Fluxera.Enumeration.EntityFrameworkCore.UnitTests
 {
 	using System.Linq;
+	using Fluxera.Enumeration.EntityFrameworkCore.UnitTests.Model;
 
 	public static class DbContextFactory
 	{
@@ -12,6 +13,24 @@
 			{
 				SeedData = PersonFactory.Generate(seedCount).ToArray(),
 			};
+
+			context.Database.EnsureDeleted();
+			context.Database.EnsureCreated();
+			return context;
+		}
+
+		public static ByNameContext GenerateByName()
+		{
+			ByNameContext context = new ByNameContext();
+
+			context.Database.EnsureDeleted();
+			context.Database.EnsureCreated();
+			return context;
+		}
+
+		public static ByValueContext GenerateByValue()
+		{
+			ByValueContext context = new ByValueContext();
 
 			context.Database.EnsureDeleted();
 			context.Database.EnsureCreated();

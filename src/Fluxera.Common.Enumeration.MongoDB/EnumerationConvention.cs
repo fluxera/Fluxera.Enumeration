@@ -30,7 +30,7 @@
 
 			if(memberType.IsEnumeration())
 			{
-				Type valueType = memberType.GetValueType();
+				Type valueType = memberType.GetEnumerationValueType();
 				Type serializerTypeTemplate = this.useValueConverter
 					? typeof(EnumerationValueSerializer<,>)
 					: typeof(EnumerationNameSerializer<,>);

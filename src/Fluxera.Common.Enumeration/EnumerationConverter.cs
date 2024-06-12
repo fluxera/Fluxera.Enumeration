@@ -43,7 +43,7 @@
 				throw new InvalidOperationException($"The type '{enumerationType}' is not a enumeration.");
 			}
 
-			Type valueType = enumerationType.GetValueType();
+			Type valueType = enumerationType.GetEnumerationValueType();
 			Type actualConverterType = typeof(EnumerationConverter<,>).MakeGenericType(enumerationType, valueType);
 			return (TypeConverter)Activator.CreateInstance(actualConverterType);
 		}
@@ -51,7 +51,7 @@
 
 	internal sealed class EnumerationConverter<TEnum, TValue> : TypeConverter
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : notnull, IComparable, IComparable<TValue>
+		where TValue : IComparable<TValue>, IEquatable<TValue>
 	{
 		/// <inheritdoc />
 		public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)

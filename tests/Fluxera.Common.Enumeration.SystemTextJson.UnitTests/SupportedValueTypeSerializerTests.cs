@@ -1,6 +1,5 @@
 ﻿namespace Fluxera.Enumeration.SystemTextJson.UnitTests
 {
-	using System;
 	using System.Text.Json;
 	using FluentAssertions;
 	using Fluxera.Enumeration.UnitTests.Enums.ValueEnums;
@@ -20,7 +19,7 @@
 			options.UseEnumeration(true);
 		}
 
-		private static readonly string JsonString = @"{""ByteEnum"":1,""ShortEnum"":1,""IntEnum"":1,""LongEnum"":1,""FloatEnum"":1,""DoubleEnum"":1,""DecimalEnum"":1,""StringEnum"":""1"",""GuidEnum"":""" + Guid.Empty.ToString("D") + @"""" + "}";
+		private static readonly string JsonString = @"{""ByteEnum"":1,""ShortEnum"":1,""IntEnum"":1,""LongEnum"":1}";
 
 		[Test]
 		public void ShouldDeserializeForValue()
@@ -39,11 +38,6 @@
 			obj.ShortEnum.Should().BeSameAs(ShortEnum.One);
 			obj.IntEnum.Should().BeSameAs(IntEnum.One);
 			obj.LongEnum.Should().BeSameAs(LongEnum.One);
-			obj.FloatEnum.Should().BeSameAs(FloatEnum.One);
-			obj.DoubleEnum.Should().BeSameAs(DoubleEnum.One);
-			obj.DecimalEnum.Should().BeSameAs(DecimalEnum.One);
-			obj.StringEnum.Should().BeSameAs(StringEnum.One);
-			obj.GuidEnum.Should().BeSameAs(GuidEnum.One);
 		}
 	}
 }

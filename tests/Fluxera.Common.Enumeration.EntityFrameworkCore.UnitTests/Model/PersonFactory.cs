@@ -1,4 +1,4 @@
-﻿namespace Fluxera.Enumeration.EntityFrameworkCore.UnitTests
+﻿namespace Fluxera.Enumeration.EntityFrameworkCore.UnitTests.Model
 {
 	using System;
 	using System.Collections.Generic;
@@ -17,11 +17,6 @@
 				.RuleFor(e => e.ShortEnum, (f, e) => ShortEnum.One)
 				.RuleFor(e => e.IntEnum, (f, e) => IntEnum.One)
 				.RuleFor(e => e.LongEnum, (f, e) => LongEnum.One)
-				.RuleFor(e => e.FloatEnum, (f, e) => FloatEnum.One)
-				.RuleFor(e => e.DoubleEnum, (f, e) => DoubleEnum.One)
-				.RuleFor(e => e.DecimalEnum, (f, e) => DecimalEnum.One)
-				.RuleFor(e => e.StringEnum, (f, e) => StringEnum.One)
-				.RuleFor(e => e.GuidEnum, (f, e) => GuidEnum.One)
 				.Generate(count);
 		}
 

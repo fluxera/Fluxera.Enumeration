@@ -23,40 +23,19 @@
 					return BsonValue.Null;
 				}
 
-				BsonValue bsonValue;
-
-				switch(enumeration)
+				switch(enumeration.Value)
 				{
-					case { Value: byte writeValue }:
-						bsonValue = new BsonValue(writeValue);
-						break;
-					case { Value: short writeValue }:
-						bsonValue = new BsonValue(writeValue);
-						break;
-					case { Value: int writeValue }:
-						bsonValue = new BsonValue(writeValue);
-						break;
-					case { Value: long writeValue }:
-						bsonValue = new BsonValue(writeValue);
-						break;
-					case { Value: decimal writeValue }:
-						bsonValue = new BsonValue(writeValue);
-						break;
-					case { Value: float writeValue }:
-						bsonValue = new BsonValue(writeValue);
-						break;
-					case { Value: double writeValue }:
-						bsonValue = new BsonValue(writeValue);
-						break;
-					case { Value: Guid writeValue }:
-						bsonValue = new BsonValue(writeValue);
-						break;
+					case byte byteValue:
+						return new BsonValue(byteValue);
+					case short shortValue:
+						return new BsonValue(shortValue);
+					case int intValue:
+						return new BsonValue(intValue);
+					case long longValue:
+						return new BsonValue(longValue);
 					default:
-						bsonValue = new BsonValue(enumeration.Value.ToString());
-						break;
+						throw new LiteException(0, $"Unsupported enum value type: {enumeration.Value.GetType()}");
 				}
-
-				return bsonValue;
 			};
 		}
 
@@ -75,9 +54,9 @@
 					return null;
 				}
 
-				if(bson.IsNumber || bson.IsString || bson.IsBoolean || bson.IsDecimal || bson.IsGuid)
+				if(bson.IsNumber)
 				{
-					Type valueType = enumerationType.GetValueType();
+					Type valueType = enumerationType.GetEnumerationValueType();
 					object value = ReadValue(bson, valueType);
 
 					if(!Enumeration.TryParseValue(enumerationType, value, out IEnumeration result))
@@ -111,26 +90,6 @@
 			else if(typeValue == typeof(long))
 			{
 				value = bsonValue.AsInt64;
-			}
-			else if(typeValue == typeof(float))
-			{
-				value = bsonValue.AsDouble;
-			}
-			else if(typeValue == typeof(double))
-			{
-				value = bsonValue.AsDouble;
-			}
-			else if(typeValue == typeof(decimal))
-			{
-				value = bsonValue.AsDecimal;
-			}
-			else if(typeValue == typeof(string))
-			{
-				value = bsonValue.AsString;
-			}
-			else if(typeValue == typeof(Guid))
-			{
-				value = bsonValue.AsGuid;
 			}
 			else
 			{

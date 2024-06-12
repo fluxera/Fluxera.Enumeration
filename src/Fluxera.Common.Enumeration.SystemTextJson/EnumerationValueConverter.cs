@@ -9,7 +9,7 @@ namespace Fluxera.Enumeration.SystemTextJson
 	[PublicAPI]
 	public sealed class EnumerationValueConverter<TEnum, TValue> : JsonConverter<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : IComparable, IComparable<TValue>
+		where TValue : IComparable<TValue>, IEquatable<TValue>
 	{
 		/// <inheritdoc />
 		public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
@@ -20,32 +20,22 @@ namespace Fluxera.Enumeration.SystemTextJson
 				return;
 			}
 
-			switch(value)
+			switch(value.Value)
 			{
-				case { Value: byte writeValue }:
-					writer.WriteNumberValue(writeValue);
+				case byte byteValue:
+					writer.WriteNumberValue(byteValue);
 					break;
-				case { Value: short writeValue }:
-					writer.WriteNumberValue(writeValue);
+				case short shortValue:
+					writer.WriteNumberValue(shortValue);
 					break;
-				case { Value: int writeValue }:
-					writer.WriteNumberValue(writeValue);
+				case int intValue:
+					writer.WriteNumberValue(intValue);
 					break;
-				case { Value: long writeValue }:
-					writer.WriteNumberValue(writeValue);
-					break;
-				case { Value: decimal writeValue }:
-					writer.WriteNumberValue(writeValue);
-					break;
-				case { Value: float writeValue }:
-					writer.WriteNumberValue(writeValue);
-					break;
-				case { Value: double writeValue }:
-					writer.WriteNumberValue(writeValue);
+				case long longValue:
+					writer.WriteNumberValue(longValue);
 					break;
 				default:
-					writer.WriteStringValue(value.Value.ToString());
-					break;
+					throw new JsonException($"Unsupported enum value type: {value.Value.GetType()}");
 			}
 		}
 
@@ -59,7 +49,7 @@ namespace Fluxera.Enumeration.SystemTextJson
 
 			if(reader.TokenType is JsonTokenType.Number or JsonTokenType.String)
 			{
-				TValue value = this.ReadValue(ref reader);
+				TValue value = ReadValue(ref reader);
 				if(!Enumeration<TEnum, TValue>.TryParseValue(value, out TEnum result))
 				{
 					throw new JsonException($"Error converting value '{value}' to enumeration '{typeToConvert.Name}'.");
@@ -71,7 +61,7 @@ namespace Fluxera.Enumeration.SystemTextJson
 			throw new JsonException($"Unexpected token {reader.TokenType} when parsing an enumeration.");
 		}
 
-		private TValue ReadValue(ref Utf8JsonReader reader)
+		private static TValue ReadValue(ref Utf8JsonReader reader)
 		{
 			TValue value;
 
@@ -90,26 +80,6 @@ namespace Fluxera.Enumeration.SystemTextJson
 			else if(typeof(TValue) == typeof(long))
 			{
 				value = (TValue)(object)reader.GetInt64();
-			}
-			else if(typeof(TValue) == typeof(float))
-			{
-				value = (TValue)(object)reader.GetSingle();
-			}
-			else if(typeof(TValue) == typeof(double))
-			{
-				value = (TValue)(object)reader.GetDouble();
-			}
-			else if(typeof(TValue) == typeof(decimal))
-			{
-				value = (TValue)(object)reader.GetDecimal();
-			}
-			else if(typeof(TValue) == typeof(string))
-			{
-				value = (TValue)(object)reader.GetString();
-			}
-			else if(typeof(TValue) == typeof(Guid))
-			{
-				value = (TValue)(object)reader.GetGuid();
 			}
 			else
 			{

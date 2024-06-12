@@ -11,7 +11,7 @@
 	[PublicAPI]
 	public readonly struct EnumerationThen<TEnum, TValue>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : IComparable, IComparable<TValue>
+		where TValue : IComparable<TValue>, IEquatable<TValue>
 	{
 		private readonly bool isMatch;
 		private readonly Enumeration<TEnum, TValue> enumeration;

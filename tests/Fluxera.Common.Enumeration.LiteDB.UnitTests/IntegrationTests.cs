@@ -3,6 +3,7 @@
 	using System;
 	using System.IO;
 	using FluentAssertions;
+	using Fluxera.Enumeration.LiteDB.UnitTests.Model;
 	using global::LiteDB;
 	using NUnit.Framework;
 

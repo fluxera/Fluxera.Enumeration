@@ -13,7 +13,7 @@
 	[PublicAPI]
 	public readonly struct EnumerationWhen<TEnum, TValue>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : IComparable, IComparable<TValue>
+		where TValue : IComparable<TValue>, IEquatable<TValue>
 	{
 		private readonly Enumeration<TEnum, TValue> enumeration;
 		private readonly bool stopEvaluating;

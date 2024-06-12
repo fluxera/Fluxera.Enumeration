@@ -28,7 +28,7 @@
 			return argument;
 		}
 
-		public static string ThrowIfNullOrWhiteSpace(string argument, [InvokerParameterName][CallerArgumentExpression("argument")] string parameterName = null)
+		public static string ThrowIfNullOrWhiteSpace(string argument, [InvokerParameterName][CallerArgumentExpression(nameof(argument))] string parameterName = null)
 		{
 			argument = ThrowIfNull(argument, parameterName);
 
@@ -73,14 +73,9 @@
 			if(valueType != typeof(byte) &&
 				valueType != typeof(short) &&
 				valueType != typeof(int) &&
-				valueType != typeof(long) &&
-				valueType != typeof(float) &&
-				valueType != typeof(double) &&
-				valueType != typeof(decimal) &&
-				valueType != typeof(string) &&
-				valueType != typeof(Guid))
+				valueType != typeof(long))
 			{
-				throw new ArgumentException(message ?? "Value cannot be an unsupported type.", parameterName);
+				throw new ArgumentException(message ?? $"Value cannot be an unsupported type ({valueType}).", parameterName);
 			}
 
 			return argument;

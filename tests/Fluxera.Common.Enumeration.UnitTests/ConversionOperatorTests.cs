@@ -67,7 +67,7 @@ namespace Fluxera.Enumeration.UnitTests
 		public void ShouldCastToStringFromEnum()
 		{
 			Color color = Color.Green;
-			string result = (string)color;
+			string result = color;
 			result.Should().Be(color.Name);
 		}
 

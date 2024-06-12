@@ -1,5 +1,7 @@
-﻿namespace Fluxera.Enumeration.EntityFrameworkCore.UnitTests
+﻿namespace Fluxera.Enumeration.EntityFrameworkCore.UnitTests.Model
 {
+	using Fluxera.Enumeration;
+
 	public class Status : Enumeration<Status, int>
 	{
 		public static readonly Status Active = new Status(1, nameof(Active));

@@ -8,7 +8,7 @@
 	[PublicAPI]
 	public sealed class EnumerationNameConverter<TEnum, TValue> : ValueConverter<TEnum, string>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : IComparable, IComparable<TValue>
+		where TValue : IComparable<TValue>, IEquatable<TValue>
 	{
 		/// <summary>
 		///     Initializes a new instance of the <see cref="EnumerationNameConverter{TEnum,TValue}" /> type.

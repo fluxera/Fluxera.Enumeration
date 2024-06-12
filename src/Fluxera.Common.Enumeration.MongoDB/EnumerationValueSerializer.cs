@@ -15,7 +15,7 @@
 	[PublicAPI]
 	public sealed class EnumerationValueSerializer<TEnum, TValue> : SerializerBase<TEnum>
 		where TEnum : Enumeration<TEnum, TValue>
-		where TValue : IComparable, IComparable<TValue>
+		where TValue : IComparable<TValue>, IEquatable<TValue>
 	{
 		/// <inheritdoc />
 		public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TEnum value)
@@ -26,32 +26,22 @@
 				return;
 			}
 
-			switch(value)
+			switch (value.Value)
 			{
-				case { Value: byte writeValue }:
-					context.Writer.WriteInt32(writeValue);
+				case byte byteValue:
+					context.Writer.WriteInt32(byteValue);
 					break;
-				case { Value: short writeValue }:
-					context.Writer.WriteInt32(writeValue);
+				case short shortValue:
+					context.Writer.WriteInt32(shortValue);
 					break;
-				case { Value: int writeValue }:
-					context.Writer.WriteInt32(writeValue);
+				case int intValue:
+					context.Writer.WriteInt32(intValue);
 					break;
-				case { Value: long writeValue }:
-					context.Writer.WriteInt64(writeValue);
-					break;
-				case { Value: decimal writeValue }:
-					context.Writer.WriteDecimal128(writeValue);
-					break;
-				case { Value: float writeValue }:
-					context.Writer.WriteDouble(writeValue);
-					break;
-				case { Value: double writeValue }:
-					context.Writer.WriteDouble(writeValue);
+				case long longValue:
+					context.Writer.WriteInt64(longValue);
 					break;
 				default:
-					context.Writer.WriteString(value.Value.ToString());
-					break;
+					throw new FormatException($"Unsupported enum value type: {value.Value.GetType()}");
 			}
 		}
 
@@ -64,9 +54,9 @@
 				return null;
 			}
 
-			if(context.Reader.CurrentBsonType is BsonType.Int32 or BsonType.Int64 or BsonType.Decimal128 or BsonType.Double or BsonType.String)
+			if(context.Reader.CurrentBsonType is BsonType.Int32 or BsonType.Int64)
 			{
-				TValue value = this.ReadValue(context.Reader);
+				TValue value = ReadValue(context.Reader);
 				if(!Enumeration<TEnum, TValue>.TryParseValue(value, out TEnum result))
 				{
 					throw new FormatException($"Error converting value '{value}' to enumeration '{args.NominalType.Name}'.");
@@ -78,7 +68,7 @@
 			throw new FormatException($"Unexpected token {context.Reader.CurrentBsonType} when parsing an enumeration.");
 		}
 
-		private TValue ReadValue(IBsonReader reader)
+		private static TValue ReadValue(IBsonReader reader)
 		{
 			TValue value;
 
@@ -97,26 +87,6 @@
 			else if(typeof(TValue) == typeof(long))
 			{
 				value = (TValue)(object)reader.ReadInt64();
-			}
-			else if(typeof(TValue) == typeof(float))
-			{
-				value = (TValue)Convert.ChangeType(reader.ReadDouble(), typeof(float));
-			}
-			else if(typeof(TValue) == typeof(double))
-			{
-				value = (TValue)(object)reader.ReadDouble();
-			}
-			else if(typeof(TValue) == typeof(decimal))
-			{
-				value = (TValue)Convert.ChangeType(reader.ReadDecimal128(), typeof(decimal));
-			}
-			else if(typeof(TValue) == typeof(string))
-			{
-				value = (TValue)(object)reader.ReadString();
-			}
-			else if(typeof(TValue) == typeof(Guid))
-			{
-				value = (TValue)(object)Guid.Parse(reader.ReadString());
 			}
 			else
 			{

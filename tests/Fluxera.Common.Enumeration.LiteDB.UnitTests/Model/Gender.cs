@@ -1,6 +1,7 @@
-﻿namespace Fluxera.Enumeration.LiteDB.UnitTests
+﻿namespace Fluxera.Enumeration.LiteDB.UnitTests.Model
 {
 	using System.Runtime.CompilerServices;
+	using Fluxera.Enumeration;
 
 	public sealed class Gender : Enumeration<Gender, int>
 	{
