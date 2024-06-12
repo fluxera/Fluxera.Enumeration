@@ -317,7 +317,7 @@
 		/// <returns></returns>
 		public static bool operator <=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
 		{
-			return left.CompareTo((TEnum)right) <= 0;
+			return left.CompareTo(right) <= 0;
 		}
 
 		/// <summary>
@@ -328,7 +328,7 @@
 		/// <returns></returns>
 		public static bool operator >(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
 		{
-			return left.CompareTo((TEnum)right) > 0;
+			return left.CompareTo(right) > 0;
 		}
 
 		/// <summary>
@@ -339,7 +339,7 @@
 		/// <returns></returns>
 		public static bool operator >=(Enumeration<TEnum, TValue> left, Enumeration<TEnum, TValue> right)
 		{
-			return left.CompareTo((TEnum)right) >= 0;
+			return left.CompareTo(right) >= 0;
 		}
 
 		/// <summary>
@@ -361,19 +361,19 @@
 		}
 
 		/// <summary>
-		///     Explicitly converts a value to an enumeration instance.
+		///     Implicitly converts a value to an enumeration instance.
 		/// </summary>
 		/// <param name="value"></param>
-		public static explicit operator Enumeration<TEnum, TValue>(TValue value)
+		public static implicit operator Enumeration<TEnum, TValue>(TValue value)
 		{
 			return ParseValue(value);
 		}
 
 		/// <summary>
-		///     Explicitly converts a string to an enumeration instance.
+		///     Implicitly converts a string to an enumeration instance.
 		/// </summary>
 		/// <param name="name"></param>
-		public static explicit operator Enumeration<TEnum, TValue>(string name)
+		public static implicit operator Enumeration<TEnum, TValue>(string name)
 		{
 			return name is not null ? ParseName(name) : null;
 		}
