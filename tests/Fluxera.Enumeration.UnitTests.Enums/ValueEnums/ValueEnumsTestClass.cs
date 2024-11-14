@@ -17,5 +17,13 @@
 			IntEnum = IntEnum.One,
 			LongEnum = LongEnum.One
 		};
+
+		public static readonly ValueEnumsTestClass InstanceLong = new ValueEnumsTestClass
+		{
+			ByteEnum = ByteEnum.One,
+			ShortEnum = ShortEnum.One,
+			IntEnum = IntEnum.One,
+			LongEnum = LongEnum.Long
+		};
 	}
 }

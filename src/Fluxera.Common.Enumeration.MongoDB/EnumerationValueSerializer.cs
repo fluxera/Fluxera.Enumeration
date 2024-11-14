@@ -86,7 +86,14 @@
 			}
 			else if(typeof(TValue) == typeof(long))
 			{
-				value = (TValue)(object)reader.ReadInt64();
+				if(reader.CurrentBsonType == BsonType.Int64)
+				{
+					value = (TValue)(object)reader.ReadInt64();
+				}
+				else
+				{
+					value = (TValue)Convert.ChangeType(reader.ReadInt32(), typeof(long));
+				}
 			}
 			else
 			{
