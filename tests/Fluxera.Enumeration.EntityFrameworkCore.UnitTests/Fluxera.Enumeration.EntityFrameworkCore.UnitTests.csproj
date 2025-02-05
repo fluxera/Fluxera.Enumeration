@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
@@ -6,9 +6,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Bogus" Version="35.6.1" />
 		<PackageReference Include="FluentAssertions" Version="8.0.1" />
-		<PackageReference Include="LiteDB.Async" Version="0.1.8" />
-		<PackageReference Include="LiteDB.Queryable" Version="9.0.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
 		<PackageReference Include="NUnit" Version="4.3.2" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
@@ -16,10 +15,11 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Fluxera.Common.Enumeration.LiteDB\Fluxera.Enumeration.LiteDB.csproj" />
+		<ProjectReference Include="..\..\src\Fluxera.Enumeration.EntityFrameworkCore\Fluxera.Enumeration.EntityFrameworkCore.csproj" />
 		<ProjectReference Include="..\Fluxera.Enumeration.UnitTests.Enums\Fluxera.Enumeration.UnitTests.Enums.csproj" />
 	</ItemGroup>
 

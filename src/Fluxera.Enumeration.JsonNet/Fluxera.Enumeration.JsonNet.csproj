@@ -31,7 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Fluxera.Common.Enumeration\Fluxera.Enumeration.csproj" />
+	  <ProjectReference Include="..\Fluxera.Enumeration\Fluxera.Enumeration.csproj" />
 	</ItemGroup>
 
 </Project>
