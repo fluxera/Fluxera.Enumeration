@@ -24,29 +24,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F18D2D58
 		tests\Directory.Build.props = tests\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration", "src\Fluxera.Common.Enumeration\Fluxera.Enumeration.csproj", "{1253CAF4-C093-44C3-B4E5-B91A45FEF860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration", "src\Fluxera.Enumeration\Fluxera.Enumeration.csproj", "{1253CAF4-C093-44C3-B4E5-B91A45FEF860}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.EntityFrameworkCore", "src\Fluxera.Common.Enumeration.EntityFrameworkCore\Fluxera.Enumeration.EntityFrameworkCore.csproj", "{2FD6047E-18B0-405B-A8BA-7B20493ED34F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.EntityFrameworkCore", "src\Fluxera.Enumeration.EntityFrameworkCore\Fluxera.Enumeration.EntityFrameworkCore.csproj", "{2FD6047E-18B0-405B-A8BA-7B20493ED34F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.JsonNet", "src\Fluxera.Common.Enumeration.JsonNet\Fluxera.Enumeration.JsonNet.csproj", "{78C4E9A0-855E-4DE3-8CA9-AF0962F29039}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.JsonNet", "src\Fluxera.Enumeration.JsonNet\Fluxera.Enumeration.JsonNet.csproj", "{78C4E9A0-855E-4DE3-8CA9-AF0962F29039}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.LiteDB", "src\Fluxera.Common.Enumeration.LiteDB\Fluxera.Enumeration.LiteDB.csproj", "{46652839-6779-4110-B93F-F3916C225F16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.LiteDB", "src\Fluxera.Enumeration.LiteDB\Fluxera.Enumeration.LiteDB.csproj", "{46652839-6779-4110-B93F-F3916C225F16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.MongoDB", "src\Fluxera.Common.Enumeration.MongoDB\Fluxera.Enumeration.MongoDB.csproj", "{97E8494A-DA43-489C-AB41-CE094ED9890F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.MongoDB", "src\Fluxera.Enumeration.MongoDB\Fluxera.Enumeration.MongoDB.csproj", "{97E8494A-DA43-489C-AB41-CE094ED9890F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.SystemTextJson", "src\Fluxera.Common.Enumeration.SystemTextJson\Fluxera.Enumeration.SystemTextJson.csproj", "{B2E15D88-619F-413F-95D0-BBAC84D58AFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.SystemTextJson", "src\Fluxera.Enumeration.SystemTextJson\Fluxera.Enumeration.SystemTextJson.csproj", "{B2E15D88-619F-413F-95D0-BBAC84D58AFE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.UnitTests", "tests\Fluxera.Common.Enumeration.UnitTests\Fluxera.Enumeration.UnitTests.csproj", "{AC3130A6-865E-4638-8B13-57AA9605A7BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.UnitTests", "tests\Fluxera.Enumeration.UnitTests\Fluxera.Enumeration.UnitTests.csproj", "{AC3130A6-865E-4638-8B13-57AA9605A7BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.EntityFrameworkCore.UnitTests", "tests\Fluxera.Common.Enumeration.EntityFrameworkCore.UnitTests\Fluxera.Enumeration.EntityFrameworkCore.UnitTests.csproj", "{D7F39DE2-2BB4-4B65-9BF2-F08EB91E10A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.EntityFrameworkCore.UnitTests", "tests\Fluxera.Enumeration.EntityFrameworkCore.UnitTests\Fluxera.Enumeration.EntityFrameworkCore.UnitTests.csproj", "{D7F39DE2-2BB4-4B65-9BF2-F08EB91E10A6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.JsonNet.UnitTests", "tests\Fluxera.Common.Enumeration.JsonNet.UnitTests\Fluxera.Enumeration.JsonNet.UnitTests.csproj", "{67A64413-B839-41BA-BE39-D22F1545C704}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.JsonNet.UnitTests", "tests\Fluxera.Enumeration.JsonNet.UnitTests\Fluxera.Enumeration.JsonNet.UnitTests.csproj", "{67A64413-B839-41BA-BE39-D22F1545C704}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.LiteDB.UnitTests", "tests\Fluxera.Common.Enumeration.LiteDB.UnitTests\Fluxera.Enumeration.LiteDB.UnitTests.csproj", "{F1ABCF53-7E0A-46E7-B018-90A61C835409}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.LiteDB.UnitTests", "tests\Fluxera.Enumeration.LiteDB.UnitTests\Fluxera.Enumeration.LiteDB.UnitTests.csproj", "{F1ABCF53-7E0A-46E7-B018-90A61C835409}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.MongoDB.UnitTests", "tests\Fluxera.Common.Enumeration.MongoDB.UnitTests\Fluxera.Enumeration.MongoDB.UnitTests.csproj", "{4EADE407-9C14-42EC-8C46-60CFB5708189}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.MongoDB.UnitTests", "tests\Fluxera.Enumeration.MongoDB.UnitTests\Fluxera.Enumeration.MongoDB.UnitTests.csproj", "{4EADE407-9C14-42EC-8C46-60CFB5708189}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.SystemTextJson.UnitTests", "tests\Fluxera.Common.Enumeration.SystemTextJson.UnitTests\Fluxera.Enumeration.SystemTextJson.UnitTests.csproj", "{E7F84B5B-8917-4819-A8EF-DDD53C557FC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.SystemTextJson.UnitTests", "tests\Fluxera.Enumeration.SystemTextJson.UnitTests\Fluxera.Enumeration.SystemTextJson.UnitTests.csproj", "{E7F84B5B-8917-4819-A8EF-DDD53C557FC7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Enumeration.UnitTests.Enums", "tests\Fluxera.Enumeration.UnitTests.Enums\Fluxera.Enumeration.UnitTests.Enums.csproj", "{E4BACBA2-F2AE-4209-B4D4-8B0CBBB61063}"
 EndProject

@@ -14,10 +14,12 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Testcontainers" Version="4.1.0" />
+		<PackageReference Include="Testcontainers.MongoDb" Version="4.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Fluxera.Common.Enumeration.JsonNet\Fluxera.Enumeration.JsonNet.csproj" />
+		<ProjectReference Include="..\..\src\Fluxera.Enumeration.MongoDB\Fluxera.Enumeration.MongoDB.csproj" />
 		<ProjectReference Include="..\Fluxera.Enumeration.UnitTests.Enums\Fluxera.Enumeration.UnitTests.Enums.csproj" />
 	</ItemGroup>
 

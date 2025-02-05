@@ -7,6 +7,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="FluentAssertions" Version="8.0.1" />
+		<PackageReference Include="LiteDB.Async" Version="0.1.8" />
+		<PackageReference Include="LiteDB.Queryable" Version="9.0.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
 		<PackageReference Include="NUnit" Version="4.3.2" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
@@ -17,7 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Fluxera.Common.Enumeration.SystemTextJson\Fluxera.Enumeration.SystemTextJson.csproj" />
+		<ProjectReference Include="..\..\src\Fluxera.Enumeration.LiteDB\Fluxera.Enumeration.LiteDB.csproj" />
 		<ProjectReference Include="..\Fluxera.Enumeration.UnitTests.Enums\Fluxera.Enumeration.UnitTests.Enums.csproj" />
 	</ItemGroup>
 

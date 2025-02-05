@@ -5,9 +5,9 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Title>Fluxera.Enumeration.MongoDB</Title>
-		<Description>MongoDB serialization support for the object-oriented enumeration.</Description>
-		<PackageTags>fluxera;library;enumeration</PackageTags>
+		<Title>Fluxera.Enumeration.EntityFrameworkCore</Title>
+		<Description>EF Core serialization support for the object-oriented enumeration.</Description>
+		<PackageTags>fluxera;library;enumeration;ef-core</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,11 +27,11 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="JetBrains.Annotations" Version="2024.3.0" PrivateAssets="All" />
-		<PackageReference Include="MongoDB.Driver" Version="3.1.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Fluxera.Common.Enumeration\Fluxera.Enumeration.csproj" />
+		<ProjectReference Include="..\Fluxera.Enumeration\Fluxera.Enumeration.csproj" />
 	</ItemGroup>
 
 </Project>

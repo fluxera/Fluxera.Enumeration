@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
@@ -11,13 +11,13 @@
 		<PackageReference Include="NUnit" Version="4.3.2" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
 		<PackageReference Include="coverlet.collector" Version="6.0.4">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Fluxera.Common.Enumeration\Fluxera.Enumeration.csproj" />
+		<ProjectReference Include="..\..\src\Fluxera.Enumeration.SystemTextJson\Fluxera.Enumeration.SystemTextJson.csproj" />
 		<ProjectReference Include="..\Fluxera.Enumeration.UnitTests.Enums\Fluxera.Enumeration.UnitTests.Enums.csproj" />
 	</ItemGroup>
 
