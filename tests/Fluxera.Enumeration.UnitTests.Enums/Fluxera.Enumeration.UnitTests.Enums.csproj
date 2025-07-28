@@ -6,6 +6,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="JetBrains.Annotations" Version="2025.2.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\..\src\Fluxera.Enumeration\Fluxera.Enumeration.csproj" />
 	</ItemGroup>
 
